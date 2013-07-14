@@ -1,8 +1,8 @@
 <?php
-  DEFINE ('DB_USER', 'clv');
-  DEFINE ('DB_PASSWORD', 'clv');
+  DEFINE ('DB_USER', 'ex2');
+  DEFINE ('DB_PASSWORD', 'ex2');
   DEFINE ('DB_HOST', 'localhost');
-  DEFINE ('DB_NAME', 'clv');
+  DEFINE ('DB_NAME', 'ex2');
 
   // Make the connection:
   $dbc = mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

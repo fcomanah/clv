@@ -1,9 +1,13 @@
     <div data-role="footer" data-position="fixed">
       <div class="center-wrapper">
       <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-        <a href="#menu" data-role="button" data-iconpos="notext" data-icon="flat-menu">Categorias</a>
+        <?php
+          echo_button($display_left_panel, $left_panel_href, $left_panel_data_icon, $left_panel_name);
+        ?>
         <a href="#top" data-ajax="false" data-role="button" data-iconpos="notext" data-icon="arrow-u">Voltar ao topo</a>
-        <a href="#cart" data-role="button" data-iconpos="notext" data-icon="cart" >Carrinho</a>
+        <?php
+          echo_button($display_right_panel, $right_panel_href, $right_panel_data_icon, $right_panel_name);
+        ?>
       </div>
       </div>
     </div>

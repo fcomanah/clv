@@ -16,11 +16,15 @@
 <body>
   <div data-role="page">	  
     <div data-role="header">
-      <a data-iconpos="notext" href="#menu" data-role="button" data-icon="flat-menu"></a>
+      <?php
+        echo_button($display_left_panel, $left_panel_href, $left_panel_data_icon, $left_panel_name);
+      ?>
       <h1>
         <?php
           echo_title($page_title);
         ?>
       </h1>
-      <a data-iconpos="notext" href="#cart" data-role="button" data-icon="cart-full"></a>
+      <?php
+        echo_button($display_right_panel, $right_panel_href, $right_panel_data_icon, $right_panel_name);
+      ?>
     </div>
