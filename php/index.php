@@ -2,6 +2,7 @@
   //require ('./includes/config.inc.php');
 
   $page_title = 'home';
+  require ('./includes/header_functions.inc.php');
   include ('./includes/header.html');
 
     //require (MYSQL);
