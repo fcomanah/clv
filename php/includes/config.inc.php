@@ -3,7 +3,7 @@
   $live = false;
   $contact_email = 'fco.manah@gmail.com';
   define ('BASE_URI', '/home/administrador/htdocs/clv/mysql/');
-  define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/php/');
+  define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/');
   define ('MYSQL', BASE_URI . 'mysql.inc.php');
 
   // Function for handling errors.

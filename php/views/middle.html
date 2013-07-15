@@ -1,56 +1,33 @@
     <div data-role="content" role="main">
-      <div data-role="popup" id="purchase" data-theme="d" data-overlay-theme="b" class="ui-content" style="max-width:440px; padding-bottom:2em;">
-          <h3>Adicionando Produto</h3>
-          <p>Qual é a quantidade?</p>
-          <form >
-            <input type="range" name="slider" value="1" min="0" max="20" data-highlight="true" />
-            <a data-role="button" data-rel="back" data-theme="b" data-icon="check" data-inline="true" data-mini="true">Colocar</a>
-            <a data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancelar</a>
-          </form>
-      </div>
-
-      <ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/cpu.png"><h2>CPU</h2><p>R$ 80.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/cooler.png"><h2>Cooler</h2><p>R$ 5.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/mb.png"><h2>MotherBoard</h2><p>R$ 100.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/images.jpg"><h2>Pastel</h2><p>R$ 20.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/ram.png"><h2>Memória ram</h2><p>R$ 10.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/hd.png"><h2>Hard Disk</h2><p>R$ 50.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>          
-      </ul>
+      <?php
       
-<?php // Check for sales!
+        $purchase = '';
+        
+        if (mysqli_num_rows($prds) > 0) 
+        {
+  	      echo '<ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">';
+		  while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
+  	      {
+            echo '<li>
+                    <a href="index.php?id=' . $row['id_'] . '&action=view"><img src="'. BASE_URL . $row['img'] . '"><h2>' . $row['nme'] . '</h2><p>R$ ' . $row['prc'] . '</p></a>
+                    <a href="#purchase' . $row['id_'] . '" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
+                 </li>';
+                 
+	        $purchase .= '<div data-role="popup" id="purchase' . $row['id_'] . '" data-theme="d" data-overlay-theme="b" class="ui-content" style="max-width:440px; padding-bottom:2em;">
+                    <h3>Adicionando <Nome do Produto></h3>
+                    <p>Qual é a quantidade?</p>
+                    <form name="add" action="index.php?id=' . $row['id_'] . '&action=add" method="post">
+                      <input type="range" name="slider" value="1" min="0" max="20" data-highlight="true" />
+                      <button type="submit" name="submit" value="submit" data-theme="b">Adicionar</button>
 
-// If records are returned, include the view:
-if (mysqli_num_rows($r) > 0) {
-	
-	echo '<dl class="special fright">
-		<dt><a href="/shop/sales/">Sale Items</a></dt>';
-
-	// Fetch each item:
-	while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-		echo '<dd><a href="/shop/sales/#' . $row['sku'] . '" title="View This Product"><img alt="" src="/products/' . $row['image'] . '" /><span>' . $row['sale_price'] . '</span></a></dd>';
-	}
-	
-	echo '</dl>';
-
-} // End of mysqli_num_rows() IF.
-?>
+                    </form>
+                   </div>';
+		  }	
+          echo '</ul>';
+        }
+        
+        echo $purchase;
+        
+      ?>
+      
     </div>
