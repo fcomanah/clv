@@ -1,9 +1,25 @@
     <div data-role="panel" id="<?echo $left_panel_href?>" data-position="left" data-theme="a" data-display="push">
-  	  <ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">
-  	     <li data-role="list-divider">Produtos</li>
-          <li>
-            <a href="#"><img src="../uploads/2013/06/21/ram.png"><h2>Memória ram</h2><p>R$ 10.00</p></a>
-            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-          </li>
-      </ul>
+  	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
+  	    <li data-role="list-divider">Produtos</li>
+  	    <?php
+          if (mysqli_num_rows($prds) > 0) 
+          {            
+            while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
+            {
+              $item = '><a style="text-decoration:none;" href="dsc.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+              
+              if (isset($pid))
+              {
+                if ($pid == $row['id_'])
+                {
+                   $item = ' data-theme="a" data-role="list-divider"' . $item;
+				}
+              }
+              
+              $item = '<li' . $item;
+              echo $item;
+            }	
+          }  	      
+  	    ?>
+     </ul>
     </div>

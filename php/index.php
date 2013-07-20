@@ -33,6 +33,8 @@
     mysqli_next_result($dbc);
     $prds = mysqli_query ($dbc, "CALL ls_prd()");
     mysqli_next_result($dbc);
+    
+    
     require ('./includes/car.inc.php');
     
         
