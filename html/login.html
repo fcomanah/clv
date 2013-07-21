@@ -6,6 +6,13 @@
   <link rel="stylesheet" type="text/css" href="../css/jquery.mobile.flatui.css" />
   <script src="../js/jquery.min.js"></script>
   <script src="../js/jquery.mobile-1.3.1.min.js"></script>
+  <style type="text/css">
+    .nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+    .nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: none !important; border-radius: none !important; }
+    #email .ui-icon { background:  url(glyphish-icons/18-envelope.png) 50% 50% no-repeat; background-size: 24px 16px; }
+    #login .ui-icon { background:  url(glyphish-icons/30-key.png) 50% 50% no-repeat;  background-size: 9px 20px; }
+    #lock .ui-icon { background:  url(glyphish-icons/54-lock.png) 50% 50% no-repeat;  background-size: 22px 27px; }
+  </style>
 </head>
 <body>
   <div data-role="page">
@@ -115,6 +122,10 @@
             <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
           </li>
           <li>
+            <a href="#"><img src="../uploads/2013/06/21/images.jpg"><h2>Pastel</h2><p>R$ 20.00</p></a>
+            <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
+          </li>
+          <li>
             <a href="#"><img src="../uploads/2013/06/21/ram.png"><h2>Memória ram</h2><p>R$ 10.00</p></a>
             <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
           </li>
@@ -130,7 +141,9 @@
       <div class="center-wrapper">
       <div data-role="controlgroup" data-type="horizontal" data-mini="true">
         <a href="#menu" data-role="button" data-iconpos="notext" data-icon="flat-menu">Categorias</a>
+        <a href="#menu" data-role="button" data-iconpos="notext" id="email" data-icon="custom">Email</a>
         <a href="#top" data-ajax="false" data-role="button" data-iconpos="notext" data-icon="arrow-u">Voltar ao topo</a>
+        <a href="#menu" data-role="button" data-iconpos="notext" id="lock" data-icon="custom">LogIn</a>
         <a href="#cart" data-role="button" data-iconpos="notext" data-icon="cart" >Carrinho</a>
       </div>
       </div>
