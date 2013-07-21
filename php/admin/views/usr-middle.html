@@ -1,0 +1,13 @@
+    <div data-role="content" role="main">
+      <div data-role="fieldcontain" data-inline="true">
+        <form action="usr.php" method="post" accept-charset="utf-8">
+          <p><label for="first_name"><strong>First Name</strong></label><?php create_form_input('first_name', 'text', $reg_errors); ?></p>
+          <p><label for="last_name"><strong>Last Name</strong></label><?php create_form_input('last_name', 'text', $reg_errors); ?></p>
+          <p><label for="username"><strong>Desired Username</strong></label><?php create_form_input('username', 'text', $reg_errors); ?><small>Only letters and numbers are allowed.</small></p>
+          <p><label for="email"><strong>Email Address</strong></label><?php create_form_input('email', 'text', $reg_errors); ?></p>
+          <p><label for="pass1"><strong>Password</strong></label><?php create_form_input('pass1', 'password', $reg_errors); ?><small>Must be between 6 and 20 characters long, with at least one lowercase letter, one uppercase letter, and one number.</small></p>
+          <p><label for="pass2"><strong>Confirm Password</strong></label><?php create_form_input('pass2', 'password', $reg_errors); ?></p>
+          <input type="submit" name="submit_button" value="Next &rarr;" id="submit_button" class="formbutton" />          
+        </form>      
+      </div>
+    </div>
