@@ -5,6 +5,7 @@
   define ('BASE_URI', '/home/administrador/htdocs/clv/mysql/');
   define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/');
   define ('MYSQL', BASE_URI . 'mysql.inc.php');
+  define ('DBC', BASE_URI . 'dbc.inc.php');
 
   // Function for handling errors.
   // Takes five arguments: error number, error message (string), name of the file where the error occurred (string) 
