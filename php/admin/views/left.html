@@ -1,14 +1,22 @@
     <div data-role="panel" id="<?echo $left_panel_href?>" data-position="left" data-theme="a" data-display="push">
-      <?php
-        if (mysqli_num_rows($ctgs) > 0) 
-        {
-  	      echo '<ul data-role="listview" data-inset="true" data-filter="true">
-  	              <li data-role="list-divider">Categorias</li>';
-		  while ($row = mysqli_fetch_array($ctgs, MYSQLI_ASSOC)) 
-  	      {
-            echo '<li><a href="#">'.$row['nme'].'</a></li>';
-		  }	
-          echo '</ul>';
-        }
-      ?>
+  	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
+  	    <li data-role="list-divider"><?echo $left_panel_name?></li>
+  	    <?php
+         foreach($left_content as $row) 
+         {
+           $item = '><a style="text-decoration:none;" href="index.php?uid='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+
+           if (isset($uid))
+           {
+             if ($uid == $row['id_'])
+             {
+               $item = ' data-theme="a" data-role="list-divider"' . $item;
+             }
+           }
+
+           $item = '<li' . $item;
+           echo $item;
+         }	
+  	    ?>
+     </ul>
     </div>

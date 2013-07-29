@@ -1,157 +1,22 @@
-    <div data-role="popup" id="popupDelete" data-overlay-theme="d" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
-        <div data-role="header" data-theme="d" class="ui-corner-top">
-            <h1>Confirmação</h1>
-        </div>
-        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Retirar Produto?</h3>
-            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancelar</a>
-            <a href="delete.php?nome=opcao1" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="d">Retirar</a>
-        </div>
+    <div data-role="panel" id="<?echo $right_panel_href?>" data-position="right" data-theme="a" data-display="push">
+  	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
+  	    <li data-role="list-divider"><?echo $right_panel_name?></li>
+  	    <?php
+         foreach($left_content as $row) 
+         {
+           $item = '><a style="text-decoration:none;" href="crud.php?uid='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+
+           if (isset($uid))
+           {
+             if ($uid == $row['id_'])
+             {
+               $item = ' data-theme="a" data-role="list-divider"' . $item;
+             }
+           }
+
+           $item = '<li' . $item;
+           echo $item;
+         }	
+  	    ?>
+     </ul>
     </div>
-    
-    <div data-role="popup" id="popupMenu" data-theme="b">
-      <div data-role="popup" id="popupCheckout" data-theme="b" class="ui-corner-all">
-        <form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
-          <div style="padding:10px 20px;">
-            <h3>Finalizando compra</h3>
-            
-<input name="email_loja" type="hidden" value="manaphys@gmail.com"> 
-<input name="produto_codigo_1" type="hidden" value="1001"> 
-<input name="produto_descricao_1" type="hidden" value="Camisa Seleção Brasileira Oficial">
-<input name="produto_qtde_1" type="hidden" value="1"> 
-<input name="produto_valor_1" type="hidden" value="1" > 
-<input name="produto_extra_1" type="hidden" value="Camiseta Dry Fit" > 
-<input name="produto_codigo_2" type="hidden" value="1002"> 
-<input name="produto_descricao_2" type="hidden" value="Raquete de Tênis">
-<input name="produto_qtde_2" type="hidden" value="1"> 
-<input name="produto_valor_2" type="hidden" value="1" > 
-<input name="produto_extra_2" type="hidden" value="Feita de Fibra de Carbono" > 
-<input name="produto_codigo_3" type="hidden" value="1003"> 
-<input name="produto_descricao_3" type="hidden" value="Celular com memória">
-<input name="produto_qtde_3" type="hidden" value="1"> 
-<input name="produto_valor_3" type="hidden" value="1" > 
-<input name="produto_extra_3" type="hidden" value="2 GB" > 
-<input name="tipo_integracao" type="hidden" value="PAD">
-<input name="frete" type="hidden" value="1">
-<input name="id_pedido" type="hidden" value="1001"> 
-<input name="email" type="hidden" value="" > 
-<input name="nome" type="hidden" value="João da Silva">
-<input name="rg" type="hidden" value="12345678900">
-<input name="data_emissao_rg" type="hidden" value="24/02/1987">
-<input name="orgao_emissor_rg" type="hidden" value="SSP">
-<input name="estado_emissor_rg" type="hidden" value="SP">
-<input name="cpf" type="hidden" value="98765432199">
-<input name="sexo" type="hidden" value="M">
-<input name="data_nascimento" type="hidden" value="06/10/1980">
-<input name="telefone" type="hidden" value="1198745632"> 
-<input name="celular" type="hidden" value="1199996666"> 
-<input name="endereco" type="hidden" value="Av Paulista, 1070">
-<input name="complemento" type="hidden" value="Sala 10">
-<input name="bairro" type="hidden" value="Centro">
-<input name="cidade" type="hidden" value="São Paulo">
-<input name="estado" type="hidden" value="SP">
-<input name="cep" type="hidden" value="04001001">
-<input name="free" type="hidden" value="">
-<input name="tipo_frete" type="hidden" value="sedex">
-<input name="desconto" type="hidden" value="3.00">
-<input name="acrescimo" type="hidden" value="1.00">
-<input name="url_retorno" type="hidden" value="http://150.164.100.10:54321/administrador/clv/php/bcash_retorno.php">
-<input name="url_aviso" type="hidden" value="https://www.enderecodasualoja.com.br/aviso.php">
-<input name="cliente_razao_social" type="hidden" value="Loja do Cliente">
-<input name="cliente_cnpj" type="hidden" value="11222333000111">
-<input name="parcela_maxima" type="hidden" value="10">
-<input name="meio_pagamento" type="hidden" value="1">
-<input name="redirect" type="hidden" value="true">
-<input type="image" src="https://www.bcash.com.br/webroot/img/bt_comprar.gif" value="Comprar" alt="Comprar" border="0" align="absbottom" >
-
-          </div>
-        </form>
-      </div>
-    </div>
-      
-    <div data-role="panel" id="cart" data-position="right" data-theme="a" data-display="push">      
-      <ul data-role="listview" data-inset="true" data-divider-theme="d" data-count-theme="c" data-filter="true">
-          <li data-role="list-divider">Carrinho</li>        
-
-      <?php
-        if (mysqli_num_rows($car) > 0) 
-        {
-		  while ($row = mysqli_fetch_array($car, MYSQLI_ASSOC)) 
-  	      {
-            echo '<li data-icon="delete">
-            <a href="#popupDelete" data-rel="popup" data-position-to="window" data-transition="pop">
-              CPU (2x) 
-              <span class="ui-li-count">
-                R$ 160
-              </span>
-            </a>
-          </li>';
-		  }	
-        }
-        ?>
-
-          <li data-role="list-divider">Total</li>
-          <li data-icon="check">
-            <a href="#popupCheckout" data-rel="popup" data-position-to="window" data-transition="pop">
-              Finalizar compra 
-              <span class="ui-li-count">
-                R$ 170
-              </span></a>
-          </li>        
-
-<?php
-
-/*
-// Initialize the total:
-$total = 0;
-
-// Fetch each product:
-while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-	
-	// Get the correct price:
-	$price = get_just_price($row['price'], $row['sale_price']);
-	
-	// Calculate the subtotal:
-	$subtotal = $price * $row['quantity'];
-	
-	// Print out a table row:
-	echo '<tr><td>' . $row['category'] . '::' . $row['name'] . '</td>
-		<td align="center"><input type="text" name="quantity[' . $row['sku'] . ']" value="' . $row['quantity'] . '" size="2" class="small" /></td>
-		<td align="right">$' . $price . '</td>
-		<td align="right">$' . number_format($subtotal, 2) . '</td>
-		<td align="right"><a href="/wishlist.php?sku=' . $row['sku'] . '&action=move&qty=' . $row['quantity'] .'">Move to Wish List</a><br /><a href="/cart.php?sku=' . $row['sku'] . '&action=remove">Remove from Cart</a></td>
-	</tr>
-	';
-	
-	// Check the stock status:
-	if ($row['stock'] < $row['quantity']) {
-		echo '<tr class="error"><td colspan="5" align="center">There are only ' . $row['stock'] . ' left in stock of the ' . $row['name'] . '. Please update the quantity, remove the item entirely, or move it to your wish list.</td></tr>';
-	}
-
-	// Add the subtotal to the total:
-  	$total += $subtotal;
-
-} // End of WHILE loop. 
-
-// Add the shipping:
-$shipping = get_shipping($total);
-$total += $shipping;
-echo '<tr>
-	<td colspan="3" align="right"><strong>Shipping &amp; Handling</strong></td>
-	<td align="right">$' . $shipping . '</td>
-	<td>&nbsp;</td>
-</tr>
-';
-
-// Display the total:
-echo '<tr>
-	<td colspan="3" align="right"><strong>Total</strong></td>
-	<td align="right">$' . number_format($total, 2) . '</td>
-	<td>&nbsp;</td>
-</tr>
-';
-*/
-      ?>
-       </ul>
-    </div>
-

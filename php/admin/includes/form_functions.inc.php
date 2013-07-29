@@ -63,6 +63,7 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 
 	// Check for a value in POST:
 	if (isset($_POST[$name])) $value = $_POST[$name];
+	else if($atual) $value = $atual;
 	
 	// Strip slashes if Magic Quotes is enabled:
 	if ($value && get_magic_quotes_gpc()) $value = stripslashes($value);
@@ -71,9 +72,9 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 	if ( ($type == 'text') || ($type == 'password') ) { // Create text or password inputs.
 		
 		// Start creating the input:
-		echo '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" value="' . $atual . '"';
+		echo '<input type="' . $type . '" name="' . $name . '" id="' . $name . '"';
 		
-		if ( $disabled == 'true' ) echo 'disabled="disabled"' ;		
+		if ( $disabled == 'true' ) echo 'disabled="disabled"' ;
 		
 		// Add the value to the input:
 		if ($value) echo ' value="' . htmlspecialchars($value) . '"';
@@ -91,7 +92,9 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 		if (array_key_exists($name, $errors)) echo ' <span class="error">' . $errors[$name] . '</span>';
 
 		// Start creating the textarea:
-		echo '<textarea name="' . $name . '" id="' . $name . '" rows="5" cols="75"' . '" value="' . $atual . '" disabled=' . $state . '"';
+		echo '<textarea name="' . $name . '" id="' . $name . '" rows="5" cols="75"';
+		
+		if ( $disabled == 'true' ) echo 'disabled="disabled"' ;
 		
 		// Add the error class, if applicable:
 		if (array_key_exists($name, $errors)) {

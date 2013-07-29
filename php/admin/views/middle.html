@@ -1,33 +1,36 @@
     <div data-role="content" role="main">
-      <?php
-      
-        $purchase = '';
-        
-        if (mysqli_num_rows($prds) > 0) 
-        {
-  	      echo '<ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">';
-		  while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
-  	      {
-            echo '<li>
-                    <a href="index.php?id=' . $row['id_'] . '&action=view"><img src="'. BASE_URL . $row['img'] . '"><h2>' . $row['nme'] . '</h2><p>R$ ' . $row['prc'] . '</p></a>
-                    <a href="#purchase' . $row['id_'] . '" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
-                 </li>';
-                 
-	        $purchase .= '<div data-role="popup" id="purchase' . $row['id_'] . '" data-theme="d" data-overlay-theme="b" class="ui-content" style="max-width:440px; padding-bottom:2em;">
-                    <h3>Adicionando <Nome do Produto></h3>
-                    <p>Qual é a quantidade?</p>
-                    <form name="add" action="index.php?id=' . $row['id_'] . '&action=add" method="post">
-                      <input type="range" name="slider" value="1" min="0" max="20" data-highlight="true" />
-                      <button type="submit" name="submit" value="submit" data-theme="b">Adicionar</button>
 
-                    </form>
-                   </div>';
-		  }	
-          echo '</ul>';
-        }
-        
-        echo $purchase;
-        
-      ?>
-      
+      <form action="crud.php" method="post" accept-charset="utf-8">
+        <p>
+          <label for="first_name"><strong>Primeiro Nome</strong></label>
+
+        </p>
+        <p>
+          <label for="last_name"><strong>Último Nome</strong></label>
+
+        </p>
+        <p>
+          <label for="nme"><strong>Nome de Usuário</strong></label>
+
+          <small>Somente letras e números são permitidos.</small>
+        </p>
+        <p>
+          <label for="email"><strong>Email</strong></label>
+
+        </p>
+        <p>
+          <label for="pass1"><strong>Senha</strong></label>
+
+          <small>Deve ter entre 6 e 20 caracteres, com pelo menos uma minúscula, uma maíuscula e um número.</small>
+        </p>
+        <p>
+          <label for="pass2"><strong>Confirmar Senha</strong></label>
+
+        </p>
+    
+        <input data-theme="a" type="submit" value="Adicionar" />
+         
+      </form>
+
     </div>
+    
