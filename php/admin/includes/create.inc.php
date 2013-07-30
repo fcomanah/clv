@@ -21,9 +21,12 @@
       // Send a separate email?
 //				$body = "Thank you for registering at <whatever site>. Blah. Blah. Blah.\n\n";
 //				mail($_POST['email'], 'Registration Confirmation', $body, 'From: admin@example.com');
-      $message = "Create efetuado com sucesso!";
-      //header('Location: index.php');
-      //exit;
+      
+      $string = 'Location: read.php?id=';
+      $string .= mysqli_insert_id($dbc);
+      $string .= '&hgm=Create executado com sucesso!';
+      header($string);
+      exit;
     }
     else
     { // If it did not run OK.

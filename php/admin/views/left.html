@@ -4,11 +4,11 @@
   	    <?php
          foreach($left_content as $row) 
          {
-           $item = '><a style="text-decoration:none;" href="index.php?uid='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+           $item = '><a style="text-decoration:none;" href="read.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
 
-           if (isset($uid))
+           if (isset($_GET['id']))
            {
-             if ($uid == $row['id_'])
+             if ($_GET['id'] == $row['id_'])
              {
                $item = ' data-theme="a" data-role="list-divider"' . $item;
              }

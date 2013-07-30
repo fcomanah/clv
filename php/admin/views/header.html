@@ -39,10 +39,18 @@
       ?>
     </div>
     <?php
-      if(isset($message))
+      //header bad messages
+      if(isset($_GET['hbm']))
+      {
+        echo '<div data-role="header" data-theme="d"><h1>';
+        echo_title($_GET['hbm']);
+        echo '</h1></div>';
+      }
+      //header good messages
+      if(isset($_GET['hgm']))
       {
         echo '<div data-role="header" data-theme="b"><h1>';
-        echo_title($message);
+        echo_title($_GET['hgm']);
         echo '</h1></div>';
       }
     ?>

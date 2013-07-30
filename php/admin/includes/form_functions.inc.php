@@ -72,18 +72,18 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 	if ( ($type == 'text') || ($type == 'password') ) { // Create text or password inputs.
 		
 		// Start creating the input:
-		echo '<input type="' . $type . '" name="' . $name . '" id="' . $name . '"';
+		$up = '<input type="' . $type . '" name="' . $name . '" id="' . $name . '"';
 		
-		if ( $disabled == 'true' ) echo 'disabled="disabled"' ;
+		if ( $disabled == 'true' ) $up .= 'disabled="disabled"' ;
 		
 		// Add the value to the input:
-		if ($value) echo ' value="' . htmlspecialchars($value) . '"';
+		if ($value) $up .= ' value="' . htmlspecialchars($value) . '"';
 
 		// Check for an error:
 		if (array_key_exists($name, $errors)) {
-			echo 'class="error" /> <div class="error">' . $errors[$name] . '</div>';
+			$up .= 'class="error" /> <div class="error">' . $errors[$name] . '</div>';
 		} else {
-			echo ' />';		
+			$up .= ' />';		
 		}
 		
 	} elseif ($type == 'textarea') { // Create a TEXTAREA.
@@ -92,24 +92,26 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 		if (array_key_exists($name, $errors)) echo ' <span class="error">' . $errors[$name] . '</span>';
 
 		// Start creating the textarea:
-		echo '<textarea name="' . $name . '" id="' . $name . '" rows="5" cols="75"';
+		$up = '<textarea name="' . $name . '" id="' . $name . '" rows="5" cols="75"';
 		
 		if ( $disabled == 'true' ) echo 'disabled="disabled"' ;
 		
 		// Add the error class, if applicable:
 		if (array_key_exists($name, $errors)) {
-			echo ' class="error">';
+			$up .= ' class="error">';
 		} else {
-			echo '>';		
+			$up .= '>';		
 		}
 		
 		// Add the value to the textarea:
 		if ($value) echo $value;
 
 		// Complete the textarea:
-		echo '</textarea>';
+		$up .= '</textarea>';
 		
 	} // End of primary IF-ELSE.
+	
+	return $up;
 
 } // End of the update_form_input() function.
 
