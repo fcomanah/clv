@@ -1,14 +1,33 @@
-    <div data-role="popup" id="auth" data-theme="d" data-overlay-theme="b" class="ui-content" style="max-width:440px; padding-bottom:2em;">
-      <h3>Autenticação</h3>
-      <form name="add" action="index.php?id=' . $row['id_'] . '&action=add" method="post">
-        <label for="nme"><strong>Nome de Usuário</strong></label>
-        <?php create_form_input('nme', 'text', $reg_errors); ?>
-        <label for="nme"><strong>Senha</strong></label>
-        <?php create_form_input('pass1', 'password', $reg_errors); ?>
-        <a data-role="button" href="create.php" data-inline="true" data-theme="b">Criar Conta</a>
+    <?
+    if (isset($_SESSION['id']))
+    {
+    echo '<div data-arrow="true" data-role="popup" id="auth" data-overlay-theme="a" data-theme="c" style="max-width:800px;" class="ui-corner-all">
+      <p>'.$_SESSION['nme'].'</p>
+      <a href="logout.php" data-role=button data-theme="b">Sair</a>
+    </div>';
+		}
+		else
+		{
+    echo '<div data-arrow="true" data-role="popup" id="auth" data-overlay-theme="a" data-theme="c" style="max-width:800px;" class="ui-corner-all">
+      <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Login</h1>
+      </div>
+      <form data-ajax="false" name="auth" action="index.php" method="post">';
+          if (!isset($login_errors)) $login_errors = array();        
+          if (array_key_exists('login', $login_errors)) 
+          {
+	          echo '<span class="error">' . $login_errors['login'] . '</span><br />';
+	        }
+        echo '<label for="email"><strong>Email</strong></label>';
+        create_form_input('email', 'text', $login_errors);
+        echo '<label for="pass"><strong>Senha</strong></label>';
+        create_form_input('pass', 'password', $login_errors);
+        echo '<a data-role="button" href="create.php" data-inline="true" data-theme="b">Criar Conta</a>
         <button type="submit" name="submit" value="submit" data-inline="true" data-theme="a">Entrar</button>
       </form>
-    </div>
+    </div>';
+	  }
+    ?>
 
     <div data-role="footer" data-position="fixed">
       <div class="center-wrapper">

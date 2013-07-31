@@ -24,7 +24,7 @@
       
   }
  
-  $display_left_panel = true;
+  $display_left_panel = false;
     $left_panel_href = 'left';
     $left_panel_data_icon = 'flat-menu';
     $left_panel_name = 'left';

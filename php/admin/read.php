@@ -1,5 +1,7 @@
 <?
   require ('./includes/read-model.inc.php');
+
+  redirect_invalid_user();
   
   include ('./views/header.html');
     require ('./includes/left.inc.php');

@@ -1,4 +1,4 @@
-<?php
+<?
   require ('./includes/model.inc.php');
   
   include ('./views/header.html');

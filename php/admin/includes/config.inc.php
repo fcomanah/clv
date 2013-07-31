@@ -6,6 +6,8 @@
   define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/');
   define ('MYSQL', BASE_URI . 'mysql.inc.php');
   define ('DBC', BASE_URI . 'dbc.inc.php');
+  
+  session_start();
 
   // Function for handling errors.
   // Takes five arguments: error number, error message (string), name of the file where the error occurred (string) 
@@ -44,5 +46,13 @@
     return true; // So that PHP doesn't try to handle the error, too.
   }
   set_error_handler ('my_error_handler');
+  
+  function redirect_invalid_user($check='id'){
+	  if (!isset($_SESSION[$check])) {
+		  $url = './';
+		  header("Location: $url");
+		  exit(); 
+	  }	
+  }
 
 // Omit the closing PHP tag to avoid 'headers already sent' errors!
