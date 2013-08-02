@@ -1,0 +1,14 @@
+    <div data-role="content" role="main">
+      <form action="create.php" method="post" accept-charset="utf-8" data-ajax="false">
+        <p>
+          <label for="nme"><strong>Nome do Produto</strong></label>
+          <?php create_form_input('nme', 'text', $reg_errors); ?>
+          <small>Somente letras e números são permitidos.</small>
+        </p>
+    
+        <input data-theme="a" type="submit" value="add" />
+         
+      </form>
+
+    </div>
+    

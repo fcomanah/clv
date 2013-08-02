@@ -6,9 +6,11 @@
       echo '<p class="error">A sua conta expirou. Gentileza entrar em contato com o administrador.</p>';
       else
       {
-        echo '<a data-role="button" href="create.php" data-theme="b">Criar</a>';
-        echo '<a data-role="button" href="read.php" data-theme="b">Ler</a>';
-        echo '<a data-role="button" href="update.php" data-theme="b">Atualizar</a>';
+        echo '<ul data-theme="c" data-role="listview" data-icon="false" data-inset="true">';
+        echo '<li><a data-role="button" href="./usr/" data-theme="b">usr</a></li>';
+        echo '<li><a data-role="button" href="./prd/" data-theme="b">prd</a></li>';
+        echo '<li><a data-role="button" href="./ord/" data-theme="b">ord</a><li>';
+        echo '</ul>';
       }
   }
   elseif (!isset($_SESSION['user_admin'])) 

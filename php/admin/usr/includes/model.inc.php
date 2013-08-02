@@ -14,12 +14,10 @@
   
   $info = array();
     
-  //if(isset($info)) $page_title .= ' ' . $info['nme'];
-  
-  $display_left_panel = false;
+  $display_left_panel = true;
   $left_panel_href = 'left';
   $left_panel_data_icon = 'flat-menu';
-  $left_panel_name = 'left';
+  $left_panel_name = 'menu';
 
   $display_right_panel = false;
   $right_panel_href = 'right';

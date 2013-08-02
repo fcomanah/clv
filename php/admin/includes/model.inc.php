@@ -10,7 +10,7 @@
   
   $reg_errors = array();    
 
-  $page_title = 'usr';  
+  $page_title = 'admin';  
   
   $info = array();
     

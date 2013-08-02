@@ -1,0 +1,23 @@
+    <div data-role="content" role="main">
+      <? 
+        if(!empty($info))
+        {
+          $read  = '<p><strong>id: </strong>'.             $info['id_']   .'</p>';
+          $read = '<p><strong>Nome do Produto: </strong>'. $info['nme']   .'</p>';
+          $read .= '<p><strong>Preço: </strong>'.          $info['prc']   .'</p>';
+          $read .= '<p><strong>Descrição </strong>'.       $info['dsc']   .'</p>';
+          $read .= '<p><strong>Imagem: </strong>'.         $info['img']   .'</p>';
+          $read .= '<p><strong>Estoque: </strong>'.        $info['stq']   .'</p>';
+          $read .= '<p><strong>Data Criação: </strong>'.   $info['dtc']   .'</p>';
+          $read .= '<p><strong>id Categoria: </strong>'.   $info['id_ctg'].'</p>';
+          $read .= '<a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>';
+                           
+          echo $read;
+        }
+        else
+        {
+          echo '<p>Não há informações para leitura.</p>';
+        }
+      ?>
+    </div>
+    
