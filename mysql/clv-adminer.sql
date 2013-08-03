@@ -36,7 +36,10 @@ SELECT * FROM prd WHERE id_=pid;;
 CREATE PROCEDURE `get_usr`(IN `uid` int(10) unsigned)
 SELECT * FROM usr WHERE id_=uid;;
 
-;;
+CREATE PROCEDURE `ls_cart`(uid CHAR(32))
+BEGIN
+SELECT * FROM car WHERE user_session_id=uid;
+END;;
 
 CREATE PROCEDURE `ls_ctg`()
 BEGIN
@@ -197,4 +200,4 @@ INSERT INTO `usr` (`id_`, `type`, `nme`, `email`, `pass`, `first_name`, `last_na
 (75,	'member',	'gladson',	'gladson@gmail.com',	UNHEX('CE8BB372405C89CF8400B914A5D455ACE5FC115C901E7454091262429E78ED70'),	'Gladson',	'Recieri',	'2013-08-30',	'2013-07-30 23:41:34',	'0000-00-00 00:00:00'),
 (73,	'admin',	'mfer',	'mfer@dcc.com',	UNHEX('CE8BB372405C89CF8400B914A5D455ACE5FC115C901E7454091262429E78ED70'),	'Manassés',	'Ferreira Neto',	'2013-08-30',	'2013-07-30 23:18:04',	'0000-00-00 00:00:00');
 
--- 2013-08-03 09:34:55
+-- 2013-08-03 10:21:21
