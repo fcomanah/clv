@@ -11,7 +11,24 @@ USE `clv`;
 
 DELIMITER ;;
 
-;;
+CREATE PROCEDURE `add_to_cart`(IN `uid` char(32), IN `pid` mediumint, IN `qty` mediumint)
+BEGIN
+DECLARE cid INT;
+DECLARE s INT;
+DECLARE q INT;
+SELECT id_ INTO cid FROM car WHERE user_session_id=uid AND id_prd=pid;
+IF cid > 0 THEN
+SELECT stq INTO s FROM prd WHERE id_=pid;
+SELECT qtd INTO q FROM car WHERE id_=cid;
+IF (q+qty) < s THEN
+UPDATE car SET qtd=qtd+qty, dtm=NOW() WHERE id_=cid;
+ELSE
+UPDATE car SET qtd=s, dtm=NOW() WHERE id_=cid;
+END IF;
+ELSE 
+INSERT INTO car (user_session_id, id_prd, qtd) VALUES (uid, pid, qty);
+END IF;
+END;;
 
 CREATE PROCEDURE `get_prd`(IN `pid` mediumint(8) unsigned)
 SELECT * FROM prd WHERE id_=pid;;
@@ -21,7 +38,10 @@ SELECT * FROM usr WHERE id_=uid;;
 
 ;;
 
-;;
+CREATE PROCEDURE `ls_ctg`()
+BEGIN
+  SELECT * FROM ctg WHERE id_ > 1 ORDER by nme;
+END;;
 
 CREATE PROCEDURE `ls_prd`()
 BEGIN
@@ -33,9 +53,14 @@ BEGIN
   SELECT * FROM usr ORDER by nme;
 END;;
 
-CREATE PROCEDURE `remove_from_cart`(IN `uid` char(32), IN `cid` mediumint)
+CREATE PROCEDURE `remove_from_cart`(IN `cid` mediumint, IN `qty` mediumint)
 BEGIN
-DELETE FROM car WHERE user_session_id=uid AND id_=cid;
+DECLARE q INT;
+UPDATE car SET qtd=qtd-qty, dtm=NOW() WHERE id_=cid;
+SELECT qtd INTO q FROM car WHERE id_=cid;
+IF q <= 0 THEN
+DELETE FROM car WHERE id_=cid;
+END IF;
 END;;
 
 DELIMITER ;
@@ -64,7 +89,7 @@ CREATE TABLE `car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `car` (`id_`, `qtd`, `user_session_id`, `id_prd`, `dtc`, `dtm`) VALUES
-(37,	1,	'3e52ddf6fae43eafafe8ba463b32016f',	5,	'2013-08-03 07:27:07',	'0000-00-00 00:00:00');
+(55,	2,	'3e52ddf6fae43eafafe8ba463b32016f',	4,	'2013-08-03 09:34:31',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `crc`;
 CREATE TABLE `crc` (
@@ -146,7 +171,7 @@ INSERT INTO `prd` (`id_`, `nme`, `prc`, `dsc`, `img`, `stq`, `dtc`, `id_ctg`) VA
 (2,	'placa-mãe',	150.00,	'important component to mount a pc.',	'uploads/2013/06/21/mb.png',	10,	'2013-07-15 01:23:08',	1),
 (3,	'cpu',	420.00,	'brain of the machine',	'uploads/2013/06/21/cpu.png',	2,	'2013-07-15 01:24:00',	1),
 (4,	'cooler',	20.00,	'anti heating',	'uploads/2013/06/21/cooler.png',	2,	'2013-07-15 01:25:06',	1),
-(5,	'Boston City Flow',	1600.00,	'Beatiful travel!',	'uploads/2013/06/21/ram.png',	200,	'2013-07-15 01:26:07',	1),
+(5,	'Boston City Flow',	1600.00,	'Beautiful travel!',	'uploads/2013/06/21/ram.png',	200,	'2013-07-15 01:26:07',	1),
 (6,	'disco rígido',	250.00,	'storage device',	'uploads/2013/06/21/hd.png',	100,	'2013-07-15 01:26:48',	1);
 
 DROP TABLE IF EXISTS `usr`;
@@ -172,4 +197,4 @@ INSERT INTO `usr` (`id_`, `type`, `nme`, `email`, `pass`, `first_name`, `last_na
 (75,	'member',	'gladson',	'gladson@gmail.com',	UNHEX('CE8BB372405C89CF8400B914A5D455ACE5FC115C901E7454091262429E78ED70'),	'Gladson',	'Recieri',	'2013-08-30',	'2013-07-30 23:41:34',	'0000-00-00 00:00:00'),
 (73,	'admin',	'mfer',	'mfer@dcc.com',	UNHEX('CE8BB372405C89CF8400B914A5D455ACE5FC115C901E7454091262429E78ED70'),	'Manassés',	'Ferreira Neto',	'2013-08-30',	'2013-07-30 23:18:04',	'0000-00-00 00:00:00');
 
--- 2013-08-03 07:42:09
+-- 2013-08-03 09:34:55
