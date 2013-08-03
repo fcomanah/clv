@@ -1,6 +1,6 @@
 <?php
   require ('./includes/index.inc.php');
-  require ('./includes/car.inc.php');
+  require ('./includes/cart.inc.php');
  
   include ('./views/header.html');
     require ('./includes/left.inc.php');

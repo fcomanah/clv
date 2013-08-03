@@ -1,14 +1,3 @@
-    <div data-role="popup" id="popupDelete" data-overlay-theme="d" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
-        <div data-role="header" data-theme="d" class="ui-corner-top">
-            <h1>Confirmação</h1>
-        </div>
-        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Retirar Produto?</h3>
-            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancelar</a>
-            <a href="delete.php?nome=opcao1" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="d">Retirar</a>
-        </div>
-    </div>
-    
     <div data-role="popup" id="popupMenu" data-theme="b">
       <div data-role="popup" id="popupCheckout" data-theme="b" class="ui-corner-all">
         <form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
@@ -74,84 +63,61 @@
           <li data-role="list-divider">Carrinho</li>        
 
       <?php
+        $total = 0;
+        $delete = '';
         if (mysqli_num_rows($car) > 0) 
         {
-		  while ($row = mysqli_fetch_array($car, MYSQLI_ASSOC)) 
-  	      {
-            echo '<li data-icon="delete">
-            <a href="#popupDelete" data-rel="popup" data-position-to="window" data-transition="pop">
-              CPU (2x) 
+          while ($row = mysqli_fetch_array($car, MYSQLI_ASSOC)) 
+          {
+            $subtotal = $row['qtd'] * $row['id_prd'];
+            echo '
+              <li data-theme="a" data-role="list-divider">'.$row['id_prd'].'</li>
+              <li data-icon="delete">
+              <a style="text-decoration:none" href="#delete'.$row['id_'].'" data-rel="popup" data-position-to="window" data-transition="pop">
+              R$ '.$subtotal.'  
               <span class="ui-li-count">
-                R$ 160
+              '.$row['qtd'].'x R$ '.$row['id_prd'].'
               </span>
-            </a>
-          </li>';
-		  }	
-        }
-        ?>
+              </a>
+            </li>';
+            $total += $subtotal;
+            
 
-          <li data-role="list-divider">Total</li>
+            echo '<div data-role="popup" id="delete' . $row['id_'] . '" data-theme="c" data-overlay-theme="d" class="ui-content" style="max-width:440px; padding-bottom:2em;">
+                    <h3>Removendo ' . $row['id_prd'] . '</h3>
+                    <p>Qual é a quantidade?</p>
+                    <form name="add" action="index.php?id=' . $row['id_'] . '&action=rm" method="post">
+                      <input type="range" name="slider" value="' . $row['qtd'] . '" min="0" max="' . $row['qtd'] . '" data-highlight="true" />
+                      <button type="submit" name="submit" value="submit" data-theme="b">Remover</button>
+                    </form>
+            </div>';
+        
+
+          }
+
+          //$shipping = get_shipping($total);
+          //$total += $shipping;
+                    
+          echo '<li data-role="list-divider">Total</li>
           <li data-icon="check">
-            <a href="#popupCheckout" data-rel="popup" data-position-to="window" data-transition="pop">
-              Finalizar compra 
+            <a style="text-decoration:none" href="#popupCheckout" data-rel="popup" data-position-to="window" data-transition="pop">
+               R$ '.$total.'
               <span class="ui-li-count">
-                R$ 170
+                Finalizar compra
               </span></a>
-          </li>        
-
-<?php
-
-/*
-// Initialize the total:
-$total = 0;
-
-// Fetch each product:
-while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-	
-	// Get the correct price:
-	$price = get_just_price($row['price'], $row['sale_price']);
-	
-	// Calculate the subtotal:
-	$subtotal = $price * $row['quantity'];
-	
-	// Print out a table row:
-	echo '<tr><td>' . $row['category'] . '::' . $row['name'] . '</td>
-		<td align="center"><input type="text" name="quantity[' . $row['sku'] . ']" value="' . $row['quantity'] . '" size="2" class="small" /></td>
-		<td align="right">$' . $price . '</td>
-		<td align="right">$' . number_format($subtotal, 2) . '</td>
-		<td align="right"><a href="/wishlist.php?sku=' . $row['sku'] . '&action=move&qty=' . $row['quantity'] .'">Move to Wish List</a><br /><a href="/cart.php?sku=' . $row['sku'] . '&action=remove">Remove from Cart</a></td>
-	</tr>
-	';
-	
-	// Check the stock status:
-	if ($row['stock'] < $row['quantity']) {
-		echo '<tr class="error"><td colspan="5" align="center">There are only ' . $row['stock'] . ' left in stock of the ' . $row['name'] . '. Please update the quantity, remove the item entirely, or move it to your wish list.</td></tr>';
-	}
-
-	// Add the subtotal to the total:
-  	$total += $subtotal;
-
-} // End of WHILE loop. 
-
-// Add the shipping:
-$shipping = get_shipping($total);
-$total += $shipping;
-echo '<tr>
-	<td colspan="3" align="right"><strong>Shipping &amp; Handling</strong></td>
-	<td align="right">$' . $shipping . '</td>
-	<td>&nbsp;</td>
-</tr>
-';
-
-// Display the total:
-echo '<tr>
-	<td colspan="3" align="right"><strong>Total</strong></td>
-	<td align="right">$' . number_format($total, 2) . '</td>
-	<td>&nbsp;</td>
-</tr>
-';
-*/
+          </li>';	
+        }
+        else
+        {
+          echo '<li data-icon="check">
+            <a style="text-decoration:none" href="index.php" data-transition="pop">
+               R$ 0.00
+              <span class="ui-li-count">
+                Vazio
+              </span></a>
+          </li>';
+        }
       ?>
+
        </ul>
     </div>
-

@@ -10,7 +10,9 @@ $image_sizes = array(
 	'320',
 	'480',
 	'768',
-	'940' // largest
+	'1024',
+	'1360',
+	'1900' // largest
 );
 
 // get base path
