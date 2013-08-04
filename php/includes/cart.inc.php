@@ -18,4 +18,34 @@
 
   }
 
-  $car = mysqli_query($dbc, "CALL ls_cart('$uid')");
+  $car = array();
+  
+  $qcar = mysqli_query($dbc, "CALL ls_cart('$uid')");
+  if (mysqli_num_rows($qcar) > 0) 
+  {
+    while ($row = mysqli_fetch_array($qcar, MYSQLI_ASSOC))
+    {
+
+      require(DBC);
+      $qprd = "SELECT nme, prc FROM prd WHERE id_='".$row['id_prd']."'";
+      $car_prd_mysql_object = mysqli_query ($dbc, $qprd);
+      if (mysqli_num_rows($car_prd_mysql_object) > 0) 
+      {
+        $tmp = mysqli_fetch_array($car_prd_mysql_object, MYSQLI_ASSOC);
+        $row["nme"] = $tmp['nme'];
+        $row["prc"] = $tmp['prc'];
+      }
+      
+      //print_r($row);
+      //exit();
+      
+      array_push($car, $row);
+
+    }
+    /*
+      echo '<pre>';
+      print_r($car);
+      echo '</pre>';
+      exit();
+    */ 
+  }

@@ -44,7 +44,7 @@
                     <h3>Adicionando ' . $row['nme'] . '</h3>
                     <p>Qual é a quantidade?</p>
                     <form name="add" action="index.php?id=' . $row['id_'] . '&action=add" method="post">
-                      <input type="range" name="slider" value="1" min="0" max="' . $row['stq'] . '" data-highlight="true" />
+                      <input type="range" name="slider" value="1" min="1" max="' . $row['stq'] . '" data-highlight="true" />
                       <button type="submit" name="submit" value="submit" data-theme="b">Adicionar</button>
                     </form>
                    </div>';

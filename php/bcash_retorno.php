@@ -24,6 +24,7 @@
   $cliente_data_nascimento = $_POST['cliente_data_nascimento'];
   $cliente_endereco = $_POST['cliente_endereco'];
   $cliente_complemento = $_POST['cliente_complemento'];
+  $cliente_telefone = $_POST['cliente_telefone'];
   $status = $_POST['status'];
   $cod_status = $_POST['cod_status'];
   $cliente_bairro = $_POST['cliente_bairro'];
@@ -67,6 +68,33 @@
     }
   }
 
-  $url = 'Location: bcash_consulta.php'."?id_transacao=$id_transacao&id_pedido=$id_pedido";
-  header($url);
+  
+  echo $id_transacao;
+  echo '</br>';
+  echo $id_pedido;
+  echo '</br>';
+  echo $valor_total;
+  echo '</br>';
+  echo $cliente_cpf;
+  echo '</br>';
+  echo $cliente_nome;
+  echo '</br>';
+  echo $cliente_email;
+  echo '</br>';
+  echo $cliente_telefone;
+  echo '</br>';
+  echo $cliente_endereco;
+  echo '</br>';
+  echo $cliente_complemento;
+  echo '</br>';
+  echo $cliente_cidade;
+  echo '</br>';
+  echo $cliente_estado;
+  echo '</br>';
+  echo $cliente_cep;
+  echo '</br>';
+  echo $status;
+  echo '</br>';
+  //$url = 'Location: bcash_consulta.php'."?id_transacao=$id_transacao&id_pedido=$id_pedido";
+  //header($url);
 ?>
