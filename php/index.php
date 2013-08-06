@@ -4,7 +4,6 @@
   if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car)) $page_title = 'Finalizando Compra';
  
   include ('./views/header.html');
-    require ('./includes/left.inc.php');
     
       require(DBC);
       $prds = mysqli_query ($dbc, "CALL ls_prd()");
@@ -21,7 +20,6 @@
   	     }
         //mysqli_next_result($dbc);
       }
-      
       
   if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car))
   {
@@ -52,10 +50,21 @@
   }
   else 
   {
-    include ('./views/middle.html');
+    if(isset($_GET['id'], $_GET['action']) && ($_GET['action'] == 'nav')){
+        require ('./includes/nav-left.inc.php');
+
+
+	 	//require(DBC);
+  	    $ctg_id = $_GET['id'];
+        $nav = mysqli_query ($dbc, "CALL ls_ctg_flh('$ctg_id')");        
+		include ('./views/nav-middle.html');
+	}
+	else
+	{
+      require ('./includes/left.inc.php');
+      include ('./views/middle.html');
+    }
   }
-  
-  
       
     require ('./includes/right.inc.php');
   include ('./views/footer.html');

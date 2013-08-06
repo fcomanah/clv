@@ -7,9 +7,9 @@
         
         foreach($nav as $item)
         {
-          echo '<div class="ui-block-b"><a href="http://www.google.com" data-role="button">'.$item['nme'].'</a></div>';
+          echo '<div class="ui-block-b"><a href="index.php?id='.$item['id_'].'&action=nav" data-role="button">'.$item['nme'].'</a></div>';
         }
-      echo '        
+        echo '
       </div></br>';
 		}
         if (isset ($prd ))
