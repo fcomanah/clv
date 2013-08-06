@@ -1,23 +1,13 @@
     <div data-role="content" role="main">
-      <? 
-        if(!empty($info))
-        {
-          $read  = '<p><strong>Tipo: </strong>'.                   $info['type']         .'</p>';
-          $read .= '<p><strong>Nome de Usuário: </strong>'.        $info['nme']          .'</p>';
-          $read .= '<p><strong>Email: </strong>'.                  $info['email']        .'</p>';
-          $read .= '<p><strong>Primeiro Nome: </strong>'.          $info['first_name']   .'</p>';
-          $read .= '<p><strong>Último Nome: </strong>'.            $info['last_name']    .'</p>';
-          $read .= '<p><strong>Data Validade: </strong>'.          $info['date_expires'] .'</p>';
-          $read .= '<p><strong>Data Criação: </strong>'.           $info['date_created'] .'</p>';
-          $read .= '<p><strong>Data Última Modificação: </strong>'.$info['date_modified'].'</p>';
-          $read .= '<a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>';
-                           
-          echo $read;
-        }
-        else
-        {
-          echo '<p>Não há informações para leitura.</p>';
-        }
-      ?>
+    <?php
+      if($valid)
+      {
+        include ('./views/check-bcash-form.html');
+      }
+      else
+      {
+        include ('./views/check-form.html');
+      }
+    ?>
+
     </div>
-    

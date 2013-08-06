@@ -1,9 +1,5 @@
 <?php
-// This function generates a form INPUT or TEXTAREA tag.
-// It takes three arguments:
-// - The name to be given to the element.
-// - The type of element (text, password, textarea).
-// - An array of errors.
+
 function create_form_input($name, $type, $errors) {
 	
 	// Assume no value already exists:
@@ -31,6 +27,43 @@ function create_form_input($name, $type, $errors) {
 			echo ' />';		
 		}
 		
+	} elseif ($type == 'select') { // Select menu.
+		
+		if ($name == 'estado') { // Create a list of states.
+			
+			//$data = array('AL' => 'Alabama', 'AK' => 'Alaska', 'AZ' => 'Arizona', 'AR' => 'Arkansas', 'CA' => 'California', 'CO' => 'Colorado', 'CT' => 'Connecticut', 'DE' => 'Delaware', 'FL' => 'Florida', 'GA' => 'Georgia', 'HI' => 'Hawaii', 'ID' => 'Idaho', 'IL' => 'Illinois', 'IN' => 'Indiana', 'IA' => 'Iowa', 'KS' => 'Kansas', 'KY' => 'Kentucky', 'LA' => 'Louisiana', 'ME' => 'Maine', 'MD' => 'Maryland', 'MA' => 'Massachusetts', 'MI' => 'Michigan', 'MN' => 'Minnesota', 'MS' => 'Mississippi', 'MO' => 'Missouri', 'MT' => 'Montana', 'NE' => 'Nebraska', 'NV' => 'Nevada', 'NH' => 'New Hampshire', 'NJ' => 'New Jersey', 'NM' => 'New Mexico', 'NY' => 'New York', 'NC' => 'North Carolina', 'ND' => 'North Dakota', 'OH' => 'Ohio', 'OK' => 'Oklahoma', 'OR' => 'Oregon', 'PA' => 'Pennsylvania', 'RI' => 'Rhode Island', 'SC' => 'South Carolina', 'SD' => 'South Dakota', 'TN' => 'Tennessee', 'TX' => 'Texas', 'UT' => 'Utah', 'VT' => 'Vermont', 'VA' => 'Virginia', 'WA' => 'Washington', 'WV' => 'West Virginia', 'WI' => 'Wisconsin', 'WY' => 'Wyoming');
+         $data = array('' => '', 'AC' => 'Acre', 'AL' => 'Alagoas', 'AP' => 'Amapá', 'AM' => 'Amazonas', 'BA' => 'Bahia', 'CE' => 'Ceará', 'DF' => 'Distrito Federal', 'ES' => 'Espírito Santo', 'GO' => 'Goiás', 'MA' => 'Maranhão', 'MT' => 'Mato Grosso', 'MS' => 'Mato Grosso do Sul', 'MG' => 'Minas Gerais', 'PA' => 'Pará', 'PB' => 'Paraíba', 'PR' => 'Paraná', 'PE' => 'Pernambuco', 'PI' => 'Piauí', 'RJ' => 'Rio de Janeiro', 'RN' => 'Rio Grande do Norte', 'RS' => 'Rio Grande do Sul', 'RO' => 'Rondônia', 'RR' => 'Roraima', 'SC' => 'Santa Catarina', 'SP' => 'São Paulo', 'SE' => 'Sergipe', 'TO' => 'Tocantins');
+			
+		}
+		
+		// Start the tag:
+		echo '<select name="' . $name  . '"';
+	
+		// Add the error class, if applicable:
+		if (array_key_exists($name, $errors)) echo ' class="error"';
+		
+		// Close the tag:
+		echo '>';		
+	
+		// Create each option:
+		foreach ($data as $k => $v) {
+			echo "<option value=\"$k\"";
+			
+			// Select the existing value:
+			if ($value == $k) echo ' selected="selected"';
+			
+			echo ">$v</option>\n";
+			
+		} // End of FOREACH.
+	
+		// Complete the tag:
+		echo '</select>';
+		
+		// Add an error, if one exists:
+		if (array_key_exists($name, $errors)) {
+			echo '<br /><span class="error">' . $errors[$name] . '</span>';
+		}
+	
 	} elseif ($type == 'textarea') { // Create a TEXTAREA.
 		
 		// Display the error first: 

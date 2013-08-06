@@ -1,6 +1,7 @@
 <?php
   require ('./includes/index.inc.php');
   require ('./includes/cart.inc.php');
+  if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car)) $page_title = 'Finalizando Compra';
  
   include ('./views/header.html');
     require ('./includes/left.inc.php');
@@ -21,7 +22,40 @@
         //mysqli_next_result($dbc);
       }
       
-      include ('./views/middle.html');
+      
+  if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car))
+  {
+    require ('./includes/form_functions.inc.php');
+    
+    $valid = false;
+    $shipping_errors = array();
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST') 
+    {
+      require ('./includes/check-validation.inc.php');
+      
+      if(empty($shipping_errors))
+      {
+        $valid = true;
+      }
+    }
+    
+    include ('./views/check-middle.html');
+
+  }
+  elseif(isset($_GET['id_transacao']) )
+  {
+  	 echo '    <div data-role="content" role="main">';
+    include ('./includes/bcash_consulta.php');
+    include ('./views/transacao-middle.html');
+    echo '</div>';
+  }
+  else 
+  {
+    include ('./views/middle.html');
+  }
+  
+  
       
     require ('./includes/right.inc.php');
   include ('./views/footer.html');

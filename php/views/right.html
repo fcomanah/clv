@@ -16,19 +16,8 @@
       <?php
         $total = 0;
         $delete = '';
-        $bcash='
-         <div data-role="popup" id="popupMenu" data-theme="b">
-         <div data-role="popup" id="popupCheckout" data-theme="b" class="ui-corner-all">
-         <form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
-          <div style="padding:10px 20px;">
-            <h3>Finalizando</h3>
-<input name="email_loja" type="hidden" value="manaphys@gmail.com">
-<input name="url_retorno" type="hidden" value="http://150.164.100.10:54321/administrador/clv/php/bcash_retorno.php">
-<input name="url_aviso" type="hidden" value="https://www.enderecodasualoja.com.br/aviso.php">
-            ';
         if (!empty($car)) 
         {
-          $contador = 1;
           foreach($car as $row) 
           {
             $subtotal = $row['qtd'] * $row['prc'];
@@ -53,71 +42,13 @@
                       <button type="submit" name="submit" value="submit" data-theme="d">Remover</button>
                     </form>
             </div>';
-            
-            $bcash .= ' 
-<input name="produto_codigo_'.$contador.'" type="hidden" value="'.$row['id_prd'].'"> 
-<input name="produto_descricao_'.$contador.'" type="hidden" value="'.$row['nme'].'">
-<input name="produto_qtde_'.$contador.'" type="hidden" value="'.$row['qtd'].'"> 
-<input name="produto_valor_'.$contador.'" type="hidden" value="'.$row['prc'].'" > 
-<input name="produto_extra_'.$contador.'" type="hidden" value="extra" >
-'; 
-            $contador++;
-
 
           }
 
 
+          /* todo: implementar frete
           $frete = '26';//get_shipping($total);
-          $total += $frete;
-          
-$bcash .= '
-<input name="frete" type="hidden" value="'.$frete.'">
-<input name="id_pedido" type="hidden" value="'.rand().'">
-<input name="tipo_frete" type="hidden" value="sedex">
-<input name="desconto" type="hidden" value="3.00">
-<input name="acrescimo" type="hidden" value="1.00">
-<input name="parcela_maxima" type="hidden" value="10">
-<input name="meio_pagamento" type="hidden" value="1">
-';
-
-
-$bcash .= ' 
-<input name="email" type="hidden" value="bla@ble.com" >
-<input name="cpf" type="hidden" value="06643071674">
-<input name="nome" type="hidden" value="João da Silva">
-<input name="telefone" type="hidden" value="3188410209">
-<input name="cep" type="hidden" value="31050540">
-<input name="endereco" type="hidden" value="Av Paulista, 1070">
-<input name="complemento" type="hidden" value="Sala 10">
-<input name="bairro" type="hidden" value="Centro">
-<input name="cidade" type="hidden" value="São Paulo">
-<input name="estado" type="hidden" value="SP">
-';
-
-/*
-$bcash .= '
-<input name="rg" type="hidden" value="">
-<input name="data_emissao_rg" type="hidden" value="">
-<input name="orgao_emissor_rg" type="hidden" value="">
-<input name="estado_emissor_rg" type="hidden" value="">
-<input name="sexo" type="hidden" value="">
-<input name="data_nascimento" type="hidden" value="">
-<input name="celular" type="hidden" value="1199996666"> 
-<input name="cliente_razao_social" type="hidden" value="Loja do Cliente">
-<input name="cliente_cnpj" type="hidden" value="11222333000111">
-';
-*/
-
-$bcash .= '
-<input name="redirect" type="hidden" value="true">
-<input type="image" src="https://www.bcash.com.br/webroot/img/bt_comprar.gif" value="Pagar" alt="Pagar" border="0" align="absbottom" >
-
-          </div>
-        </form>
-      </div>
-    </div>
-';
-                    
+          $total += $frete;                    
           echo '
           <li data-theme="a" data-role="list-divider">Frete</li>
           <li data-icon="gear">
@@ -127,11 +58,13 @@ $bcash .= '
                 PAC Correios
               </span></a>
           </li>
+          ';
+          */
 
-
+          echo '
           <li data-role="list-divider">Total</li>
           <li data-icon="check">
-            <a style="text-decoration:none" href="#popupCheckout" data-rel="popup" data-position-to="window" data-transition="pop">
+            <a style="text-decoration:none" href="index.php?action=pay" data-transition="pop">
                R$ '.number_format($total, 2, '.', '').'
               <span class="ui-li-count">
                 Comprar

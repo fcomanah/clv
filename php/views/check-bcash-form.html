@@ -1,0 +1,51 @@
+<div class="center-wrapper">
+<form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
+  <input name="email_loja" type="hidden" value="manaphys@gmail.com">
+  <input name="url_retorno" type="hidden" value="http://150.164.100.10:54321/administrador/clv/php/includes/bcash_retorno.php">
+  <input name="url_aviso" type="hidden" value="http://150.164.100.10:54321/administrador/clv/php/bcash_aviso.php">
+  <input name="frete" type="hidden" value="0">
+  <input name="id_pedido" type="hidden" value="<?echo rand();?>">
+  <input name="tipo_frete" type="hidden" value="sedex">
+  <input name="desconto" type="hidden" value="0.00">
+  <input name="acrescimo" type="hidden" value="0.00">
+  <input name="parcela_maxima" type="hidden" value="10">
+  <input name="meio_pagamento" type="hidden" value="1">
+
+  <?
+    if (!empty($car)) 
+    {
+      $contador = 1;
+      foreach($car as $row) 
+      {
+        echo '
+  <input name="produto_codigo_'.$contador.'" type="hidden" value="'.$row['id_prd'].'"> 
+  <input name="produto_descricao_'.$contador.'" type="hidden" value="'.$row['nme'].'">
+  <input name="produto_qtde_'.$contador.'" type="hidden" value="'.$row['qtd'].'"> 
+  <input name="produto_valor_'.$contador.'" type="hidden" value="'.$row['prc'].'" > 
+  <input name="produto_extra_'.$contador.'" type="hidden" value="extra" >
+        ';
+        $contador++;
+      }
+    }    
+  ?>              
+
+
+  <input name="email" type="hidden" value="<? echo $_POST['email'];?>" >
+  <input name="cpf" type="hidden" value="<? echo $_POST['cpf'];?>">
+  <input name="nome" type="hidden" value="<? echo $_POST['nome'];?>">
+  <input name="telefone" type="hidden" value="<? echo $_POST['telefone'];?>">
+  <input name="cep" type="hidden" value="<? echo $_POST['cep'];?>">
+  <input name="endereco" type="hidden" value="<? echo $_POST['endereco'];?>">
+  <input name="complemento" type="hidden" value="<? echo $_POST['complemento'];?>">
+  <input name="bairro" type="hidden" value="<? echo $_POST['bairro'];?>">
+  <input name="cidade" type="hidden" value="<? echo $_POST['cidade'];?>">
+  <input name="estado" type="hidden" value="<? echo $_POST['estado'];?>">
+
+  <input name="redirect" type="hidden" value="true">
+  
+  <h3> Dados corretos, gentileza efetuar o pagamento:</h3></br>
+        
+  <input type="image" src="https://www.bcash.com.br/webroot/img/bt_comprar.gif" value="Pagar" alt="Pagar" border="0" align="absbottom" >
+                
+</form>
+</div>

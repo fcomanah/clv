@@ -1,0 +1,38 @@
+    <div data-role="content" role="main">
+    
+      <div class="ui-grid-b">
+        <div class="ui-block-a"><div class="ui-bar ui-bar-d" style="height:60px"><?echo 'Data compra: </br>'.$trs['data_transacao'];?></div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px"><?echo 'Id: </br>'.$trs['id_transacao'];?></div></div>
+        <div class="ui-block-c"><div class="ui-bar ui-bar-b" style="height:60px"><?echo 'Status: </br>'.$trs['status'];?></div></div>
+      </div><!-- /grid-b -->
+
+
+      <table data-role="table" id="table-column-toggle" data-mode="columntoggle" data-column-btn-theme="d" class="ui-responsive table-stroke ui-body-d ui-shadow table-stripe">
+        <thead>
+          <tr>
+            <th data-priority="2">#</th>
+            <th>Nome</th>
+            <th data-priority="3">Quantidade</th>
+            <th data-priority="1"><abbr title="Rotten Tomato Rating">Preço Total</abbr></th>
+          </tr>
+        </thead>
+        
+        <tbody>
+    <?    
+    for($i=0; $i<$trs['qtd_prds']; $i++)
+    {
+      $id = $i + 1;
+      $item ='<tr>
+            <th>'.$id.'</th>
+            <td><a href="index.php?id=' . $trs[$i]['codigo_produto'] . '&action=view" target="_blank">'.$trs[$i]['nome_produto'].'</a></td>
+            <td>'.$trs[$i]['qtde'].'</td>
+            <td>'.$trs[$i]['valor_total'].'</td>
+          </tr>';
+      echo $item;
+    }
+    ?>
+        </tbody>
+      </table>
+      
+    </div>
+

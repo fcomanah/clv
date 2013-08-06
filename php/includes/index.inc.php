@@ -24,4 +24,3 @@
     $uid = md5(uniqid('biped',true));
   }
   setcookie('SESSION', $uid, time()+(60*60*24*30));
-  
