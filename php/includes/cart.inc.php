@@ -1,8 +1,8 @@
 <?php
   if (isset ($_POST['slider'], $_GET['id'], $_GET['action']) && ($_GET['action'] == 'add') ) 
   {
-	 $pid = $_GET['id'];
-	 $qtd = $_POST['slider'];
+	$pid = $_GET['id'];
+	$qtd = $_POST['slider'];
     $car = mysqli_query($dbc, "CALL add_to_cart('$uid', '$pid', '$qtd')");
 	
 	// For debugging purposes:
@@ -14,7 +14,7 @@
 	
 	 $cid = $_GET['id'];
 	 $qtd = $_POST['slider'];
-    $r = mysqli_query($dbc, "CALL remove_from_cart('$cid', '$qtd')");
+     $r = mysqli_query($dbc, "CALL remove_from_cart('$cid', '$qtd')");
 
   }
 

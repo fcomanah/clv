@@ -1,17 +1,28 @@
     <div data-role="content" role="main">
+      <div class="ui-grid-d ui-responsive">
       <?php
-        if (isset ($nav))
-        {
-      echo '<div class="ui-grid-d ui-responsive">
-        <div class="ui-block-a"><a href="./" data-role="button">Home</a></div>';
+        $a = array();
+        $a[] = 'a';
+        $a[] = 'b';
+        $a[] = 'c';
+        $a[] = 'd';
+        $a[] = 'e';
+        $i=0;
         
-        foreach($nav as $item)
+        if (!empty($nav))
         {
-          echo '<div class="ui-block-b"><a href="index.php?id='.$item['id_'].'&action=nav" data-role="button">'.$item['nme'].'</a></div>';
-        }
-        echo '
-      </div></br>';
-		}
+          foreach($nav as $item)
+          {
+            echo '<div class="ui-block-'.$a[$i].'"><a href="index.php?id='.$item['id_'].'&action=nav" data-role="button" data-theme="a">'.$item['nme'].'</a></div>';
+            $i++;
+          }
+	   }
+	   
+        echo '<div class="ui-block-'.$a[$i].'"><a href="#" data-role="button" data-theme="a" class="ui-disabled">'.$ctg_atual['nme'].'</a></div>';
+      ?>  
+      </div></br>
+      <?
+      
         if (isset ($prd ))
         {
           
