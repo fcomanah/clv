@@ -48,6 +48,50 @@ function validaCPF($cpf)
 	} else {
 		$shipping_errors['cpf'] = 'Gentileza fornecer o cpf!';
 	}
+
+	// Check for a street address:
+	if (preg_match ('/^[A-Z0-9 \',.#-]{2,80}$/i', $_POST['endereco'])) {
+		$a1  = addslashes($_POST['endereco']);
+	} else {
+		$shipping_errors['endereco'] = 'Gentileza fornecer o endereço!';
+	}
+	
+	// Check for a second street address:
+	if (empty($_POST['complemento'])) {
+		$a2 = NULL;
+	} elseif (preg_match ('/^[A-Z0-9 \',.#-]{2,80}$/i', $_POST['complemento'])) {
+		$a2 = addslashes($_POST['complemento']);
+	} else {
+		$shipping_errors['complemento'] = 'Gentileza fornecer o complemento!';
+	}
+	
+	// Check for a bairro:
+	if (preg_match ('/^[A-Záâãéêíóôúç \'.-]{2,60}$/i', $_POST['bairro'])) {
+		$c = addslashes($_POST['bairro']);
+	} else {
+		$shipping_errors['bairro'] = 'Gentileza fornecer o bairro!';
+	}
+	
+	// Check for a cidade:
+	if (preg_match ('/^[A-Záâãéêíóôúç \'.-]{2,60}$/i', $_POST['cidade'])) {
+		$c = addslashes($_POST['cidade']);
+	} else {
+		$shipping_errors['cidade'] = 'Gentileza fornecer a cidade!';
+	}
+	
+	// Check for a estado:
+	if (preg_match ('/^[A-Z]{2}$/', $_POST['estado'])) {
+		$s = $_POST['estado'];
+	} else {
+		$shipping_errors['estado'] = 'Gentileza fornecer o estado!';
+	}
+	
+	// Check for a cep code: 
+	if (preg_match('/^[0-9]{5}([- ]?[0-9]{3})?$/', $_POST['cep'])) {
+		$cep = $_POST['cep'];
+	} else {
+		$shipping_errors['cep'] = 'Gentileza fornecer o CEP!';
+	}
 	
 	// Check for a telefone number:
 	// Strip out spaces, hyphens, and parentheses:

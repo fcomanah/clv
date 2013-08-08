@@ -6,34 +6,7 @@
   include ('./views/header.html');
     
      
-  if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car))
-  {
-    require ('./includes/form_functions.inc.php');
-    
-    $valid = false;
-    $shipping_errors = array();
-    
-    if($_SERVER['REQUEST_METHOD'] == 'POST') 
-    {
-      require ('./includes/check-validation.inc.php');
-      
-      if(empty($shipping_errors))
-      {
-        $valid = true;
-      }
-    }
-    
-    include ('./views/check-middle.html');
-
-  }
-  elseif(isset($_GET['id_transacao']) )
-  {
-  	 echo '    <div data-role="content" role="main">';
-    include ('./includes/bcash_consulta.php');
-    include ('./views/transacao-middle.html');
-    echo '</div>';
-  }
-  else 
+  if(true) 
   {
     if(isset($_GET['id'], $_GET['action']) && ($_GET['action'] == 'nav'))
     {
@@ -76,8 +49,6 @@
       $ctg_atual = mysqli_fetch_array($ctg_atual, MYSQLI_ASSOC);
 
     }
-
-
     if(!empty($ctg_atual))
     {
       require(DBC);
@@ -105,9 +76,38 @@
   	     }
         //mysqli_next_result($dbc);
       }
-      
+
       require ('./includes/left.inc.php');
-      include ('./views/middle.html');
+      
+      if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car))
+      {
+        require ('./includes/form_functions.inc.php');
+    
+        $valid = false;
+        $shipping_errors = array();
+    
+        if($_SERVER['REQUEST_METHOD'] == 'POST') 
+        {
+          require ('./includes/check-validation.inc.php');
+      
+          if(empty($shipping_errors))
+          {
+            $valid = true;
+          }
+        }
+    
+        include ('./views/check-middle.html');
+
+      }
+      elseif(isset($_GET['id_transacao']) )
+      {
+  	   echo '    <div data-role="content" role="main">';
+        include ('./includes/bcash_consulta.php');
+        include ('./views/transacao-middle.html');
+        echo '</div>';
+      }
+      else
+        include ('./views/middle.html');
     }
   }
       
