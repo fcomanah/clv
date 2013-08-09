@@ -10,7 +10,7 @@
 
   if(isset($_GET['id']))  	 
   {
-
+  	
     if($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
       require ('update-validation.inc.php');
@@ -21,7 +21,8 @@
     }
     
     include ('./includes/read.inc.php');
-      
+
+  	       
   }
  
   $display_left_panel = true;

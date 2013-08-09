@@ -12,7 +12,7 @@
 	// Check for a last name:
 	if ($_POST['last_name'] != '')
 	{
-	if (preg_match ('/^[A-Záâãéêíóôúç\'.- ]{2,40}$/i', $_POST['last_name'])) {
+	if (preg_match ('/^[A-Záâãéêíóôúç \'.- ]{2,40}$/i', $_POST['last_name'])) {
 		$ln = mysqli_real_escape_string ($dbc, $_POST['last_name']);
 	} else {
 		$reg_errors['last_name'] = 'Please enter your last name!';

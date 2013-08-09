@@ -14,8 +14,6 @@
   
   $info = array();
     
-  //if(isset($info)) $page_title .= ' ' . $info['nme'];
-  
   $display_left_panel = false;
   $left_panel_href = 'left';
   $left_panel_data_icon = 'flat-menu';

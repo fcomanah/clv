@@ -187,6 +187,7 @@ DROP TABLE IF EXISTS `mnu`;
 CREATE TABLE `mnu` (
   `id_ctg_flh` tinyint(3) unsigned NOT NULL,
   `id_ctg_pai` tinyint(3) unsigned NOT NULL,
+  UNIQUE KEY `id_ctg_flh` (`id_ctg_flh`),
   UNIQUE KEY `id_flh_pai` (`id_ctg_flh`,`id_ctg_pai`),
   KEY `mnu_ibfk_1` (`id_ctg_flh`),
   KEY `mnu_ibfk_2` (`id_ctg_pai`),
@@ -202,7 +203,6 @@ INSERT INTO `mnu` (`id_ctg_flh`, `id_ctg_pai`) VALUES
 (7,	2),
 (8,	6),
 (9,	4),
-(9,	5),
 (10,	9),
 (11,	10),
 (12,	11),

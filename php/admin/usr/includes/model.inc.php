@@ -10,11 +10,11 @@
   
   $reg_errors = array();    
 
-  $page_title = 'usr';  
+  $page_title = getcwd();  
   
   $info = array();
     
-  $display_left_panel = true;
+  $display_left_panel = false;
   $left_panel_href = 'left';
   $left_panel_data_icon = 'flat-menu';
   $left_panel_name = 'menu';
