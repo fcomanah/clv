@@ -4,7 +4,7 @@
   require ('./includes/hf_functions.inc.php');
   require ('./includes/form_functions.inc.php');
   
-  $page_title = 'Update';  
+  $page_title = 'admin';  
   $reg_errors = array();
   $info = array();
 

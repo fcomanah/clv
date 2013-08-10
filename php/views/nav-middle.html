@@ -53,10 +53,10 @@
         {
           $purchase = '';
         
-          if (mysqli_num_rows($prds) > 0) 
+          if (!empty($prds)) 
           {
   	       echo '<ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">';
-		    while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
+		    foreach($prds as $row) 
   	       {
              echo '<li>
                     <a style="text-decoration:none" data-ajax="false"href="index.php?id=' . $row['id_'] . '&action=view"><img src="'. BASE_URL . $row['img'] . '"><h2>' . $row['nme'] . '</h2><p>R$ ' . $row['prc'] . '</p></a>

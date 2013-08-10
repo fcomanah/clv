@@ -6,6 +6,7 @@
   define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/');
   define ('MYSQL', BASE_URI . 'mysql.inc.php');
   define ('DBC', BASE_URI . 'dbc.inc.php');
+   
   
   session_start();
 
@@ -47,9 +48,8 @@
   }
   set_error_handler ('my_error_handler');
   
-  function redirect_invalid_user($check='id'){
-	  if (!isset($_SESSION[$check])) {
-		  $url = './';
+  function redirect_invalid_user($check='id', $url = './'){
+	  if (!isset($_SESSION[$check])) {		  
 		  header("Location: $url");
 		  exit(); 
 	  }	

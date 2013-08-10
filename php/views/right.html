@@ -1,5 +1,6 @@
     <div data-role="panel" id="cart" data-position="right" data-theme="a" data-display="push">   
 
+<!--
 <div data-role="popup" id="popupMenu" data-theme="c">
         <ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="c">
             <li data-role="divider" data-theme="a">Escolha o método de entrega</li>
@@ -9,9 +10,9 @@
             <li><a style="text-decoration:none" href="./">SEDEX A COBRAR</a></li>
         </ul>
 </div>
-   
-      <ul data-role="listview" data-inset="true" data-divider-theme="d" data-count-theme="c" data-filter="true">
-          <li data-role="list-divider">Carrinho</li>        
+-->   
+      <ul data-role="listview" data-inset="true" data-divider-theme="a" data-count-theme="c" data-filter="true">
+          <li data-theme="b" data-role="list-divider">Carrinho</li>        
 
       <?php
         $total = 0;
@@ -22,7 +23,7 @@
           {
             $subtotal = $row['qtd'] * $row['prc'];
             echo '
-              <li data-theme="a" data-role="list-divider">'.$row['nme'].'</li>
+              <li data-role="list-divider">'.$row['nme'].'</li>
               <li data-icon="delete">
               <a style="text-decoration:none" href="#delete'.$row['id_'].'" data-rel="popup" data-position-to="window" data-transition="pop">
               R$ '.number_format($subtotal, 2, '.', '').'
@@ -63,7 +64,7 @@
 
           echo '
           <li data-role="list-divider">Total</li>
-          <li data-icon="check">
+          <li data-icon="check" data-theme="d">
             <a style="text-decoration:none" href="index.php?action=pay" data-transition="pop">
                R$ '.number_format($total, 2, '.', '').'
               <span class="ui-li-count">

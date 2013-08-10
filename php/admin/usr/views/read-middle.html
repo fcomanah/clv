@@ -1,23 +1,85 @@
     <div data-role="content" role="main">
+    
+      <div class="ui-grid-c ui-responsive">
+        <div class="ui-block-a"><a href="#" data-role="button" data-theme="a" class="ui-disabled">Usuários</a></div>
+        <div class="ui-block-b"><a href="create.php" data-role="button" data-theme="a">Criar</a></div>
+        <div class="ui-block-c"><a href="read.php" data-role="button" data-theme="b" class="ui-disabled">Ler</a></div>
+        <div class="ui-block-d"><a href="update.php" data-role="button" data-theme="a">Editar</a></div>
+      </div></br>
+      
       <? 
         if(!empty($info))
         {
-          $read  = '<p><strong>Tipo: </strong>'.                   $info['type']         .'</p>';
-          $read .= '<p><strong>Nome de Usuário: </strong>'.        $info['nme']          .'</p>';
-          $read .= '<p><strong>Email: </strong>'.                  $info['email']        .'</p>';
-          $read .= '<p><strong>Primeiro Nome: </strong>'.          $info['first_name']   .'</p>';
-          $read .= '<p><strong>Último Nome: </strong>'.            $info['last_name']    .'</p>';
-          $read .= '<p><strong>Data Validade: </strong>'.          $info['date_expires'] .'</p>';
-          $read .= '<p><strong>Data Criação: </strong>'.           $info['date_created'] .'</p>';
-          $read .= '<p><strong>Data Última Modificação: </strong>'.$info['date_modified'].'</p>';
-          $read .= '<a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>';
-                           
-          echo $read;
+
+    $update = '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8">
+<ul data-role="listview" data-inset="true">
+        <li class="ui-body ui-body-b">
+            <fieldset class="ui-grid-a ui-responsive">';
+        
+    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Nome de Usuário</strong></label>'
+            .update_form_input('nme', $info['nme'], 'true', 'text', $reg_errors).
+            '<input name="nme" type="hidden" value="'.$info['nme'].'"></p></div>';        
+                    
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Email</strong></label>'
+            .update_form_input('email', $info['email'], 'true', 'text', $reg_errors).
+            '<input name="email" type="hidden" value="'.$info['email'].'"></p></div>';
+          
+    $update .= '<div class="ui-block-a"><p><label for="first_name"><strong>Primeiro Nome</strong></label>'
+            .update_form_input('first_name', $info['first_name'], 'true', 'text', $reg_errors).
+            '</p></div>';
+                      
+    $update .= '<div class="ui-block-b"><p><label for="last_name"><strong>Último Nome</strong></label>'
+            .update_form_input('last_name', $info['last_name'], 'true', 'text', $reg_errors).
+            '</p></div>';
+          
+    $update .= '<div class="ui-block-a"><p><label for="date_created"><strong>Data de Criação</strong></label>'
+            .update_form_input('date_created', $info['date_created'], 'true', 'text', $reg_errors).
+            '</p></div>';
+          
+    $update .= '<div class="ui-block-b"><p><label for="date_expires"><strong>Data de Validade</strong></label>'
+            .update_form_input('date_expires', $info['date_expires'], 'true', 'text', $reg_errors).
+            '</p></div>';
+            
+    $update .= '<div class="ui-block-a"><p><label for="type"><strong>Tipo</strong></label>'
+            .update_form_input('type', $info['type'], 'true', 'text', $reg_errors).
+            '</p></div>';
+          
+    $update .= '<div class="ui-block-b"><p><label for="date_modified"><strong>Data da Última Modificação</strong></label>'
+            .update_form_input('date_modified', $info['date_modified'], 'true', 'text', $reg_errors).
+            '</p></div>
+            
+            </fieldset>
+        </li>
+            <a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>
+    </ul>
+    
+      </form>';
+
+      
+    echo $update;
         }
         else
-        {
-          echo '<p>Não há informações para leitura.</p>';
-        }
+        {?>
+  	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
+  	    <?php
+         foreach($left_content as $row) 
+         {
+           $item = '><a style="text-decoration:none;" href="read.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+
+           if (isset($_GET['id']))
+           {
+             if ($_GET['id'] == $row['id_'])
+             {
+               $item = ' data-theme="a" data-role="list-divider"' . $item;
+             }
+           }
+
+           $item = '<li' . $item;
+           echo $item;
+         }	
+  	    ?>
+     </ul>
+        <?}
       ?>
     </div>
     

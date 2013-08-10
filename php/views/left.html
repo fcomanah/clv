@@ -4,10 +4,10 @@
         {
   	      echo '<ul data-role="listview" data-inset="true" data-filter="true">
   	              <li data-role="list-divider">Categorias</li>';
-		  while ($row = mysqli_fetch_array($ctgs, MYSQLI_ASSOC)) 
-  	      {
-            echo '<li><a href="index.php?id='.$row['id_'].'&action=nav">'.$row['nme'].'</a></li>';
-		  }	
+		    while ($row = mysqli_fetch_array($ctgs, MYSQLI_ASSOC)) 
+  	       {
+            echo '<li><a style="text-decoration:none" href="index.php?id='.$row['id_'].'&action=nav">'.$row['nme'].'</a></li>';
+		    }	
           echo '</ul>';
         }
       ?>

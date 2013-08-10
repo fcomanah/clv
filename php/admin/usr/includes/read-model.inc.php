@@ -4,7 +4,7 @@
   require ('./includes/hf_functions.inc.php');
   require ('./includes/form_functions.inc.php');
   
-  $page_title = 'Read';  
+  $page_title = 'admin';  
   $reg_errors = array();
   $info = array();
 
@@ -16,7 +16,7 @@
   $display_left_panel = true;
     $left_panel_href = 'left';
     $left_panel_data_icon = 'flat-menu';
-    $left_panel_name = 'left';
+    $left_panel_name = 'Usuários';
 
   $display_right_panel = false;
     $right_panel_href = 'right';

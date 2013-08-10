@@ -3,7 +3,7 @@
   require (MYSQL);
   require ('./includes/hf_functions.inc.php');
     
-  $page_title = 'index';
+  $page_title = 'client';
   
   $display_left_panel = true;
   $left_panel_href = 'menu';

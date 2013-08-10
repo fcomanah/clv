@@ -39,7 +39,7 @@ function validaCPF($cpf)
 	if (preg_match ('/^[A-Záâãéêíóôúç\'.-]{2,20}[ ]{1,1}[A-Záâãéêíóôúç \'.-]{2,40}$/i', $_POST['nome'])) {
 		$fn = addslashes($_POST['nome']);
 	} else {
-		$shipping_errors['nome'] = 'Gentileza fornecer o nome!';
+		$shipping_errors['nome'] = 'Gentileza fornecer o nome completo!';
 	}
 	
 	// Check for a cpf:

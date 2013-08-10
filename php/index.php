@@ -49,17 +49,29 @@
       $ctg_atual = mysqli_fetch_array($ctg_atual, MYSQLI_ASSOC);
 
     }
+    
     if(!empty($ctg_atual))
     {
+     
       require(DBC);
-      $prds = mysqli_query ($dbc, "CALL ls_prd_from_ctg('$ctg_id')");
+      $q = mysqli_query ($dbc, "CALL ls_prd_from_ctg('$ctg_id')");
       //mysqli_next_result($dbc);
-	
-      require ('./includes/nav-left.inc.php');
+      
+      $prds=array();
+      
+      if (mysqli_num_rows($q) > 0) 
+      {
+		 while ($row = mysqli_fetch_array($q, MYSQLI_ASSOC)) 
+  	    {
+         array_push($prds,$row);
+       }
+      }
+
+      require ('./includes/nav-left.inc.php');      
       include ('./views/nav-middle.html');
-	}
-	else
-	{
+	 }
+	 else
+	 {
 	
       require(DBC);
       $prds = mysqli_query ($dbc, "CALL ls_prd()");

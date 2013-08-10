@@ -6,5 +6,5 @@
     $row['href']='../';
     $row['nme']='admin';
     array_push($left_content, $row);
-  	 include('./views/left.html');
+  	include('./views/left.html');
   }
