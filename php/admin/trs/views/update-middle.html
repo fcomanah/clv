@@ -1,0 +1,107 @@
+    <div data-role="content" role="main">
+    
+      <div class="ui-grid-c ui-responsive">
+        <div class="ui-block-a"><a href="#" data-role="button" data-theme="a" class="ui-disabled"><?echo $table?></a></div>
+        <div class="ui-block-b"><a href="create.php" data-role="button" data-theme="a" class="ui-disabled">Criar</a></div>
+        <div class="ui-block-c"><a href="read.php" data-role="button" data-theme="a">Ler</a></div>
+        <div class="ui-block-d"><a href="update.php" data-role="button" data-theme="b" class="ui-disabled">Editar</a></div>
+      </div></br>
+ 
+<?
+  if(!empty($info))
+  {
+    echo '<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Remover?</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <h3 class="ui-title">Você tem certeza de que vai remover?</h3>
+        <p>Essa ação não poderá ser desfeita.</p>
+      <form name="add" action="remove.php" method="post" data-ajax="false">        
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancelar</a>
+        <input name="id" type="hidden" value="'.$_GET['id'].'">
+        <button type="submit" name="submit" value="submit" data-inline="true" data-theme="d">Remover</button>
+      </form>
+    </div>
+    </div>';
+
+    $update = '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8" data-ajax="false">
+<ul data-role="listview" data-inset="true">
+        <li class="ui-body ui-body-b">
+            <fieldset class="ui-grid-a ui-responsive">';
+
+    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Nome de Usuário</strong></label>'
+            .update_form_input('nme', $info['nme'], 'true', 'text', $reg_errors).
+            '<input name="nme" type="hidden" value="'.$info['nme'].'"></p></div>';        
+
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Email</strong></label>'
+            .update_form_input('email', $info['email'], 'true', 'text', $reg_errors).
+            '<input name="email" type="hidden" value="'.$info['email'].'"></p></div>';
+
+    $update .= '<div class="ui-block-a"><p><label for="first_name"><strong>Primeiro Nome</strong></label>'
+            .update_form_input('first_name', $info['first_name'], 'false', 'text', $reg_errors).
+            '</p></div>';
+
+    $update .= '<div class="ui-block-b"><p><label for="last_name"><strong>Último Nome</strong></label>'
+            .update_form_input('last_name', $info['last_name'], 'false', 'text', $reg_errors).
+            '</p></div>';
+          
+    //$update .= '<div class="ui-block-a"><p><label for="date_created"><strong>Data de Criação</strong></label>'
+    //        .update_form_input('date_created', $info['date_created'], 'true', 'text', $reg_errors).
+    //        '</p></div>';
+
+    //$update .= '<div class="ui-block-b"><p><label for="date_expires"><strong>Data de Validade</strong></label>'
+    //        .update_form_input('date_expires', $info['date_expires'], 'true', 'text', $reg_errors).
+    //        '</p></div>';
+
+    //$update .= '<div class="ui-block-a"><p><label for="type"><strong>Tipo</strong></label>'
+    //        .update_form_input('type', $info['type'], 'true', 'text', $reg_errors).
+    //        '</p></div>';
+
+    //$update .= '<div class="ui-block-b"><p><label for="date_modified"><strong>Data da Última Modificação</strong></label>'
+    //        .update_form_input('date_modified', $info['date_modified'], 'true', 'text', $reg_errors).
+    //        '</p></div>';
+
+    $update .= '<div class="ui-block-a"><p><label for="pass1"><strong>Alterar Senha</strong></label>'
+            .update_form_input('pass1', '', 'false', 'password', $reg_errors).
+            '<small>Deve ter entre 6 e 20 caracteres, com pelo menos uma minúscula, uma maíuscula e um número.</small></p></div>';
+
+    $update .= '<div class="ui-block-b"><p><label for="pass2"><strong>Confirmar Senha</strong></label>'
+            .update_form_input('pass2', '', 'false', 'password', $reg_errors).
+            '</p></div>
+
+            <div class="ui-block-a"><input data-theme="a" type="submit" value="Atualizar" /></div>          
+            <div class="ui-block-b"><a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-transition="pop" data-icon="delete" data-theme="d">Remover</a></div>
+            </fieldset>
+        </li>
+    </ul>
+    
+      </form>';
+      
+    echo $update;
+  }
+  else
+  {?>
+  	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
+  	    <?php
+         foreach($left_content as $row) 
+         {
+           $item = '><a style="text-decoration:none;" href="update.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+
+           if (isset($_GET['id']))
+           {
+             if ($_GET['id'] == $row['id_'])
+             {
+               $item = ' data-theme="a" data-role="list-divider"' . $item;
+             }
+           }
+
+           $item = '<li' . $item;
+           echo $item;
+         }	
+  	    ?>
+     </ul>
+  <?}
+
+?>
+    </div>

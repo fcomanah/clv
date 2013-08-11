@@ -4,12 +4,15 @@
   {
     if (!isset($_SESSION['user_not_expired'])) 
       echo '<p class="error">A sua conta expirou. Gentileza entrar em contato com o administrador.</p>';
-      else
-      {
-        echo '<a data-role="button" href="create.php" data-theme="b">Criar</a>';
-        echo '<a data-role="button" href="read.php" data-theme="b">Ler</a>';
-        echo '<a data-role="button" href="update.php" data-theme="b">Atualizar</a>';
-      }
+    else
+    {?>
+      <div class="ui-grid-d ui-responsive">
+        <div class="ui-block-a"><a href="#" data-role="button" data-theme="a" class="ui-disabled">Usuários</a></div>
+        <div class="ui-block-b"><a href="create.php" data-role="button" data-theme="a">Criar</a></div>
+        <div class="ui-block-c"><a href="read.php" data-role="button" data-theme="a">Ler</a></div>
+        <div class="ui-block-d"><a href="update.php" data-role="button" data-theme="a">Atualizar</a></div>
+      </div></br>
+    <?}
   }
   elseif (!isset($_SESSION['user_admin'])) 
   {
