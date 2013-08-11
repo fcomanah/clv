@@ -1,5 +1,5 @@
 <?
-  require ('../includes/config.inc.php');
+  require ('../models/config.php');
   
   redirect_invalid_user();
   
