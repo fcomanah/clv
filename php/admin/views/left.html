@@ -2,9 +2,9 @@
   	  <ul data-theme="c" data-role="listview" data-icon="false" data-inset="true" data-filter="true">
   	    <li data-role="list-divider"><?echo $left_panel_name?></li>
   	    <?php
-         foreach($left_content as $row) 
+         foreach($left_content as $left) 
          {
-           $item = '><a style="text-decoration:none;" href="read.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+           $item = '><a style="text-decoration:none;" href="'. $left['href'] . '"><h2>'. $left['nme'] . '</h2></a></li>';
 
            if (isset($_GET['id']))
            {

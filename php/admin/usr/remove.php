@@ -1,3 +1,3 @@
 <?
-  require ('./includes/remove-model.inc.php');  
+  require ('./models/delete/base.php');  
 ?>

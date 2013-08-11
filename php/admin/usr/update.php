@@ -1,12 +1,12 @@
 <?
-  require ('./includes/update-model.inc.php');
+  require ('./models/update/base.php');
 
   redirect_invalid_user('user_admin');
   
   include ('./views/header.html');
-    require ('./includes/update-left.inc.php');
+    require ('./models/update/left.php');
       include ('./views/update-middle.html');
-    require ('./includes/right.inc.php');
+    require ('./models/right.php');
   include ('./views/footer.html');
   
 ?>

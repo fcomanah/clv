@@ -1,9 +1,9 @@
 <?
-  require ('./includes/model.inc.php');
+  require ('./models/base.php');
   
   include ('./views/header.html');
-    require ('./includes/left.inc.php');
+    require ('./models/left.php');
       include ('./views/middle.html');
-    require ('./includes/right.inc.php');
+    require ('./models/right.php');
   include ('./views/footer.html');
 ?>
