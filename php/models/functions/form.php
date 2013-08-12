@@ -203,6 +203,22 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 
           }
 
+	    } 
+	    else if ($name == 'status') 
+	    { 
+		  require(DBC);
+          $sql = "SHOW COLUMNS FROM trs LIKE 'status'";
+          $sts = mysqli_query ($dbc, $sql);    		  
+          if (mysqli_num_rows($sts) > 0) 
+          {
+  	        $sts = mysqli_fetch_array($sts, MYSQLI_ASSOC);
+            $type = $sts['Type'];
+            preg_match('/enum\((.*)\)$/', $type, $matches);
+            $data = explode(",", $matches[1]);
+          }
+          else
+            $data = array('1'=>'Em andamento','2'=>'Cancelada','3'=>'Aprovada','4'=>'Concluída');
+
 	    }
 		
 		// Start the tag:
@@ -219,7 +235,7 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 			$up .= "<option value=\"$k\"";
 			
 			// Select the existing value:
-			if ($value == $k) $up .= ' selected="selected"';
+			if ($value == $v) $up .= ' selected="selected"';
 			
 			$up .= ">$v</option>\n";
 			

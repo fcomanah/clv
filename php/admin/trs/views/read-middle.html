@@ -10,44 +10,86 @@
       <? 
         if(!empty($info))
         {
+			
+    $update = '<table data-role="table" id="table-column-toggle" data-mode="columntoggle" data-column-btn-theme="d" class="ui-responsive table-stroke ui-body-d ui-shadow table-stripe">
+        <thead>
+          <tr>
+            <th data-priority="2">#</th>
+            <th>Nome</th>
+            <th data-priority="3">Quantidade</th>
+            <th data-priority="1">Preço Total</th>
+          </tr>
+        </thead>
+        
+        <tbody>';
 
-    $update = '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8">
+    for($i=0; $i<$trs['qtd_prds']; $i++)
+    {
+      $id = $i + 1;
+      $item ='<tr>
+            <th>'.$id.'</th>
+            <td><a href="../../index.php?id=' . $trs[$i]['codigo_produto'] . '&action=view" target="_blank">'.$trs[$i]['nome_produto'].'</a></td>
+            <td>'.$trs[$i]['qtde'].'</td>
+            <td>'.$trs[$i]['valor_total'].'</td>
+          </tr>';
+          
+      $update .= $item;
+      
+    }
+
+    $update .= '
+            </tbody>
+      </table>';
+
+    $update .= '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8">
 <ul data-role="listview" data-inset="true">
         <li class="ui-body ui-body-b">
             <fieldset class="ui-grid-a ui-responsive">';
         
-    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Nome de Usuário</strong></label>'
-            .update_form_input('nme', $info['nme'], 'true', 'text', $reg_errors).
-            '<input name="nme" type="hidden" value="'.$info['nme'].'"></p></div>';        
+    $update .= '<div class="ui-block-a"><p><label for="id_trs"><strong>Id Transação</strong></label>'
+            .update_form_input('id_trs', $info['id_trs'], 'true', 'text', $reg_errors).
+            '<input name="id_trs" type="hidden" value="'.$info['id_trs'].'"></p></div>';        
+                    
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Status</strong></label>'
+            .update_form_input('status', $info['status'], 'true', 'text', $reg_errors).
+            '<input name="status" type="hidden" value="'.$info['status'].'"></p></div>';
+            
+    $update .= '<div class="ui-block-a"><p><label for="id_trs"><strong>Nome</strong></label>'
+            .update_form_input('nome', $trs['nome'], 'true', 'text', $reg_errors).
+            '</p></div>';        
                     
     $update .= '<div class="ui-block-b"><p><label for="email"><strong>Email</strong></label>'
-            .update_form_input('email', $info['email'], 'true', 'text', $reg_errors).
-            '<input name="email" type="hidden" value="'.$info['email'].'"></p></div>';
-          
-    $update .= '<div class="ui-block-a"><p><label for="first_name"><strong>Primeiro Nome</strong></label>'
-            .update_form_input('first_name', $info['first_name'], 'true', 'text', $reg_errors).
-            '</p></div>';
-                      
-    $update .= '<div class="ui-block-b"><p><label for="last_name"><strong>Último Nome</strong></label>'
-            .update_form_input('last_name', $info['last_name'], 'true', 'text', $reg_errors).
-            '</p></div>';
-          
-    $update .= '<div class="ui-block-a"><p><label for="date_created"><strong>Data de Criação</strong></label>'
-            .update_form_input('date_created', $info['date_created'], 'true', 'text', $reg_errors).
-            '</p></div>';
-          
-    $update .= '<div class="ui-block-b"><p><label for="date_expires"><strong>Data de Validade</strong></label>'
-            .update_form_input('date_expires', $info['date_expires'], 'true', 'text', $reg_errors).
+            .update_form_input('email', $trs['email'], 'true', 'text', $reg_errors).
             '</p></div>';
             
-    $update .= '<div class="ui-block-a"><p><label for="type"><strong>Tipo</strong></label>'
-            .update_form_input('type', $info['type'], 'true', 'text', $reg_errors).
+    $update .= '<div class="ui-block-a"><p><label for="id_trs"><strong>Telefone</strong></label>'
+            .update_form_input('telefone', $trs['telefone'], 'true', 'text', $reg_errors).
+            '</p></div>';        
+                    
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Endereço</strong></label>'
+            .update_form_input('endereco', $trs['endereco'], 'true', 'text', $reg_errors).
             '</p></div>';
-          
-    $update .= '<div class="ui-block-b"><p><label for="date_modified"><strong>Data da Última Modificação</strong></label>'
-            .update_form_input('date_modified', $info['date_modified'], 'true', 'text', $reg_errors).
+            
+    $update .= '<div class="ui-block-a"><p><label for="id_trs"><strong>Complemento</strong></label>'
+            .update_form_input('complemento', $trs['complemento'], 'true', 'text', $reg_errors).
+            '</p></div>';        
+                    
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Bairro</strong></label>'
+            .update_form_input('bairro', $trs['bairro'], 'true', 'text', $reg_errors).
+            '</p></div>';
+
+    $update .= '<div class="ui-block-a"><p><label for="email"><strong>Cidade</strong></label>'
+            .update_form_input('cidade', $trs['cidade'], 'true', 'text', $reg_errors).
+            '</p></div>';
+            
+    $update .= '<div class="ui-block-b"><p><label for="id_trs"><strong>Estado</strong></label>'
+            .update_form_input('estado', $trs['estado'], 'true', 'text', $reg_errors).
+            '</p></div>';        
+                    
+    $update .= '<div class="ui-block-a"><p><label for="email"><strong>CEP</strong></label>'
+            .update_form_input('cep', $trs['cep'], 'true', 'text', $reg_errors).
             '</p></div>
-            
+           
             </fieldset>
         </li>
             <a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>
@@ -55,8 +97,9 @@
     
       </form>';
 
-      
+     
     echo $update;
+    
         }
         else
         {?>
@@ -64,7 +107,7 @@
   	    <?php
          foreach($left_content as $row) 
          {
-           $item = '><a style="text-decoration:none;" href="read.php?id='. $row['id_'] . '"><h2>'. $row['nme'] . '</h2></a></li>';
+           $item = '><a style="text-decoration:none;" href="read.php?id='. $row['id_'] . '"><h2>'. $row['id_trs'] . '</h2></a></li>';
 
            if (isset($_GET['id']))
            {

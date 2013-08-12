@@ -3,11 +3,11 @@
   {
     $left_content = array();
     require(DBC);
-    $usrs = mysqli_query ($dbc, "CALL ls_usr()");
-    if (mysqli_num_rows($usrs) > 0) 
+    $trs = mysqli_query ($dbc, "CALL ls_trs()");
+    if (mysqli_num_rows($trs) > 0) 
     {
     	mysqli_next_result($dbc);
-      while ($row = mysqli_fetch_array($usrs, MYSQLI_ASSOC)) 
+      while ($row = mysqli_fetch_array($trs, MYSQLI_ASSOC)) 
       {
         array_push($left_content, $row);
       }

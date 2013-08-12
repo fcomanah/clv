@@ -143,15 +143,15 @@
     
     $obj = json_decode($json,true);
     
-    
+    /*
     echo '<pre>';
       echo '$obj is ';
       if(!is_array($obj)) echo 'not ';
       echo 'an array:</br>';
       var_dump($obj);
     echo '</pre>';
-    
     exit();
+    */
     
     //echo_iterative($obj);
    

@@ -3,7 +3,7 @@
   {
     $left_content = array();
     require(DBC);
-    $usrs = mysqli_query ($dbc, "CALL ls_usr()");
+    $usrs = mysqli_query ($dbc, "CALL ls_trs()");
     if (mysqli_num_rows($usrs) > 0) 
     {
     	mysqli_next_result($dbc);
