@@ -25,49 +25,33 @@
     </div>
     </div>';
 
-    $update = '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8" data-ajax="false">
+    $update = '<form name=update action="update.php?id='.$info['id_'].'" method="post" accept-charset="utf-8" data-ajax="false" enctype="multipart/form-data">
 <ul data-role="listview" data-inset="true">
         <li class="ui-body ui-body-b">
             <fieldset class="ui-grid-a ui-responsive">';
 
-    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Nome de Usuário</strong></label>'
-            .update_form_input('nme', $info['nme'], 'true', 'text', $reg_errors).
-            '<input name="nme" type="hidden" value="'.$info['nme'].'"></p></div>';        
-
-    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Email</strong></label>'
-            .update_form_input('email', $info['email'], 'true', 'text', $reg_errors).
-            '<input name="email" type="hidden" value="'.$info['email'].'"></p></div>';
-
-    $update .= '<div class="ui-block-a"><p><label for="first_name"><strong>Primeiro Nome</strong></label>'
-            .update_form_input('first_name', $info['first_name'], 'false', 'text', $reg_errors).
+    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Nome do Produto</strong></label>'
+            .update_form_input('nme', $info['nme'], 'false', 'text', $reg_errors).
             '</p></div>';
-
-    $update .= '<div class="ui-block-b"><p><label for="last_name"><strong>Último Nome</strong></label>'
-            .update_form_input('last_name', $info['last_name'], 'false', 'text', $reg_errors).
+            
+    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Preço</strong></label>'
+            .update_form_input('prc', $info['prc'], 'false', 'text', $reg_errors).
             '</p></div>';
-          
-    //$update .= '<div class="ui-block-a"><p><label for="date_created"><strong>Data de Criação</strong></label>'
-    //        .update_form_input('date_created', $info['date_created'], 'true', 'text', $reg_errors).
-    //        '</p></div>';
-
-    //$update .= '<div class="ui-block-b"><p><label for="date_expires"><strong>Data de Validade</strong></label>'
-    //        .update_form_input('date_expires', $info['date_expires'], 'true', 'text', $reg_errors).
-    //        '</p></div>';
-
-    //$update .= '<div class="ui-block-a"><p><label for="type"><strong>Tipo</strong></label>'
-    //        .update_form_input('type', $info['type'], 'true', 'text', $reg_errors).
-    //        '</p></div>';
-
-    //$update .= '<div class="ui-block-b"><p><label for="date_modified"><strong>Data da Última Modificação</strong></label>'
-    //        .update_form_input('date_modified', $info['date_modified'], 'true', 'text', $reg_errors).
-    //        '</p></div>';
-
-    $update .= '<div class="ui-block-a"><p><label for="pass1"><strong>Alterar Senha</strong></label>'
-            .update_form_input('pass1', '', 'false', 'password', $reg_errors).
-            '<small>Deve ter entre 6 e 20 caracteres, com pelo menos uma minúscula, uma maíuscula e um número.</small></p></div>';
-
-    $update .= '<div class="ui-block-b"><p><label for="pass2"><strong>Confirmar Senha</strong></label>'
-            .update_form_input('pass2', '', 'false', 'password', $reg_errors).
+            
+    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Imagem</strong></label>'
+            .update_form_input('img', $info['img'], 'false', 'file', $reg_errors).
+            '<input name="img" type="hidden" value="'.$info['img'].'"></p></div>';
+            
+    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Estoque</strong></label>'
+            .update_form_input('stq', $info['stq'], 'false', 'text', $reg_errors).
+            '</p></div>';
+            
+    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Categoria</strong></label>'
+            .update_form_input('ctg', $info['id_ctg'], 'false', 'select', $reg_errors).
+            '</p></div>';
+            
+    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Descrição</strong></label>'
+            .update_form_input('dsc', $info['dsc'], 'false', 'textarea', $reg_errors).
             '</p></div>
 
             <div class="ui-block-a"><input data-theme="a" type="submit" value="Atualizar" /></div>          
