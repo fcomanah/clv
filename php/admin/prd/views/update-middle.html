@@ -34,23 +34,23 @@
             .update_form_input('nme', $info['nme'], 'false', 'text', $reg_errors).
             '</p></div>';
             
-    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Preço</strong></label>'
+    $update .= '<div class="ui-block-b"><p><label for="prc"><strong>Preço</strong></label>'
             .update_form_input('prc', $info['prc'], 'false', 'text', $reg_errors).
             '</p></div>';
             
-    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Imagem</strong></label>'
+    $update .= '<div class="ui-block-a"><p><label for="img"><strong>Imagem</strong></label>'
             .update_form_input('img', $info['img'], 'false', 'file', $reg_errors).
             '<input name="img" type="hidden" value="'.$info['img'].'"></p></div>';
             
-    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Estoque</strong></label>'
+    $update .= '<div class="ui-block-b"><p><label for="stq"><strong>Estoque</strong></label>'
             .update_form_input('stq', $info['stq'], 'false', 'text', $reg_errors).
             '</p></div>';
             
-    $update .= '<div class="ui-block-a"><p><label for="nme"><strong>Categoria</strong></label>'
-            .update_form_input('ctg', $info['id_ctg'], 'false', 'select', $reg_errors).
+    $update .= '<div class="ui-block-a"><p><label for="ctg"><strong>Categoria</strong></label>'
+            .update_form_input('ctg', $info['ctg'], 'false', 'select', $reg_errors).
             '</p></div>';
             
-    $update .= '<div class="ui-block-b"><p><label for="nme"><strong>Descrição</strong></label>'
+    $update .= '<div class="ui-block-b"><p><label for="dsc"><strong>Descrição</strong></label>'
             .update_form_input('dsc', $info['dsc'], 'false', 'textarea', $reg_errors).
             '</p></div>
 

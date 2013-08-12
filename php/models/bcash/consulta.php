@@ -187,7 +187,7 @@
 
     $trs['data_transacao'] = $obj['transacao']['data_transacao'];
     $trs['id_transacao'] = $obj['transacao']['id_transacao'];
-    $trs['status'] = $obj['transacao']['status'];
+    $trs['statusb'] = $obj['transacao']['status'];
     
     $i=0;
     while(isset($obj['transacao']['pedidos'][$i]['nome_produto']))
@@ -208,6 +208,18 @@
       var_dump($trs);
     echo '</pre>';
     */
+    
+    require(DBC);
+  
+    $q = "SELECT status FROM trs WHERE id_trs='".$_GET['id_transacao']."'";
+    $info_mysql_object = mysqli_query ($dbc, $q);
+    if (mysqli_num_rows($info_mysql_object) > 0) 
+    {
+      $info = mysqli_fetch_array($info_mysql_object, MYSQLI_ASSOC);
+      $trs['status'] = $info['status'];
+    }
+    else
+      $trs['status'] = 'Em andamento';
     
   } 
 ?>

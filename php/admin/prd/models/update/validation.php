@@ -2,7 +2,7 @@
 	// Check for a product name:
 	if(isset($_POST['nme']))
 	{
-	  if (preg_match ('/^[A-Záâãéêíóôúç \'.-]{2,100}$/i', $_POST['nme'])) {
+	  if (preg_match ('/^[0-9A-Záâãéêíóôúç," \'.-]{2,100}$/i', $_POST['nme'])) {
 		$nme = mysqli_real_escape_string ($dbc, $_POST['nme']);
 	  } else {
 		$reg_errors['nme'] = 'Por favor, entre com o nome do produto!';
@@ -20,7 +20,7 @@
     
 	if(isset($_POST['dsc']))
 	{
-      if (!empty($_POST['dsc']))
+	  if (preg_match ('/^[0-9A-Záâãéêíóôúç," \'.-]{2,100}$/i', $_POST['nme']))
       {
         $dsc = mysqli_real_escape_string ($dbc, $_POST['dsc']);
       } 

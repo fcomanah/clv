@@ -55,6 +55,13 @@
   curl_exec ($ch);
   $resposta = ob_get_contents();
   ob_end_clean();
+  
+  define ('BASE_URI', '/home/administrador/htdocs/clv/mysql/');
+  define ('BASE_URL', 'http://150.164.100.10:54321/administrador/clv/');
+  define ('MYSQL', BASE_URI . 'mysql.inc.php');
+  define ('DBC', BASE_URI . 'dbc.inc.php');
+  require (MYSQL);
+  require(DBC);
 
   if(trim($resposta)=="VERIFICADO")
   {
@@ -65,9 +72,26 @@
       $produto_qtde = $_POST['produto_qtde_'.$x];
       $produto_valor = $_POST['produto_valor_'.$x];
       $produto_extra = $_POST['produto_extra_'.$x];
+      
+      $qstq = "CALL remove_from_stq('$produto_qtde','$produto_codigo')";
+      $stq = mysqli_query ($dbc, $qstq);
     }
   }
+ 
+  $q = "INSERT INTO trs (id_trs, status) VALUES ('$id_transacao', '1')";
+  $r = mysqli_query ($dbc, $q);
 
-  $url = 'Location: ../index.php?id_transacao='.$id_transacao;
-  header($url);
+  if (mysqli_affected_rows($dbc) == 1)
+  { 
+    $url = 'Location: ../../index.php?id_transacao='.$id_transacao;
+    header($url);
+    exit();
+  }
+  else
+  {
+    $url = 'Location: ../../';
+    header($url);
+    exit();
+	}
+
 ?>

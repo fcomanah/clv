@@ -88,8 +88,12 @@
                     
     $update .= '<div class="ui-block-a"><p><label for="email"><strong>CEP</strong></label>'
             .update_form_input('cep', $trs['cep'], 'true', 'text', $reg_errors).
+            '</p></div>';
+
+    $update .= '<div class="ui-block-b"><p><label for="email"><strong>Data da Compra</strong></label>'
+            .update_form_input('data_transacao', $trs['data_transacao'], 'true', 'text', $reg_errors).
             '</p></div>
-           
+
             </fieldset>
         </li>
             <a href="update.php?id='.$info['id_'].'" data-theme="a" data-role="button">Editar</a>

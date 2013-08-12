@@ -1,8 +1,8 @@
 <div class="center-wrapper">
 <form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
   <input name="email_loja" type="hidden" value="manaphys@gmail.com">
-  <input name="url_retorno" type="hidden" value="<?echo BASE_URL;?>php/includes/bcash_retorno.php">
-  <input name="url_aviso" type="hidden" value="<?echo BASE_URL;?>php/bcash_aviso.php">
+  <input name="url_retorno" type="hidden" value="<?echo BASE_URL;?>php/models/bcash/retorno.php">
+  <input name="url_aviso" type="hidden" value="<?echo BASE_URL;?>php/models/bcash/aviso.php">
   <input name="id_pedido" type="hidden" value="<?echo rand();?>">
 
 

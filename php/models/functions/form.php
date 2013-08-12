@@ -206,18 +206,18 @@ function update_form_input($name, $atual, $disabled, $type, $errors) {
 	    } 
 	    else if ($name == 'status') 
 	    { 
-		  require(DBC);
-          $sql = "SHOW COLUMNS FROM trs LIKE 'status'";
-          $sts = mysqli_query ($dbc, $sql);    		  
-          if (mysqli_num_rows($sts) > 0) 
-          {
-  	        $sts = mysqli_fetch_array($sts, MYSQLI_ASSOC);
-            $type = $sts['Type'];
-            preg_match('/enum\((.*)\)$/', $type, $matches);
-            $data = explode(",", $matches[1]);
-          }
-          else
-            $data = array('1'=>'Em andamento','2'=>'Cancelada','3'=>'Aprovada','4'=>'Concluída');
+		    /*require(DBC);
+        $sql = "SHOW COLUMNS FROM trs LIKE 'status'";
+        $sts = mysqli_query ($dbc, $sql);    		  
+        if (mysqli_num_rows($sts) > 0) 
+        {					
+  	      $sts = mysqli_fetch_array($sts, MYSQLI_ASSOC);
+          $type = $sts['Type'];
+          preg_match('/enum\((.*)\)$/', $type, $matches);
+          $data = explode(",", $matches[1]);
+        }
+        else*/
+          $data = array('1'=>'Em andamento','2'=>'Não foi feito pagamento','3'=>'Cancelada','4'=>'Aguardando pagamento','5'=>'Aprovada','6'=>'Encaminhando envio','7'=>'Concluída');
 
 	    }
 		
