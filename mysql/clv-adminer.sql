@@ -5,9 +5,6 @@ SET foreign_key_checks = 0;
 SET time_zone = '-03:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-CREATE DATABASE `clv` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `clv`;
-
 DELIMITER ;;
 
 DROP PROCEDURE IF EXISTS `add_to_cart`;;
@@ -89,6 +86,12 @@ BEGIN
   SELECT * FROM prd WHERE id_ctg=id ORDER by nme;
 END;;
 
+DROP PROCEDURE IF EXISTS `ls_trs`;;
+CREATE PROCEDURE `ls_trs`()
+BEGIN
+  SELECT * FROM trs ORDER by id_trs DESC;
+END;;
+
 DROP PROCEDURE IF EXISTS `ls_usr`;;
 CREATE PROCEDURE `ls_usr`()
 BEGIN
@@ -105,6 +108,10 @@ IF q <= 0 THEN
 DELETE FROM car WHERE id_=cid;
 END IF;
 END;;
+
+DROP PROCEDURE IF EXISTS `remove_from_stq`;;
+CREATE PROCEDURE `remove_from_stq`(IN `qtd` mediumint(8) unsigned, IN `pid` mediumint(8) unsigned)
+UPDATE prd SET stq=stq-qtd WHERE id_=pid;;
 
 DELIMITER ;
 
@@ -131,9 +138,6 @@ CREATE TABLE `ctg` (
   UNIQUE KEY `nme` (`nme`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `ctg` (`id_`, `nme`) VALUES
-(16,	'Aulas Particulares'),
-(1,	'raiz');
 
 DROP TABLE IF EXISTS `mnu`;
 CREATE TABLE `mnu` (
@@ -147,8 +151,6 @@ CREATE TABLE `mnu` (
   CONSTRAINT `mnu_ibfk_2` FOREIGN KEY (`id_ctg_pai`) REFERENCES `ctg` (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `mnu` (`id_ctg_flh`, `id_ctg_pai`) VALUES
-(16,	1);
 
 DROP TABLE IF EXISTS `prd`;
 CREATE TABLE `prd` (
@@ -165,8 +167,16 @@ CREATE TABLE `prd` (
   CONSTRAINT `prd_ibfk_1` FOREIGN KEY (`id_ctg`) REFERENCES `ctg` (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `prd` (`id_`, `nme`, `prc`, `dsc`, `img`, `stq`, `dtc`, `id_ctg`) VALUES
-(24,	'Construindo Lojas Virtuais',	600.00,	'Usando HTML, CSS, JQUERY mobile, PHP e MySQL construir uma loja virtual com as principais funcionalidades.',	'uploads/1376269010.png',	100,	'2013-08-11 21:49:38',	16);
+
+DROP TABLE IF EXISTS `trs`;
+CREATE TABLE `trs` (
+  `id_` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id_trs` int(100) unsigned NOT NULL,
+  `status` enum('Em andamento','Não foi feito pagamento','Cancelada','Aguardando pagamento','Aprovada','Encaminhando envio','Concluída') COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_`),
+  UNIQUE KEY `id_trs` (`id_trs`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `usr`;
 CREATE TABLE `usr` (
@@ -185,7 +195,5 @@ CREATE TABLE `usr` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `usr` (`id_`, `type`, `nme`, `email`, `pass`, `first_name`, `last_name`, `date_expires`, `date_created`, `date_modified`) VALUES
-(73,	'admin',	'clv',	'clv@clv.com',	UNHEX('CE8BB372405C89CF8400B914A5D455ACE5FC115C901E7454091262429E78ED70'),	'Construindo',	'Lojas Virtuais',	'2013-08-30',	'2013-07-30 23:18:04',	'0000-00-00 00:00:00');
 
--- 2013-08-11 22:09:34
+-- 2013-08-14 19:43:27
