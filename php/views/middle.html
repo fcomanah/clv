@@ -28,13 +28,14 @@
         }
         else
         {
-          $purchase = '';
+          
         
           if (mysqli_num_rows($prds) > 0) 
           {
-  	       echo '<ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">';
-		    while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
-  	       {
+            $purchase = '';
+  	         echo '<ul data-theme="c" data-role="listview" data-split-icon="cart" data-inset="true" data-filter="true">';
+		      while ($row = mysqli_fetch_array($prds, MYSQLI_ASSOC)) 
+  	         {
              echo '<li>
                     <a style="text-decoration:none" data-ajax="false"href="index.php?id=' . $row['id_'] . '&action=view"><img src="'. BASE_URL . $row['img'] . '"><h2>' . $row['nme'] . '</h2><p>R$ ' . $row['prc'] . '</p></a>
                     <a href="#purchase' . $row['id_'] . '" data-rel="popup" data-position-to="window" data-transition="pop">Colocar no Carrinho</a>
@@ -48,11 +49,14 @@
                       <button type="submit" name="submit" value="submit" data-theme="b">Adicionar</button>
                     </form>
                    </div>';
-		     }	
+		      }	
             echo '</ul>';
+            echo $purchase;
+          }         
+          else
+          {
+            echo '<a style="text-decoration:none" href="./">Não há produtos</a>';
           }
-        
-          echo $purchase;
         }
       ?>
       

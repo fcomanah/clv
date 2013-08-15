@@ -1,10 +1,45 @@
 <?php
   require ('./models/base.php');
   require ('./models/cart.php');
+
+function get_prd_from_ctg($ctg_id)
+{
+	 require(DBC);
+    $q = mysqli_query ($dbc, "CALL ls_prd_from_ctg('$ctg_id')");
+      
+    $prds=array();
+      
+    if (mysqli_num_rows($q) > 0) 
+    {
+	   while ($row = mysqli_fetch_array($q, MYSQLI_ASSOC)) 
+  	   {
+        array_push($prds,$row);
+      }
+    }
+    return $prds;
+}
+
+function get_ctg_flh($ctg_id)
+{
+	 require(DBC);
+    $q = mysqli_query ($dbc, "CALL ls_ctg_flh('$ctg_id')");
+      
+    $ctgs=array();
+      
+    if (mysqli_num_rows($q) > 0) 
+    {
+	   while ($row = mysqli_fetch_array($q, MYSQLI_ASSOC)) 
+  	   {
+        array_push($ctgs,$row['id_']);
+      }
+    }
+    return $ctgs;
+}
+
+
   if (isset($_GET['action']) && ($_GET['action'] == 'pay') && !empty($car)) $page_title = 'Finalizando Compra';
  
   include ('./views/header.html');
-    
      
   if(isset($_GET['id'], $_GET['action']) && ($_GET['action'] == 'nav'))
   {
@@ -49,19 +84,26 @@
     
   if(!empty($ctg_atual))
   {
-     
-    require(DBC);
-    $q = mysqli_query ($dbc, "CALL ls_prd_from_ctg('$ctg_id')");
-      
-    $prds=array();
-      
-    if (mysqli_num_rows($q) > 0) 
+    $id = $ctg_id;
+    $prds = array();
+    $flhs = array();
+    $tmp_prds = array();
+    $tmp_flhs = array();
+    do
     {
-	  while ($row = mysqli_fetch_array($q, MYSQLI_ASSOC)) 
-  	  {
-        array_push($prds,$row);
-      }
-    }
+      $tmp_prds = get_prd_from_ctg($id);
+      if(!empty($tmp_prds)) $prds = array_merge($prds, $tmp_prds);
+      
+      $tmp_flhs = get_ctg_flh($id);
+      if(!empty($tmp_flhs)) $flhs = array_merge($flhs, $tmp_flhs);
+      
+      $id = array_shift($flhs);
+      //echo $id." ";
+      //print_r($flhs);
+      
+    }while(!empty($id));
+    //print_r($prds);
+    //exit();
 
     require ('./models/nav-left.php');      
     include ('./views/nav-middle.html');
@@ -114,6 +156,7 @@
     else
     {
       include ('./views/middle.html');
+
     }
   }
       
