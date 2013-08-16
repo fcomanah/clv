@@ -1,4 +1,23 @@
     <div data-role="content" role="main">
+		
+    <div data-arrow="true" data-role="popup" id="ctg" data-overlay-theme="a" data-theme="c" style="max-width:800px;" class="ui-corner-all">
+      <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Criando Categoria</h1>
+      </div>
+      <form data-ajax="false" name="ctg" action="create.php" method="post">
+      <? if (!isset($ctg_errors)) $ctg_errors = array();        
+         if (array_key_exists('login', $ctg_errors)) 
+         {
+	       echo '<span class="error">' . $ctg_errors['login'] . '</span><br />';
+	     }
+        echo '<label for="ctg_nme"><strong>Nome</strong></label>';
+        create_form_input('ctg_nme', 'text', $ctg_errors);
+        echo '<label for="ctg_pai"><strong>Categoria Pai</strong></label>';
+        create_form_input('ctg_pai', 'select', $ctg_errors);
+        echo '<button type="submit" name="submit" value="submit" data-theme="a">Criar</button>';
+      ?>
+      </form>
+    </div>
     
       <div class="ui-grid-c ui-responsive">
         <div class="ui-block-a"><a href="#" data-role="button" data-theme="a" class="ui-disabled"><?echo $table?></a></div>
@@ -35,7 +54,10 @@
          <div class="ui-block-a"><p>
            <label for="ctg"><strong>Categoria</strong></label>
            <?php create_form_input('ctg', 'select', $reg_errors); ?>
+           <a href="#ctg" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-icon="plus" data-iconpos="notext">Criar Categoria</a>
          </p></div>
+         
+         
                   
          <div class="ui-block-b"><p>
            <label for="dsc"><strong>Descrição</strong></label>

@@ -126,6 +126,24 @@ else
   $reg_errors['img'] = 'Por favor, entre com a imagem do produto!';
 }
 
-
-
-        
+	// Check for a category name:
+	if(isset($_POST['ctg_nme']))
+	{
+	  if (preg_match ('/^[0-9A-Záâãéêíóôúç," \'.-]{2,100}$/i', $_POST['ctg_nme'])) {
+		$ctg_nme = mysqli_real_escape_string ($dbc, $_POST['ctg_nme']);
+	  } else {
+		$ctg_errors['ctg_nme'] = 'Por favor, entre com o nome da categoria!';
+      }
+    }
+    
+	if(isset($_POST['ctg_pai']))
+	{
+      if (!empty($_POST['ctg_pai']))
+      {
+        $ctg_pai = mysqli_real_escape_string ($dbc, $_POST['ctg_pai']);
+      }
+      else
+      {
+        $ctg_errors['ctg_pai'] = 'Por favor, entre com a categoria pai!';
+      }
+    }

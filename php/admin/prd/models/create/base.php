@@ -9,6 +9,11 @@
     {
     	include ('./models/create/insert.php');
     }
+    
+    if (empty($ctg_errors)) 
+    {
+    	include ('./models/create/ctg-insert.php');
+    }
   }
  
   $display_left_panel = false;
