@@ -122,6 +122,16 @@ function get_ctg_flh($ctg_id)
       {
         $prd = $row;
       }
+
+      $prd_id = $_GET['id'];
+      $ctg_id = mysqli_query ($dbc, "SELECT id_ctg FROM prd WHERE id_ = '$prd_id'");
+      $ctg_id = mysqli_fetch_array($ctg_id, MYSQLI_ASSOC);
+      $ctg_id=$ctg_id['id_ctg'];
+      $ctg_id;
+      exit();
+
+      $ctg_atual = mysqli_query ($dbc, "CALL get_ctg('$ctg_id')");
+      $ctg_atual = mysqli_fetch_array($ctg_atual, MYSQLI_ASSOC);
     }
 
     require ('./models/left.php');
@@ -148,7 +158,7 @@ function get_ctg_flh($ctg_id)
     }
     elseif(isset($_GET['id_transacao']) )
     {
-      echo '    <div data-role="content" role="main">';
+  	  echo '    <div data-role="content" role="main">';
       include ('./models/bcash/consulta.php');
       include ('./views/transacao-middle.html');
       echo '</div>';
