@@ -1,1 +1,3 @@
-<?header("Location: ./php")?>
+<?
+	header("location:products.php");
+?>
