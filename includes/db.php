@@ -1,5 +1,5 @@
 <?
-	@mysql_connect("localhost","root","Z0cip@.9") or die("Demo is not available, please try again later");
-	@mysql_select_db("shopping") or die("Demo is not available, please try again later");
+	@mysql_connect("localhost","clvu","clvp") or die("clv is not available, please try again later: 1");
+	@mysql_select_db("clv") or die("clv is not available, please try again later: 2");
 	session_start();
 ?>

@@ -1,0 +1,5 @@
+CREATE USER 'clvu'@'%' IDENTIFIED BY 'clvp';
+CREATE USER 'clvu'@'localhost' IDENTIFIED BY 'clvp';
+CREATE DATABASE IF NOT EXISTS clv COLLATE 'utf8_general_ci';
+GRANT ALL PRIVILEGES ON clv . * TO 'clvu'@'%';
+FLUSH PRIVILEGES;
