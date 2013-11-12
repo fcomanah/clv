@@ -1,3 +1,0 @@
-<?
-  header("Location: ./create.php");
-?>
