@@ -1,0 +1,51 @@
+-- Adminer 3.7.1 MySQL dump
+
+SET NAMES utf8;
+SET foreign_key_checks = 0;
+SET time_zone = '-02:00';
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE `customers` (
+  `serial` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(80) NOT NULL,
+  `address` varchar(80) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `customers` (`serial`, `name`, `email`, `address`, `phone`) VALUES
+(1,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(2,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(3,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(4,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(5,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(6,	'ManassÃ©s',	'manah@ufmg.br',	'',	''),
+(7,	'ManassÃ©s',	'',	'',	''),
+(8,	'ManassÃ©s',	'',	'',	''),
+(9,	'ManassÃ©s',	'',	'',	''),
+(10,	'ManassÃ©s',	'',	'',	''),
+(11,	'M',	'm@c',	'',	''),
+(12,	'M',	'm@c',	'',	''),
+(13,	'M',	'm@c',	'',	'');
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `serial` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `customerid` int(11) NOT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `order_detail`;
+CREATE TABLE `order_detail` (
+  `orderid` int(11) NOT NULL,
+  `productid` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 2013-11-16 09:26:25

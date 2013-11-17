@@ -1,13 +1,26 @@
 <?
-	function get_product_name($pid){
-		$result=mysql_query("select name from products where serial=$pid");
-		$row=mysql_fetch_array($result);
-		return $row['name'];
+    function no_more_than($a, $b){
+        if ( $a <= $b){
+            return $a;
+        }else{
+            return $b;
+        }
+    }
+	function get_product_stock($pid){
+		#$result=mysql_query("select nome from produto where sku=$pid");
+		#$row=mysql_fetch_array($result);
+		#return $row['nome'];
+        return 10;
 	}
-	function get_price($pid){
-		$result=mysql_query("select price from products where serial=$pid");
+	function get_product_nome($pid){
+		$result=mysql_query("select nome from produto where sku=$pid");
 		$row=mysql_fetch_array($result);
-		return $row['price'];
+		return $row['nome'];
+	}
+	function get_preco($pid){
+		$result=mysql_query("select preco from produto where sku=$pid");
+		$row=mysql_fetch_array($result);
+		return $row['preco'];
 	}
 	function remove_product($pid){
 		$pid=intval($pid);
@@ -26,8 +39,8 @@
 		for($i=0;$i<$max;$i++){
 			$pid=$_SESSION['cart'][$i]['productid'];
 			$q=$_SESSION['cart'][$i]['qty'];
-			$price=get_price($pid);
-			$sum+=$price*$q;
+			$preco=get_preco($pid);
+			$sum+=$preco*$q;
 		}
 		return $sum;
 	}
@@ -57,6 +70,10 @@
 			}
 		}
 		return $flag;
+	}
+    
+    function get_all_products(){
+		return mysql_query("SELECT * FROM `produto` ORDER BY `nome`");
 	}
 
 ?>
