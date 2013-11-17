@@ -1,6 +1,6 @@
 <?php
     //parametros: 'host', 'username', 'password', 'dbname', 'port', 'socket'
-    $con = mysqli_connect("localhost","clv","clv","clv");
+    $con = mysqli_connect("localhost","clvu","clvp","clv");
     // Check connection
     if (mysqli_connect_errno($con))
     {
@@ -9,7 +9,7 @@
     else
     {
         // Perform a query, check for error
-        $result = mysqli_query($con,"SELECT * FROM ctg");
+        $result = mysqli_query($con,"SELECT * FROM produto");
         if (!$result)
         {
             echo("Error description: " . mysqli_error($con));
@@ -18,7 +18,7 @@
         {
             while($row = mysqli_fetch_array($result))
             {
-                echo $row['id_'] . " " . $row['nme'];
+                echo $row['sku'] . " " . $row['nome'];
                 echo "<br>";
             }
         }

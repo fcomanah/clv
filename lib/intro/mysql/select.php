@@ -1,6 +1,6 @@
 <?php
     //parametros: 'host', 'username', 'password', 'dbname', 'port', 'socket'
-    $con=mysqli_connect("localhost","root","arjl39","menagerie");
+    $con=mysqli_connect("localhost","root","","menagerie");
     // Check connection
     if (mysqli_connect_errno($con))
     {

@@ -2,7 +2,7 @@
     //parametros: 'host', 'username', 'password', 'dbname', 'port', 'socket'
     $dbname = 'menagerie';
 	
-    $con=mysqli_connect("localhost","root","arjl39");
+    $con=mysqli_connect("localhost","root","");
     // Check connection
     if (mysqli_connect_errno())
     {
