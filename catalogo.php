@@ -1,10 +1,11 @@
-<?
+<?php
 	include("includes/db.php");
 	include("includes/carrinho_functions.php");
-    init_sessao();
-	
+  init_sessao($link);
+
 	if($_REQUEST['command']=='add' && $_REQUEST['productid']>0){
 		$pid=$_REQUEST['productid'];
+		echo "ha";
 		addtocart($pid,1);
 		header("location:carrinho.php");
 		exit();
@@ -29,22 +30,22 @@
 <div align="center">
 	<h1 align="center">Catálogo</h1>
 	<table border="0" cellpadding="2px" width="600px">
-		<?
-			$result=get_all_products();
-			while($row=mysql_fetch_row($result)){
+		<?php
+			$result=get_all_products($link);
+			while($row=mysqli_fetch_row($result)){
 		?>
     	<tr>
-        	<td><img src="<?='images/'.$row[4]?>" /></td>
+        	<td><img src="<?php echo 'images/'.$row[4]?>" /></td>
             <td>
-                <b><?=$row[1]?></b><br/>
-                <?=$row[2]?><br />
-                Preço:<big style="color:green"> R$ <?=number_format($row[3], 2, '.', ' ')?></big><br /><br />
-                <a style="text-decoration: none" href="catalogo.php?command=add&productid=<?=$row[0]?>">
+                <b><?php  echo $row[1]?></b><br/>
+                <?php  echo $row[2]?><br />
+                Preço:<big style="color:green"> R$ <?php  echo number_format($row[3], 2, '.', ' ')?></big><br /><br />
+                <a style="text-decoration: none" href="catalogo.php?command=add&productid=<?php echo $row[0]?>">
                 <input type="button" value="Adicionar ao Carrinho"/></a>
 			</td>
 		</tr>
         <tr><td colspan="2"><hr size="1" /></td>
-        <? } ?>
+        <?php } ?>
     </table>
 </div>
 </body>

@@ -1,7 +1,7 @@
-<?
-    function getBrowser() 
-    { 
-        $u_agent = $_SERVER['HTTP_USER_AGENT']; 
+<?php
+    function getBrowser()
+    {
+        $u_agent = $_SERVER['HTTP_USER_AGENT'];
         $bname = 'Unknown';
         $platform = 'Unknown';
         $version= "";
@@ -16,39 +16,39 @@
         elseif (preg_match('/windows|win32/i', $u_agent)) {
             $platform = 'windows';
         }
-        
+
         // Next get the name of the useragent yes seperately and for good reason
-        if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) 
-        { 
-            $bname = 'Internet Explorer'; 
-            $ub = "MSIE"; 
-        } 
-        elseif(preg_match('/Firefox/i',$u_agent)) 
-        { 
-            $bname = 'Mozilla Firefox'; 
-            $ub = "Firefox"; 
-        } 
-        elseif(preg_match('/Chrome/i',$u_agent)) 
-        { 
-            $bname = 'Google Chrome'; 
-            $ub = "Chrome"; 
-        } 
-        elseif(preg_match('/Safari/i',$u_agent)) 
-        { 
-            $bname = 'Apple Safari'; 
-            $ub = "Safari"; 
-        } 
-        elseif(preg_match('/Opera/i',$u_agent)) 
-        { 
-            $bname = 'Opera'; 
-            $ub = "Opera"; 
-        } 
-        elseif(preg_match('/Netscape/i',$u_agent)) 
-        { 
-            $bname = 'Netscape'; 
-            $ub = "Netscape"; 
-        } 
-        
+        if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
+        {
+            $bname = 'Internet Explorer';
+            $ub = "MSIE";
+        }
+        elseif(preg_match('/Firefox/i',$u_agent))
+        {
+            $bname = 'Mozilla Firefox';
+            $ub = "Firefox";
+        }
+        elseif(preg_match('/Chrome/i',$u_agent))
+        {
+            $bname = 'Google Chrome';
+            $ub = "Chrome";
+        }
+        elseif(preg_match('/Safari/i',$u_agent))
+        {
+            $bname = 'Apple Safari';
+            $ub = "Safari";
+        }
+        elseif(preg_match('/Opera/i',$u_agent))
+        {
+            $bname = 'Opera';
+            $ub = "Opera";
+        }
+        elseif(preg_match('/Netscape/i',$u_agent))
+        {
+            $bname = 'Netscape';
+            $ub = "Netscape";
+        }
+
         // finally get the correct version number
         $known = array('Version', $ub, 'other');
         $pattern = '#(?<browser>' . join('|', $known) .
@@ -56,7 +56,7 @@
         if (!preg_match_all($pattern, $u_agent, $matches)) {
             // we have no matching number just continue
         }
-        
+
         // see how many we have
         $i = count($matches['browser']);
         if ($i != 1) {
@@ -72,10 +72,10 @@
         else {
             $version= $matches['version'][0];
         }
-        
+
         // check if we have a number
         if ($version==null || $version=="") {$version="?";}
-        
+
         return array(
             'userAgent' => $u_agent,
             'name'      => $bname,
@@ -83,31 +83,33 @@
             'platform'  => $platform,
             'pattern'    => $pattern
         );
-    } 
+    }
 
-    function create_sessao(){
+    function create_sessao($link){
+        print_r($link);
         $ua=getBrowser();
         $browser = $ua['name'] . " " . $ua['version'];
         $ip = $_SERVER['REMOTE_ADDR'];
-   		$result=mysql_query("INSERT INTO `sessao` (`browser`, `ip`) VALUES ('$browser', '$ip' );");
-        return mysql_insert_id();
+   		  $result=mysqli_query($link,"INSERT INTO `sessao` (`browser`, `ip`) VALUES ('$browser', '$ip' );");
+        echo "INSERT INTO `sessao` (`browser`, `ip`) VALUES ('$browser', '$ip' );";
+        return mysqli_insert_id($link);
     }
-    
-    function init_sessao(){
-        if (isset($_COOKIE['SESSION'])) 
+
+    function init_sessao($link){
+        if (isset($_COOKIE['SESSION']))
         {
             $chave = $_COOKIE['SESSION'];
-        } 
-        else 
+        }
+        else
         {
             $chave = md5(uniqid('biped',true));
-            $_SESSION['chave'] = create_sessao();
+            $_SESSION['chave'] = create_sessao($link);
         }
         setcookie('SESSION', $chave, time()+(60*60*24*30));
-        
-        if(!isset($_SESSION['chave'])) $_SESSION['chave'] = create_sessao();
+
+        if(!isset($_SESSION['chave'])) $_SESSION['chave'] = create_sessao($link);
     }
-    
+
     function get_frete(){
 
         require_once('RsCorreios.php');
@@ -121,10 +123,10 @@
         //foreach ($_POST as $key => $value) {
         //    $frete->setValue($key, $value);
         //}
-        
+
         $frete->setValue('sCepDestino', $_SESSION['sCepDestino']);
         $frete->setValue('nCdServico', $_SESSION['nCdServico']);
-        
+
         $frete->setValue('sCepOrigem', "31050540");
         $frete->setValue('nVlPeso', "1");
         $frete->setValue('nVlAltura', "2");
@@ -147,7 +149,7 @@
         // Caso não haja erros mostramos o resultado de cada variável retornada pelos correios.
         // Use apenas as que forem de seu interesse
         else {
-            
+
             $resultadoFrete = "Código do Serviço: " . $result['servico_codigo'] . "<br />";
             $resultadoFrete .= "Valor do Frete: R$ " . $result['valor'] . "<br />";
             $resultadoFrete .= "Prazo de Entrega: " . $result['prazo_entrega'] . " dias <br />";
@@ -156,14 +158,13 @@
             $resultadoFrete .= "Valor Declarado: R$ " . $result['valor_declarado'] . "<br />";
             $resultadoFrete .= "Entrega Domiciliar: " . $result['en_domiciliar'] . "<br />";
             $resultadoFrete .= "Entrega Sábado: " . $result['en_sabado'] . "<br />";
-            
+
             return str_replace(array(','), array('.'), $result['valor']);
         }
 
         //echo $resultadoFrete;
-        
     }
-    
+
     function no_more_than($a, $b){
         if ( $a <= $b){
             return $a;
@@ -171,19 +172,19 @@
             return $b;
         }
     }
-	function get_product_stock($pid){
-		$result=mysql_query("select quantidadeestoque from produto where sku=$pid");
-		$row=mysql_fetch_array($result);
+	function get_product_stock($link,$pid){
+		$result=mysqli_query($link,"select quantidadeestoque from produto where sku=$pid");
+		$row=mysqli_fetch_array($result);
 		return $row['quantidadeestoque'];
 	}
-	function get_product_name($pid){
-		$result=mysql_query("select nome from produto where sku=$pid");
-		$row=mysql_fetch_array($result);
+	function get_product_name($link,$pid){
+		$result=mysqli_query($link,"select nome from produto where sku=$pid");
+		$row=mysqli_fetch_array($result);
 		return $row['nome'];
 	}
-	function get_price($pid){
-		$result=mysql_query("select preco from produto where sku=$pid");
-		$row=mysql_fetch_array($result);
+	function get_price($link,$pid){
+		$result=mysqli_query($link,"select preco from produto where sku=$pid");
+		$row=mysqli_fetch_array($result);
 		return $row['preco'];
 	}
 	function get_description($pid){
@@ -192,38 +193,38 @@
 		return $row['descricao'];
 	}
 
-	function get_order_total(){
+	function get_order_total($link){
 		$max=count($_SESSION['cart']);
 		$sum=0;
 		for($i=0;$i<$max;$i++){
 			$pid=$_SESSION['cart'][$i]['productid'];
 			$q=$_SESSION['cart'][$i]['qty'];
-			$preco=get_price($pid);
+			$preco=get_price($link,$pid);
 			$sum+=$preco*$q;
 		}
-        if(get_frete()==''){
+        //if(get_frete()==''){
             return $sum;
-        }else{
-            return $sum+get_frete();
-        }
+        //}else{
+        //    return $sum+get_frete();
+        //}
 	}
 
-	function del_cart($pid){
-        //$chave = $_SESSION['chave'];
+	function del_cart($link,$pid){
+    //$chave = $_SESSION['chave'];
 		$pid=intval($pid);
 		$max=count($_SESSION['cart']);
 		for($i=0;$i<$max;$i++){
 			if($pid==$_SESSION['cart'][$i]['productid']){
 				unset($_SESSION['cart'][$i]);
-                //$result=mysql_query("DELETE FROM `carrinho` WHERE `chave` = '$chave' AND `sku` = '$pid';");
+        //$result=mysqli_query($link,"DELETE FROM `carrinho` WHERE `chave` = '$chave' AND `sku` = '$pid';");
 				break;
 			}
 		}
 		$_SESSION['cart']=array_values($_SESSION['cart']);
 	}
-    
-	function update_cart(){
-        $chave = $_SESSION['chave'];
+
+	function update_cart($link){
+    $chave = $_SESSION['chave'];
 		$max=count($_SESSION['cart']);
 		for($i=0;$i<$max;$i++){
 			$pid=$_SESSION['cart'][$i]['productid'];
@@ -231,19 +232,19 @@
 			if($q>0 && $q<=10000){
                 if($_SESSION['cart'][$i]['qty']!=$q){
                     $_SESSION['cart'][$i]['qty']=$q;
-                    $result=mysql_query("UPDATE `carrinho` SET `quantidade` = '$q', `modificacao` = now() WHERE `chave` = '$chave' AND `sku` = '$pid';");
+                    $result=mysqli_query($link,"UPDATE `carrinho` SET `quantidade` = '$q', `modificacao` = now() WHERE `chave` = '$chave' AND `sku` = '$pid';");
                 }
-			}else{                
+			}else{
 				#$msg='Algum produto não foi atualizado! Quantidade deve ser um número entre 1 e 999';
 			}
 		}
     }
-	function addtocart($pid,$q){
-        
+	function addtocart($link,$pid,$q){
+
 		if($pid<1 or $q<1) return;
-		
+
 		if(is_array($_SESSION['cart'])){
-			if(product_exists($pid)) return;
+			if(product_exists($link,$pid)) return;
 			$max=count($_SESSION['cart']);
 			$_SESSION['cart'][$max]['productid']=$pid;
 			$_SESSION['cart'][$max]['qty']=$q;
@@ -253,13 +254,13 @@
 			$_SESSION['cart'][0]['productid']=$pid;
 			$_SESSION['cart'][0]['qty']=$q;
 		}
-        
-        //vai falhar se o produto
-        $chave = $_SESSION['chave'];
-		$result=mysql_query("INSERT INTO `carrinho` (`chave`, `sku`, `quantidade`) VALUES ('$chave', '$pid', '$q');");
+
+    $chave = $_SESSION['chave'];
+    echo "INSERT INTO `carrinho` (`chave`, `sku`, `quantidade`) VALUES ('$chave', '$pid', '$q');";
+		$result=mysqli_query($link,"INSERT INTO `carrinho` (`chave`, `sku`, `quantidade`) VALUES ('$chave', '$pid', '$q');");
 	}
-    
-	function product_exists($pid){
+
+	function product_exists($link,$pid){
 		$pid=intval($pid);
 		$max=count($_SESSION['cart']);
 		$flag=0;
@@ -271,9 +272,9 @@
 		}
 		return $flag;
 	}
-    
-    function get_all_products(){
-		return mysql_query("SELECT * FROM `produto` WHERE `quantidadeestoque`>0 ORDER BY `nome`");
+
+  function get_all_products($link){
+		return mysqli_query($link,"SELECT * FROM `produto` WHERE `quantidadeestoque`>0 ORDER BY `nome`");
 	}
 
 ?>
