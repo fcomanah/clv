@@ -1,9 +1,12 @@
+
+
+
 <html>
-<head>
+  <head>
 <title>Ler um arquivo de texto</title>
 </head>
-<body>
-<?php
+  <body>
+    <?php
 $f = fopen("textfile.txt", "r");
 // Lê cada uma das linhas do arquivo
 while(!feof($f)) { echo fgets($f) . "<br />"; }

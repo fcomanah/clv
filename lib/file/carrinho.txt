@@ -1,0 +1,4 @@
+Camisa 50.20 2
+Calca 80.59 5
+Blusa 120.80 7
+Saia 60.25 3

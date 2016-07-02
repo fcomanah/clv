@@ -1,9 +1,22 @@
-<html> 
+<html>
+
+<head>
+
+  <title>Formulário</title>
+  <meta charset= "utf-8">
+
+  </head>
 <body>
-  <form enctype="multipart/form-data" action="upload.php" method="post">
-    <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-    Choose a file to upload: <input name="uploaded_file" type="file" />
-    <input type="submit" value="Upload" />
-  </form> 
-</body> 
+  <form method="post" action="upload.php">
+    <p>Qual é o seu nome?</p>
+    <input type="text" name="username"></p>
+    <p>Qual  a sua cor favorita?
+      <input type="radio" name="favoritecolor" value="r" /> Vermelha
+      <input type="radio" name="favoritecolor" value="g" /> Verde
+      <input type="radio" name="favoritecolor" value="y" /> Amarelo
+      <input type="radio" name="favoritecolor" value="b" /> Azul </p>
+      <input type="radio" name="favoritecolor" value="c" /> Cinza </p>
+      <input type="submit" value= "Enviar"/>
+  </form>
+</body>
 </html>
