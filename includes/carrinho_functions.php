@@ -91,7 +91,6 @@
         $browser = $ua['name'] . " " . $ua['version'];
         $ip = $_SERVER['REMOTE_ADDR'];
    		  $result=mysqli_query($link,"INSERT INTO `sessao` (`browser`, `ip`) VALUES ('$browser', '$ip' );");
-        echo "INSERT INTO `sessao` (`browser`, `ip`) VALUES ('$browser', '$ip' );";
         return mysqli_insert_id($link);
     }
 
