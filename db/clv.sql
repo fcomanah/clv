@@ -1,10 +1,12 @@
--- Adminer 3.7.1 MySQL dump
+-- Adminer 4.2.5 MySQL dump
 
 SET NAMES utf8;
+SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
-SET time_zone = '-02:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP DATABASE IF EXISTS `clv`;
+CREATE DATABASE `clv` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `clv`;
 
 DROP TABLE IF EXISTS `administrador`;
@@ -40,17 +42,18 @@ CREATE TABLE `produto` (
   `imagem` varchar(80) NOT NULL,
   `quantidadeestoque` int(11) NOT NULL,
   PRIMARY KEY (`sku`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 INSERT INTO `produto` (`sku`, `nome`, `descricao`, `preco`, `imagem`, `quantidadeestoque`) VALUES
-(1,	'Celular',	'Nokia 5800 XpressMusic is a mobile device with 3.2',	50.00,	'mobile.jpg',   1000),
-(2,	'LCD',	'Monitor 19\"',	699.50,	'lcd.jpg',  1000),
-(3,	'Mouse',	'Ã“tico para Notebook',	23.45,	'mouse.jpg',    1000),
-(4,	'PenDrive',	'8GB',	11.23,	'flash-disk.jpg',   1000),
+(1,	'Celular',	'Nokia 5800 XpressMusic is a mobile device with 3.2',	50.00,	'mobile.jpg',	1000),
+(2,	'LCD',	'Monitor 19\"',	699.50,	'lcd.jpg',	1000),
+(3,	'Mouse',	'Ã“tico para Notebook',	23.45,	'mouse.jpg',	1000),
+(4,	'PenDrive',	'8GB',	11.23,	'flash-disk.jpg',	1000),
 (5,	'Bateria',	'Para NoteBooks Dell',	56.77,	'charger.jpg',	1000),
 (6,	'Drive CD',	'Leitor e Gravador',	555.33,	'cdrom-drive.jpg',	1000),
 (7,	'HardDrive',	'80GB - 7200RPM',	137.00,	'hard-drive.jpg',	1000),
-(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000);
+(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000),
+(9,	'Camisa',	'Algodão',	149.99,	'camisa.jpg',	100);
 
 DROP TABLE IF EXISTS `sessao`;
 CREATE TABLE `sessao` (
@@ -59,8 +62,10 @@ CREATE TABLE `sessao` (
   `browser` varchar(255) NOT NULL,
   `criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`chave`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+INSERT INTO `sessao` (`chave`, `ip`, `browser`, `criacao`) VALUES
+(1,	'::1',	'Mozilla Firefox 47.0',	'2016-07-02 13:05:39');
 
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
@@ -68,7 +73,7 @@ CREATE TABLE `status` (
   `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `status` (`codigo`, `nome`, `descricao`) VALUES
 (1,	'Em Andamento',	''),
@@ -96,4 +101,4 @@ CREATE TABLE `transacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2013-11-17 11:48:59
+-- 2016-07-02 14:44:35
