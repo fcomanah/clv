@@ -5,7 +5,7 @@
     function frete(){
         $_SESSION['sCepDestino']=$_REQUEST['sCepDestino'];
         $_SESSION['nCdServico']=$_REQUEST['nCdServico'];
-				//if (get_frete()=='') $msg="O frete não pode ser calculado.";
+				if (get_frete()=='') $msg="O frete não pode ser calculado.";
     }
 
 	if($_REQUEST['command']=='delete' && $_REQUEST['pid']>0){
@@ -15,10 +15,10 @@
 	} else if($_REQUEST['command']=='update'){
         update_cart($link);
 	} else if($_REQUEST['command']=='frete'){
-        //frete();
+        frete();
 	} else if($_REQUEST['command']=='checkout'){
         update_cart($link);
-        //frete();
+        frete();
         header("location:pagamento.php");
         exit();
 	}
@@ -127,7 +127,7 @@
             <?php
 				}
 			?>
-            		<!--<tr>
+            		<tr>
                         <td></td>
                         <td>Frete</td>
                         <td>
@@ -143,9 +143,9 @@
                                 <option value="40290" <?php if ('40290' == $_SESSION['nCdServico']) echo ' selected="selected"';?>>SEDEX HOJE</option>
                             </select>
                         </td>
-                        <td>R$ <?php //echo number_format(get_frete(), 2, '.', ' ')?></td>
-                    <td><a href="javascript:get_frete()">Calcular</a></td></tr>
-										<td><a href="">Calcular</a></td></tr> -->
+                        <td>R$ <?php echo number_format(get_frete(), 2, '.', ' ');?></td>
+                    <td><a href="javascript:get_frete()">Calcular</a></td>
+								</tr>
 
 				<tr><td colspan="2"><b>Total: R$ <?php echo number_format(get_order_total($link), 2, '.', ' ')?></b></td><td colspan="5" align="right">
                     <input type="button" value="Esvaziar" onclick="clear_cart()">

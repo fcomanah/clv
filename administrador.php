@@ -41,8 +41,7 @@
 <?php if($_SESSION['status'] == 'dentro'){ 	?>
         <div align="right">
             <a href="produto.php"><input type="submit" value="Produto" /></td></a>
-            <a href="transacao.php"><input type="submit" value="Transacao" /></td></a>
-            <a href="relatorio.php"><input type="submit" value="Relatório" /></td></a>
+            <a href="transacao.php"><input type="submit" value="Transação" /></td></a>
             <a href="status.php"><input type="submit" value="Status" /></td></a>
         </div>
         <form name="form2" method="POST">

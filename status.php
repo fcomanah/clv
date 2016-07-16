@@ -2,19 +2,19 @@
 <?
 	include("includes/db.php");
 	include("includes/status_functions.php");
-    
+
 	if($_REQUEST['command']=='login'){
-		
+
 		$email=$_REQUEST['email'];
         $senha=$_REQUEST['senha'];
         list ( $_SESSION['status'], $msg, $msg_color ) = auth($email, $senha);
-        
+
 	}else if($_REQUEST['command']=='create'){
         $status=array();
         $status[1]=$_REQUEST['sname_c'];
         $status[2]=$_REQUEST['sdesc_c'];
         create_status($status);
-        
+
 	}else if($_REQUEST['command']=='edit'){
         $pedit = $_REQUEST['pid'];
 
@@ -24,12 +24,12 @@
         $status[1]=$_REQUEST['sname'];
         $status[2]=$_REQUEST['sdesc'];
         update_status($status);
-        
+
 	}else if($_REQUEST['command']=='delete'){
         remove_status($_REQUEST['pid']);
-      
+
 	}else if($_REQUEST['command']=='logout'){
-        
+
         $_SESSION['status'] = 'fora';
         $msg_color ='#0F0';
         $msg = "Logout feito com sucesso.";
@@ -105,9 +105,14 @@
 <body>
 
 <?if($_SESSION['status'] == 'dentro'){?>
+				<div align="right">
+						<a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
+						<a href="produto.php"><input type="submit" value="Produto" /></td></a>
+						<a href="transacao.php"><input type="submit" value="Transação" /></td></a>
+				</div>
         <form name="form2" method="POST">
             <input type="hidden" name="command" value="logout" />
-            <div align="right">                
+            <div align="right">
                 <table border="0" cellpadding="2px">
                     <tr><td>&nbsp;</td><td><input type="submit" value="Sair" /></td></tr>
                 </table>
@@ -121,7 +126,7 @@
     <div style="padding-bottom:10px">
     	<h1 align="center">Status</h1>
         <div style="color:<?=$msg_color?>"><?=$msg?></div>
-    </div>        
+    </div>
     	<table border="0" cellpadding="5px" cellspacing="1px" style="font-family:Verdana, Geneva, sans-serif; font-size:11px; background-color:#E1E1E1" width="100%">
     	<?
             	echo '<tr bgcolor="#FFFFFF" style="font-weight:bold">
@@ -129,16 +134,16 @@
                     <td>Nome</td>
                     <td>Descrição</td>
                     <td>Opções</td></tr>';
-                    
+
             $statuss = read_status();
-            
+
 			if( count($statuss) > 0 ){
-                    
+
 				foreach ($statuss as $status){
 					$pid   =$status[0];
 					$sname =$status[1];
 					$sdesc =$status[2];
-                    
+
                     if ( $pid == $pedit) {
 			?>
             		<tr bgcolor="#FFFFFF">

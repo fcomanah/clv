@@ -115,6 +115,7 @@
         // Instancia a classe
         $frete = new RsCorreios();
 
+
         // Percorre todos as variáveis $_POST para setar os atributos necessários
         // Se você achar melhor pode fazer 1 a 1.
         // Ex.: $frete->setValue('sCepOrigem', $_POST['sCepOrigem']);
@@ -125,18 +126,23 @@
         $frete->setValue('sCepDestino', $_SESSION['sCepDestino']);
         $frete->setValue('nCdServico', $_SESSION['nCdServico']);
 
+
+//TODO: ESSEs Campos devem sera justados conforme a Loja
         $frete->setValue('sCepOrigem', "31050540");
         $frete->setValue('nVlPeso', "1");
         $frete->setValue('nVlAltura', "2");
         $frete->setValue('nVlLargura', "11");
         $frete->setValue('nVlComprimento', "16");
 
+
         // Diâmetro
         $frete->getDiametro();
+
 
         // Chamado ao método getFrete, que irá se comunicar com os correios
         // e nos trazer o resultado
         $result = $frete->getFrete();
+
 
 
         // Retornamos a mensagem de erro caso haja alguma falha
@@ -159,17 +165,15 @@
 
             return str_replace(array(','), array('.'), $result['valor']);
         }
-
-        //echo $resultadoFrete;
     }
 
-    function no_more_than($a, $b){
-        if ( $a <= $b){
-            return $a;
-        }else{
-            return $b;
-        }
-    }
+  function no_more_than($a, $b){
+      if ( $a <= $b){
+          return $a;
+      }else{
+          return $b;
+      }
+  }
 	function get_product_stock($link,$pid){
 		$result=mysqli_query($link,"select quantidadeestoque from produto where sku=$pid");
 		$row=mysqli_fetch_array($result);
@@ -185,9 +189,9 @@
 		$row=mysqli_fetch_array($result);
 		return $row['preco'];
 	}
-	function get_description($pid){
-		$result=mysql_query("select descricao from produto where sku=$pid");
-		$row=mysql_fetch_array($result);
+	function get_description($link, $pid){
+		$result=mysqli_query($link,"select descricao from produto where sku=$pid");
+		$row=mysqli_fetch_array($result);
 		return $row['descricao'];
 	}
 
@@ -200,11 +204,11 @@
 			$preco=get_price($link,$pid);
 			$sum+=$preco*$q;
 		}
-        //if(get_frete()==''){
+        if(get_frete()==''){
             return $sum;
-        //}else{
-        //    return $sum+get_frete();
-        //}
+        }else{
+            return $sum+get_frete();
+        }
 	}
 
 	function del_cart($link,$pid){

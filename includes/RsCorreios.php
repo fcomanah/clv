@@ -2,25 +2,25 @@
 
 /**
  * Classe RSCorreios
- * 
+ *
  * Classe criada por Rodrigo dos Santos para realizar o cálculo de frete dos
  * correios em suas aplicações de ecommerce.
- * 
+ *
  * PHP Version 5
- * 
+ *
  * @category RsCorreios
  * @package  RsCorreios
  * @author   Rodrigo dos Santos <falecom@rodrigodossantos.ws>
  * @license  GNU GENERAL PUBLIC LICENSE
  * @link     http://rodrigodossantos.ws
- * 
+ *
  */
 
 /**
  * Esta classe faz a comunicação com o webservice dos correios
  * para cálculo de frete por SEDEX e PAC, etc.
  * Baseado no manual disponibilizado pelos Correios
- * 
+ *
  * @category RsCorreios
  * @package  RsCorreios
  * @author   Rodrigo dos Santos <falecom@rodrigodossantos.ws>
@@ -75,7 +75,7 @@ class RsCorreios
     protected $sCepDestino;
 
     /**
-     * Peso da encomenda, incluindo sua embalagem. 
+     * Peso da encomenda, incluindo sua embalagem.
      * O peso deve ser informado em quilogramas.
      */
     protected $nVlPeso;
@@ -119,7 +119,7 @@ class RsCorreios
     protected $sCdMaoPropria = "N";
 
     /**
-     * Indica se a encomenda será entregue com o serviço 
+     * Indica se a encomenda será entregue com o serviço
      * adicional valor declarado.
      * Neste campo deve ser apresentado o valor declarado desejado, em Reais.
      * Se não optar pelo serviço informar zero.
@@ -127,7 +127,7 @@ class RsCorreios
     protected $nVlValorDeclarado = "0";
 
     /**
-     * Indica se a encomenda será entregue com o serviço 
+     * Indica se a encomenda será entregue com o serviço
      * adicional aviso de recebimento.
      * Valores possíveis: S ou N (S = Sim, N = Não)
      */
@@ -143,10 +143,10 @@ class RsCorreios
 
     /**
      * SETTER único para todos os atributos da classe
-     * 
+     *
      * @param string $name  Nome do atributo
      * @param string $value Valor do atributo
-     * 
+     *
      * @return void
      */
     public function setValue($name, $value)
@@ -156,9 +156,9 @@ class RsCorreios
 
     /**
      * GETTER único para todos os atributos da class
-     * 
+     *
      * @param string $name Nome do atributo
-     * 
+     *
      * @return void
      */
     public function getValue($name)
@@ -168,7 +168,7 @@ class RsCorreios
 
     /**
      * Calcula o diâmetro da encomenda em cm
-     * 
+     *
      * @return void
      */
     public function getDiametro()
@@ -178,7 +178,7 @@ class RsCorreios
 
     /**
      * Monta a URL de Consulta para enviar ao webservice dos correios
-     * 
+     *
      * @return string
      */
     private function _getURL()
@@ -199,9 +199,9 @@ class RsCorreios
 
     /**
      * Obtém dados de uma url via curl
-     * 
+     *
      * @param string $url URL do site que se deseja obter os dados
-     * 
+     *
      * @return mixed Dados retornados pela URL
      */
     private function _getSite($url)
@@ -218,7 +218,7 @@ class RsCorreios
 
     /**
      * Comunica-se com os correios para obter os valores do frete
-     * 
+     *
      * @return array
      */
     public function getFrete()
@@ -227,6 +227,7 @@ class RsCorreios
         $response = $this->_getSite(self::_getURL());
 
         $xml = simplexml_load_string($response);
+
 
         $frete = array("servico_codigo" => $xml->cServico->Codigo,
             "valor" => $xml->cServico->Valor,

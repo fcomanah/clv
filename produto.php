@@ -1,15 +1,16 @@
-<?
+<?php
 	include("includes/db.php");
+	include("includes/auth_functions.php");
 	include("includes/produto_functions.php");
-    
+
 	if($_REQUEST['command']=='login'){
-		
+
 		$email=$_REQUEST['email'];
         $senha=$_REQUEST['senha'];
-        list ( $_SESSION['status'], $msg, $msg_color ) = auth($email, $senha);
-        
+        list ( $_SESSION['status'], $msg, $msg_color ) = auth($link, $email, $senha);
+
 	}else if($_REQUEST['command']=='create'){
-        
+
         $_UP['pasta'] = 'images/';
         $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
         $_UP['extensoes'] = array('jpg', 'png', 'gif');
@@ -56,16 +57,16 @@
             } else {
                 // Não foi possível fazer o upload, provavelmente a pasta está incorreta
                 echo "Não foi possível enviar o arquivo, tente novamente";
-            }        
+            }
         }
-        
 
-        
+
+
 	}else if($_REQUEST['command']=='edit'){
         $pedit = $_REQUEST['pid'];
 
 	}else if($_REQUEST['command']=='update'){
-        
+
         $product=array();
         $product[0]=$_REQUEST['pid'];
         $product[1]=$_REQUEST['pname'];
@@ -74,11 +75,11 @@
         $product[4]=$_REQUEST['ppict'];
         $product[5]=$_REQUEST['pqest'];
         update_product($product);
-        
+
 	}else if($_REQUEST['command']=='alter'){
         $upload=true;
         $pid = $_REQUEST['pid'];
-        
+
 	}else if($_REQUEST['command']=='upload'){
         $_UP['pasta'] = 'images/';
         $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
@@ -113,7 +114,7 @@
                 // Upload efetuado com sucesso, exibe uma mensagem e um link para o arquivo
                 echo "Upload efetuado com sucesso!";
                 echo '<br /><a href="' . $_UP['pasta'] . $nome_final . '">Clique aqui para acessar o arquivo</a>';
-                
+
                 $product=array();
                 $product[0]=$_REQUEST['pid'];
                 $product[4]=$nome_final;
@@ -123,15 +124,15 @@
             } else {
                 // Não foi possível fazer o upload, provavelmente a pasta está incorreta
                 echo "Não foi possível enviar o arquivo, tente novamente";
-            }        
+            }
         }
 
-        
+
 	}else if($_REQUEST['command']=='delete'){
         remove_product($_REQUEST['pid']);
-      
+
 	}else if($_REQUEST['command']=='logout'){
-        
+
         $_SESSION['status'] = 'fora';
         $msg_color ='#0F0';
         $msg = "Logout feito com sucesso.";
@@ -236,117 +237,131 @@
 
 <body>
 
-<?if($_SESSION['status'] == 'dentro'){?>
-    <form name="form2" method="POST">
-    <input type="hidden" name="command" value="logout" />
-    <div align="right">                
-    <table border="0" cellpadding="2px">
-    <tr><td>&nbsp;</td><td><input type="submit" value="Sair" /></td></tr>
-    </table>
-    </div>
-    </form>
 
-    <div style="margin:0px auto; width:800px;" >
-        <div style="padding-bottom:10px">
-            <h1 align="center">Produto</h1>
-            <div style="color:<?=$msg_color?>"><?=$msg?></div>
-        </div>
-        <table border="0" cellpadding="5px" cellspacing="1px" style="font-family:Verdana, Geneva, sans-serif; font-size:11px; background-color:#E1E1E1" width="100%">
-            
-    <?if($upload){?>
-        <tr bgcolor="#FFFFFF" style="font-weight:bold"><td>#</td><td>Nome</td><td colspan="4">Alterando a imagem<td>Opções</td></tr>
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="command" value="upload"/>
-            <input type="hidden" name="pid" value="<?=$pid?>"/>
-            <tr>
-                <td><?=$pid?></td>
-                <td><?=get_name_product($pid)?></td>
-                <td colspan="4">
-                    <input type="file" name="arquivo"/>
-                </td>
-                <td><input type="submit" value="Enviar" /><a href="produto.php">Cancelar</a></td>
-            </tr>
-            <div align="center"><img src="images/<?=get_image_product($pid)?>"></div>            
-        </form> 
-        
-    <?}else{?>
-        <tr bgcolor="#FFFFFF" style="font-weight:bold"><td>#</td><td>Nome</td><td>Descrição</td><td>Preço</td><td>Imagem</td><td>QtdEstoque</td><td>Opções</td></tr>
-        <form name="form1" method="post">
-            <input type="hidden" name="command" />
-            <input type="hidden" name="pid" />
-            <? $products = get_all_products();
+	<?php if($_SESSION['status'] == 'dentro'){?>
+			<div align="right">
+					<a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
+					<a href="transacao.php"><input type="submit" value="Transacao" /></td></a>
+					<a href="status.php"><input type="submit" value="Status" /></td></a>
+			</div>
+	    <form name="form2" method="POST">
+		    <input type="hidden" name="command" value="logout" />
+		    <div align="right">
+			    <table border="0" cellpadding="2px">
+			    	<tr><td>&nbsp;</td><td><input type="submit" value="Sair" /></td></tr>
+			    </table>
+		    </div>
+	    </form>
 
-            if( count($products) > 0 ){
-                foreach ($products as $product){
-                    $pid   =$product[0];
-                    $pname =$product[1];
-                    $pdesc =$product[2];
-                    $ppric =$product[3];
-                    $ppict =$product[4];
-                    $pqest =$product[5];
 
-                    if ( $pid == $pedit ) {?>
-                        <tr bgcolor="#FFFFFF">
-                        <td><?=$pid?></td>
-                        <td><input type="text" name="pname" value="<?=$pname?>"/></td>
-                        <td><input type="text" name="pdesc" value="<?=$pdesc?>"/></td>
-                        <td><input type="text" name="ppric" value="<?=$ppric?>"/></td>                    
-                        <td>
-                            <input type="hidden" name="ppict" value="<?=$ppict?>"/>
-                            <a href="produto.php?command=alter&pid=<?=$pid?>" title="Alterar Imagem"><?=$ppict?></a>
-                        </td>
-                        <td><input type="text" name="pqest" value="<?=$pqest?>"/></td>
-                        <td><a href="javascript:del(<?=$pid?>)">Remover</a>
-                            <a href="javascript:update(<?=$pid?>)">Atualizar</a></td>
-                        </tr>
-                    <?} else { ?>
-                        <tr bgcolor="#FFFFFF">
-                        <td><?=$pid?></td>
-                        <td><?=$pname?></td>
-                        <td><?=$pdesc?></td>
-                        <td><?=$ppric?></td>
-                        <td><?=$ppict?></td>
-                        <td><?=$pqest?></td>
-                        <td><a href="javascript:edit(<?=$pid?>)">Editar</a></td>
-                        </tr>
-                    <?}
-                }
-            } else {
-                echo '<tr bgColor=\'#FFFFFF\'><td colspan="6" align="left">Sua Lista de Produtos está vazia!</td>';
-            }?>
-        </form>
+				    <div style="margin:0px auto; width:800px;" >
+				        <div style="padding-bottom:10px">
+				            <h1 align="center">Produto</h1>
+				            <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
+				        </div>
+				        <table border="0" cellpadding="5px" cellspacing="1px" style="font-family:Verdana, Geneva, sans-serif; font-size:11px; background-color:#E1E1E1" width="100%">
 
-        <form name="form3" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="command"/>
-            <input type="hidden" name="pid"/> 
-            <tr>
-            <td>+</td>
-            <td><input type="text" name="pname_c" /></td>
-            <td><input type="text" name="pdesc_c" /></td>
-            <td><input type="text" name="ppric_c" /></td>
-            <td><input type="file" name="ppict_c" /></td>
-            <td><input type="text" name="pqest_c" /></td>
-            <td><a href="javascript:create()">Adicionar</a></td>
-            </tr>
-        </form> 
-        
-    <?}?>
-        </table>
-    </div>
-<?}else{?>
-    <form name="form1" onsubmit="return validate()" method="POST">
-    <input type="hidden" name="command" />
-    <div align="center">
-    <h1 align="center">Login</h1>
-    <div style="color:<?=$msg_color?>"><?=$msg?></div>
-    <table border="0" cellpadding="2px">
-    <tr><td>Email:</td><td><input type="text" name="email" value="<?=$email?>" /></td></tr>
-    <tr><td>Senha:</td><td><input type="password" name="senha" /></td></tr>
-    <tr><td>&nbsp;</td><td><input type="submit" value="Entrar" /></td></tr>
-    </table>
-    </div>
-    </form>
-<?}?>
+				    <?php if($upload){?>
+				        <tr bgcolor="#FFFFFF" style="font-weight:bold"><td>#</td><td>Nome</td><td colspan="4">Alterando a imagem<td>Opções</td></tr>
+				        <form method="post" enctype="multipart/form-data">
+				            <input type="hidden" name="command" value="upload"/>
+				            <input type="hidden" name="pid" value="<?php echo $pid?>"/>
+				            <tr>
+				                <td><?php echo $pid?></td>
+				                <td><?php echo get_name_product($link,$pid)?></td>
+				                <td colspan="4">
+				                    <input type="file" name="arquivo"/>
+				                </td>
+				                <td><input type="submit" value="Enviar" /><a href="produto.php">Cancelar</a></td>
+				            </tr>
+				            <div align="center"><img src="images/<?php echo get_image_product($link,$pid)?>"></div>
+				        </form>
+
+				    <?php }else{?>
+				        <tr bgcolor="#FFFFFF" style="font-weight:bold"><td>#</td><td>Nome</td><td>Descrição</td><td>Preço</td><td>Imagem</td><td>QtdEstoque</td><td>Opções</td></tr>
+				        <form name="form1" method="post">
+				            <input type="hidden" name="command" />
+				            <input type="hidden" name="pid" />
+				        </form>
+
+								<?php $products = get_all_products($link);
+								if( count($products) > 0 ){
+										foreach ($products as $product){
+												$pid   =$product[0];
+												$pname =$product[1];
+												$pdesc =$product[2];
+												$ppric =$product[3];
+												$ppict =$product[4];
+												$pqest =$product[5];
+								?>
+												<?php if ( $pid == $pedit ) {?>
+														<tr bgcolor="#FFFFFF">
+														<td><?php echo $pid?></td>
+														<td><input type="text" name="pname" value="<?php echo $pname?>"/></td>
+														<td><input type="text" name="pdesc" value="<?php echo $pdesc?>"/></td>
+														<td><input type="text" name="ppric" value="<?php echo $ppric?>"/></td>
+														<td>
+																<input type="hidden" name="ppict" value="<?php echo $ppict?>"/>
+																<a href="produto.php?command=alter&pid=<?php echo $pid?>" title="Alterar Imagem"><?php echo $ppict?></a>
+														</td>
+														<td><input type="text" name="pqest" value="<?php echo $pqest?>"/></td>
+														<td><a href="javascript:del(<?php echo $pid?>)">Remover</a>
+																<a href="javascript:update(<?php echo $pid?>)">Atualizar</a></td>
+														</tr>
+												<?php } else { ?>
+														<tr bgcolor="#FFFFFF">
+														<td><?php echo $pid?></td>
+														<td><?php echo $pname?></td>
+														<td><?php echo $pdesc?></td>
+														<td><?php echo $ppric?></td>
+														<td><?php echo $ppict?></td>
+														<td><?php echo $pqest?></td>
+														<td><a href="javascript:edit(<?php echo $pid?>)">Editar</a></td>
+														</tr>
+												<?php }?>
+								<?php
+										}
+								} else {
+										echo '<tr bgColor=\'#FFFFFF\'><td colspan="6" align="left">Sua Lista de Produtos está vazia!</td>';
+								}?>
+
+
+
+
+
+				        <form name="form3" method="post" enctype="multipart/form-data">
+				            <input type="hidden" name="command"/>
+				            <input type="hidden" name="pid"/>
+				            <tr>
+				            <td>+</td>
+				            <td><input type="text" name="pname_c" /></td>
+				            <td><input type="text" name="pdesc_c" /></td>
+				            <td><input type="text" name="ppric_c" /></td>
+				            <td><input type="file" name="ppict_c" /></td>
+				            <td><input type="text" name="pqest_c" /></td>
+				            <td><a href="javascript:create()">Adicionar</a></td>
+				            </tr>
+				        </form>
+
+				    <?php }?>
+				        </table>
+				    </div>
+
+
+	<?php }else{?>
+	    <form name="form1" onsubmit="return validate()" method="POST">
+	    <input type="hidden" name="command" />
+	    <div align="center">
+	    <h1 align="center">Login</h1>
+	    <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
+	    <table border="0" cellpadding="2px">
+	    <tr><td>Email:</td><td><input type="text" name="email" value="<?php echo $email?>" /></td></tr>
+	    <tr><td>Senha:</td><td><input type="password" name="senha" /></td></tr>
+	    <tr><td>&nbsp;</td><td><input type="submit" value="Entrar" /></td></tr>
+	    </table>
+	    </div>
+	    </form>
+	<?php }?>
 
 </body>
 </html>

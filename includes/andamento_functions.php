@@ -1,35 +1,37 @@
-<?
+<?php
     include("auth_functions.php");
 
 	function get_transaction($tidbcash){
-        
-          	$bcash_email = 'manaphys@gmail.com';
-            $bcash_token = 'F878CC6FE37BA15012A9B42E1D7BDA78';  
-      
-          $urlPost = 'https://www.pagamentodigital.com.br/transacao/consulta/'; 
+
+//TODO: Alterar conforme o usuário
+          $bcash_email = 'manaphys@gmail.com';
+// Obtenha seu TOKEN entrando no menu Ferramentas do Bcash
+          $bcash_token = '189418A59EAE7662C5FD84A380690C14';
+
+          $urlPost = 'https://www.pagamentodigital.com.br/transacao/consulta/';
           $transacaoId = $tidbcash;
           $pedidoId = '';
-          $tipoRetorno = '2'; 
-          $codificacao = '1'; 
+          $tipoRetorno = '2';
+          $codificacao = '1';
 
-          ob_start(); 
-            $ch = curl_init(); 
-              curl_setopt($ch, CURLOPT_URL, $urlPost); 
-              curl_setopt($ch, CURLOPT_POST, 1); 
-              curl_setopt($ch, CURLOPT_POSTFIELDS,array('id_transacao'=>$transacaoId, 'id_pedido'=>$pedidoId,'tipo_retorno'=>$tipoRetorno,'codificacao'=>$codificacao)); 
-              curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Basic '.base64_encode($bcash_email.':'.$bcash_token))); 
-            curl_exec($ch); 
-            $json = ob_get_contents(); 
-          ob_end_clean(); 
-          
+          ob_start();
+            $ch = curl_init();
+              curl_setopt($ch, CURLOPT_URL, $urlPost);
+              curl_setopt($ch, CURLOPT_POST, 1);
+              curl_setopt($ch, CURLOPT_POSTFIELDS,array('id_transacao'=>$transacaoId, 'id_pedido'=>$pedidoId,'tipo_retorno'=>$tipoRetorno,'codificacao'=>$codificacao));
+              curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Basic '.base64_encode($bcash_email.':'.$bcash_token)));
+            curl_exec($ch);
+            $json = ob_get_contents();
+          ob_end_clean();
 
-          /* Capturando o http code para tratamento dos erros na requisição*/  
-          $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
-          curl_close($ch); 
+
+          /* Capturando o http code para tratamento dos erros na requisição*/
+          $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+          curl_close($ch);
 
           if($httpCode != '200')
-          { 
-           switch ($httpCode) 
+          {
+           switch ($httpCode)
             {
               case 400:
                 echo 'Requisição com parâmetros obrigatórios vazios ou inválidos';
@@ -55,9 +57,9 @@
               var_dump($json);
             echo '</pre>';
             */
-            
+
             $obj = json_decode($json,true);
-            
+
             /*
             echo '<pre>';
               echo '$obj is ';
@@ -67,25 +69,25 @@
             echo '</pre>';
             exit();
             */
-            
-            
+
+
             //echo_iterative($obj);
-           
+
             //echo_recursive($obj, '');
-            
+
             //echo get_iterative($obj);
-            
+
             //get_recursive($obj, '', $str);
             //echo $str;
 
             /*
             echo $obj['transacao']['data_transacao'];
-            echo '</br>';    
+            echo '</br>';
             echo $obj['transacao']['id_transacao'];
             echo '</br>';
             echo $obj['transacao']['status'];
             echo '</br></br>';
-            
+
             $i=0;
             while(isset($obj['transacao']['pedidos'][$i]['nome_produto']))
             {
@@ -98,7 +100,7 @@
               ++$i;
             }
             */
-            
+
             $trs = array();
 
             $trs['nome'] = $obj['transacao']['cliente_nome'];
@@ -110,13 +112,13 @@
             $trs['cidade'] = $obj['transacao']['cliente_cidade'];
             $trs['estado'] = $obj['transacao']['cliente_estado'];
             $trs['cep'] = $obj['transacao']['cliente_cep'];
-            
-            
+
+
             $trs['data_transacao'] = $obj['transacao']['data_transacao'];
             $trs['id_transacao'] = $obj['transacao']['id_transacao'];
             $trs['id_pedido'] = $obj['transacao']['id_pedido'];
             $trs['status'] = $obj['transacao']['status'];
-            
+
             $i=0;
             while(isset($obj['transacao']['pedidos'][$i]['nome_produto']))
             {
@@ -127,7 +129,7 @@
               ++$i;
             }
             $trs['qtd_prds'] = $i;
-            
+
             return $trs;
         }
 	}

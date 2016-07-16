@@ -1,8 +1,10 @@
-<?
+<?php
 	include("includes/db.php");
 
   // Obtenha seu TOKEN entrando no menu Ferramentas do Bcash
-  $bcash_token = 'F878CC6FE37BA15012A9B42E1D7BDA78';
+  $bcash_token = '189418A59EAE7662C5FD84A380690C14';
+
+
 
   /* Montando as variáveis de retorno */
   $id_transacao = $_POST['id_transacao'];
@@ -56,15 +58,15 @@
   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
   curl_exec ($ch);
   $resposta = ob_get_contents();
-  ob_end_clean(); 
-  
+  ob_end_clean();
+
     if(trim($resposta)=="VERIFICADO")
     {
         $qexiste = "SELECT * FROM `transacao` WHERE `idexterno`='$id_transacao';";
-        $rexiste = mysql_query ($qexiste);
+        $rexiste = mysqli_query ($link, $qexiste);
 
-        if(mysql_num_rows($rexiste) == 0){            
-            for ($x=1; $x <= $qtde_produtos; $x++) 
+        if(mysqli_num_rows($rexiste) == 0){
+            for ($x=1; $x <= $qtde_produtos; $x++)
             {
                 $produto_codigo = $_POST['produto_codigo_'.$x];
                 $produto_descricao = $_POST['produto_descricao_'.$x];
@@ -80,17 +82,17 @@
         date_default_timezone_set('America/Sao_Paulo');
         $criacao = date('r');
         $q = "INSERT INTO `transacao` (`id`, `idexterno`, `valor`, `codigostatus`, `criacao`) VALUES ('$id_pedido', '$id_transacao', '$valor_original', '1', '$criacao');";
-        $r = mysql_query ($q);
+        $r = mysqli_query ($link, $q);
     }
 
-    unset($_SESSION['chave']);    
+    unset($_SESSION['chave']);
     unset($_SESSION['cart']);
-    
+
             //SMTP needs accurate times, and the PHP time zone MUST be set
             //This should be done in your php.ini, but this is how to do it if you don't have access to that
             date_default_timezone_set('America/Sao_Paulo');
 
-            require 'includes/PHPMailerAutoload.php';           
+            require 'includes/PHPMailerAutoload.php';
 
             //Create a new PHPMailer instance
             $mail = new PHPMailer();
@@ -125,14 +127,14 @@
             $mail->Subject = 'CLV';
             //Read an HTML message body from an external file, convert referenced images to embedded,
             //convert HTML into a basic plain-text alternative body
-            $mail->msgHTML('Transação iniciada! 
+            $mail->msgHTML('Transação iniciada!
                 Clique nesse <a href="http://localhost/clv/andamento.php?command=read&tidbcash='.$id_transacao.'">link</a>
                  para acompanhar o status do seu pedido. Cordialmente,CLV');
             //Replace the plain text body with one created manually
             $mail->AltBody = 'This is a plain-text message body';
             //Attach an image file
             #$mail->addAttachment('images/phpmailer_mini.gif');
-            
+
 
             //send the message, check for errors
             if (!$mail->send()) {
@@ -142,7 +144,7 @@
                 //echo "Message sent!";
                 $data['success'] = true;
             }
-    
+
     $url = 'Location: andamento.php?command=read&tidbcash='.$id_transacao;
     header($url);
 

@@ -1,24 +1,25 @@
-<?
+<?php
 	include("includes/db.php");
+	include("includes/auth_functions.php");
 	include("includes/transacao_functions.php");
-    
+
 	if($_REQUEST['command']=='login'){
-		
+
 		$email=$_REQUEST['email'];
         $senha=$_REQUEST['senha'];
-        list ( $_SESSION['status'], $msg, $msg_color ) = auth($email, $senha);
-        
+        list ( $_SESSION['status'], $msg, $msg_color ) = auth($link,$email, $senha);
+
 	}else if($_REQUEST['command']=='update'){
         $transaction=array();
         $transaction[0]=$_REQUEST['tid'];
         $transaction[3]=$_REQUEST['tstat'];
-        update_transaction($transaction);
-        
+        update_transaction($link,$transaction);
+
 	}else if($_REQUEST['command']=='edit'){
         $pedit = $_REQUEST['tid'];
-        
+
 	}else if($_REQUEST['command']=='logout'){
-        
+
         $_SESSION['status'] = 'fora';
         $msg_color ='#0F0';
         $msg = "Logout feito com sucesso.";
@@ -66,10 +67,15 @@
 
 <body>
 
-<?if($_SESSION['status'] == 'dentro'){?>
+<?php if($_SESSION['status'] == 'dentro'){?>
+				<div align="right">
+					  <a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
+						<a href="produto.php"><input type="submit" value="Produto" /></td></a>
+						<a href="status.php"><input type="submit" value="Status" /></td></a>
+				</div>
         <form name="form2" method="POST">
             <input type="hidden" name="command" value="logout" />
-            <div align="right">                
+            <div align="right">
                 <table border="0" cellpadding="2px">
                     <tr><td>&nbsp;</td><td><input type="submit" value="Sair" /></td></tr>
                 </table>
@@ -82,10 +88,10 @@
     <div style="margin:0px auto; width:800px;" >
     <div style="padding-bottom:10px">
     	<h1 align="center">Transação</h1>
-        <div style="color:<?=$msg_color?>"><?=$msg?></div>
-    </div>        
+        <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
+    </div>
     	<table border="0" cellpadding="5px" cellspacing="1px" style="font-family:Verdana, Geneva, sans-serif; font-size:11px; background-color:#E1E1E1" width="100%">
-    	<?
+    	<?php
             	echo '<tr bgcolor="#FFFFFF" style="font-weight:bold">
                     <td>#</td>
                     <td># bcash</td>
@@ -94,12 +100,12 @@
                     <td>Criação</td>
                     <td>Modificação</td>
                     <td>Opções</td></tr>';
-                    
-            $transactions = get_all_transactions();
-            $status = get_all_status();
-            
+
+            $transactions = get_all_transactions($link);
+            $status = get_all_status($link);
+
 			if( count($transactions) > 0 ){
-                    
+
 				foreach ($transactions as $transaction){
 					$tid   =$transaction[0];
 					$tidbcash =$transaction[1];
@@ -107,16 +113,16 @@
                     $tstat =$transaction[3];
                     $tcria =$transaction[4];
                     $tmodi =$transaction[5];
-                    
+
                     if ( $tid == $pedit) {
 			?>
             		<tr bgcolor="#FFFFFF">
-                        <td><?=$tid?></td>
-                        <td><?=$tidbcash?></td>
-                        <td><?=$tvalor?></td>
+                        <td><?php echo $tid?></td>
+                        <td><?php echo $tidbcash?></td>
+                        <td><?php echo $tvalor?></td>
                         <td>
-                            <select name="tstat"> 
-                            <?
+                            <select name="tstat">
+                            <?php
                                 foreach($status as $stat){
                                     echo '<option VALUE="'.$stat[0].'"';
                                     if ($stat[1] == $tstat) echo ' selected="selected"';
@@ -125,45 +131,45 @@
                             ?>
                             </select>
                         </td>
-                        <td><?=$tcria?></td>
-                        <td><?=$tmodi?></td>
-                        <td><a href="javascript:update(<?=$tid?>)">Atualizar</a></td>
-                    </tr>
-            <?      } else { ?>
+                        <td><?php echo $tcria?></td>
+                        <td><?php echo $tmodi?></td>
+                        <td><a href="javascript:update(<?php echo $tid?>)">Atualizar</a></td>
+                </tr>
+            <?php      } else { ?>
             		<tr bgcolor="#FFFFFF">
-                        <td><?=$tid?></td>
-                        <td><a href="andamento.php?command=read&tidbcash=<?=$tidbcash?>" target="_blank""><?=$tidbcash?></a></td>
-                        <td><?=number_format($tvalor, 2, '.', ' ')?></td>
-                        <td><?=$tstat?></td>
-                        <td><?=$tcria?></td>
-                        <td><?=$tmodi?></td>
-                        <td><a href="javascript:edit(<?=$tid?>)">Editar</a></td>
+                        <td><?php echo $tid?></td>
+                        <td><a href="andamento.php?command=read&tidbcash=<?php echo $tidbcash?>" target="_blank""><?php echo $tidbcash?></a></td>
+                        <td><?php=number_format($tvalor, 2, '.', ' ')?></td>
+                        <td><?php echo $tstat?></td>
+                        <td><?php echo $tcria?></td>
+                        <td><?php echo $tmodi?></td>
+                        <td><a href="javascript:edit(<?php echo $tid?>)">Editar</a></td>
                     </tr>
-            <?      }
+    <?php             }
 				}
             }
 			else{
-				echo '<tr bgColor=\'#FFFFFF\'><td colspan="6" align="left">Sua Lista de Produtos está vazia!</td>';
+				echo '<tr bgColor=\'#FFFFFF\'><td colspan="6" align="left">Sua Lista de Transações está vazia!</td>';
 			}
 		?>
         </table>
     </div>
 </form>
 
-<?}else{?>
+<?php }else{?>
         <form name="form1" onsubmit="return validate()" method="POST">
             <input type="hidden" name="command" />
             <div align="center">
                 <h1 align="center">Login</h1>
-                <div style="color:<?=$msg_color?>"><?=$msg?></div>
+                <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
                 <table border="0" cellpadding="2px">
-                    <tr><td>Email:</td><td><input type="text" name="email" value="<?=$email?>" /></td></tr>
+                    <tr><td>Email:</td><td><input type="text" name="email" value="<?php echo $email?>" /></td></tr>
                     <tr><td>Senha:</td><td><input type="password" name="senha" /></td></tr>
                     <tr><td>&nbsp;</td><td><input type="submit" value="Entrar" /></td></tr>
                 </table>
             </div>
         </form>
-<?}?>
+<?php }?>
 
 </body>
 </html>

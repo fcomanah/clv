@@ -1,31 +1,30 @@
-<?
-    include("auth_functions.php");
-/*       
+<?php
+/*
 	function create_transaction($row){
         date_default_timezone_set('America/Sao_Paulo');
         $criacao = date('r');
 		$result=mysql_query("INSERT INTO `transacao` (`idexterno`, `valor`, `codigostatus`, `criacao`) VALUES ('$row[1]', '$row[2]', '$row[3]', '$criacao');");
 	}
 */
-	function get_all_transactions(){
-		$result=mysql_query("SELECT `id`, `idexterno`, `valor`, `nome`, `criacao`, `modificacao` FROM `transacao`, `status` WHERE `codigostatus` = `codigo` ORDER BY `id` DESC");
+	function get_all_transactions($link){
+		$result=mysqli_query($link, "SELECT `id`, `idexterno`, `valor`, `nome`, `criacao`, `modificacao` FROM `transacao`, `status` WHERE `codigostatus` = `codigo` ORDER BY `id` DESC");
+    $rows = array();
+    while (	$row=mysqli_fetch_row($result) ){
+      array_push($rows, $row);
+    }
+		return $rows;
+	}
+
+	function get_all_status($link){
+        $result=mysqli_query($link,"SELECT * FROM `status` ORDER BY `nome`");
         $rows = array();
-        while (	$row=mysql_fetch_row($result) ){
+        while (	$row=mysqli_fetch_row($result) ){
             array_push($rows, $row);
         }
 		return $rows;
 	}
-    
-	function get_all_status(){
-        $result=mysql_query("SELECT * FROM `status` ORDER BY `nome`");
-        $rows = array();
-        while (	$row=mysql_fetch_row($result) ){
-            array_push($rows, $row);
-        }
-		return $rows;
-	}
-    
-	function update_transaction($row){
-		$result=mysql_query("UPDATE `transacao` SET `codigostatus` = '$row[3]', `modificacao`=now() WHERE `id` = '$row[0]';");
+
+	function update_transaction($link,$row){
+		$result=mysqli_query($link,"UPDATE `transacao` SET `codigostatus` = '$row[3]', `modificacao`=now() WHERE `id` = '$row[0]';");
 	}
 ?>
