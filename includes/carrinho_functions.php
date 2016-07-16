@@ -85,8 +85,7 @@
         );
     }
 
-    function create_sessao($link){
-        print_r($link);
+    function create_sessao($link){        
         $ua=getBrowser();
         $browser = $ua['name'] . " " . $ua['version'];
         $ip = $_SERVER['REMOTE_ADDR'];

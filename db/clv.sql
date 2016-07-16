@@ -52,8 +52,7 @@ INSERT INTO `produto` (`sku`, `nome`, `descricao`, `preco`, `imagem`, `quantidad
 (5,	'Bateria',	'Para NoteBooks Dell',	56.77,	'charger.jpg',	1000),
 (6,	'Drive CD',	'Leitor e Gravador',	555.33,	'cdrom-drive.jpg',	1000),
 (7,	'HardDrive',	'80GB - 7200RPM',	137.00,	'hard-drive.jpg',	1000),
-(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000),
-(9,	'Camisa',	'Algodão',	149.99,	'camisa.jpg',	100);
+(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000);
 
 DROP TABLE IF EXISTS `sessao`;
 CREATE TABLE `sessao` (

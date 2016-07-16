@@ -5,7 +5,6 @@
 
 	if($_REQUEST['command']=='add' && $_REQUEST['productid']>0){
 		$pid=$_REQUEST['productid'];
-		echo "ha";
 		addtocart($pid,1);
 		header("location:carrinho.php");
 		exit();

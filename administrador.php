@@ -1,19 +1,16 @@
-<?
+<?php
 	include("includes/db.php");
 	include("includes/auth_functions.php");
-    
+
 	if($_REQUEST['command']=='login'){
-		
-		$email=$_REQUEST['email'];
-        $senha=$_REQUEST['senha'];
-        list ( $_SESSION['status'], $msg, $msg_color ) = auth($email, $senha);
-        
+    $email=$_REQUEST['email'];
+    $senha=$_REQUEST['senha'];
+	  list ( $_SESSION['status'], $msg, $msg_color ) = auth($link, $email, $senha);
 	}else if($_REQUEST['command']=='logout'){
-        
-        $_SESSION['status'] = 'fora';
-        $msg_color ='#0F0';
-        $msg = "Logout feito com sucesso.";
-    }
+    $_SESSION['status'] = 'fora';
+    $msg_color ='#0F0';
+    $msg = "Logout feito com sucesso.";
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +38,7 @@
 
 <body>
 
-<?if($_SESSION['status'] == 'dentro'){?>
+<?php if($_SESSION['status'] == 'dentro'){ 	?>
         <div align="right">
             <a href="produto.php"><input type="submit" value="Produto" /></td></a>
             <a href="transacao.php"><input type="submit" value="Transacao" /></td></a>
@@ -57,20 +54,20 @@
             </div>
         </form>
 
-<?}else{?>
+<?php }else{?>
         <form name="form1" onsubmit="return validate()" method="POST">
             <input type="hidden" name="command" />
             <div align="center">
                 <h1 align="center">Login</h1>
-                <div style="color:<?=$msg_color?>"><?=$msg?></div>
+                <div style="color:<?php echo $msg_color; ?>"><?php echo $msg;?></div>
                 <table border="0" cellpadding="2px">
-                    <tr><td>Email:</td><td><input type="text" name="email" value="<?=$email?>" /></td></tr>
+                    <tr><td>Email:</td><td><input type="text" name="email" value="<?php echo $email;?>" /></td></tr>
                     <tr><td>Senha:</td><td><input type="password" name="senha" /></td></tr>
                     <tr><td>&nbsp;</td><td><input type="submit" value="Entrar" /></td></tr>
                 </table>
             </div>
         </form>
-<?}?>
+<?php }?>
 
 </body>
 </html>
