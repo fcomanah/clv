@@ -5,8 +5,7 @@
     function frete(){
         $_SESSION['sCepDestino']=$_REQUEST['sCepDestino'];
         $_SESSION['nCdServico']=$_REQUEST['nCdServico'];
-				//if (get_frete()=='')
-					$msg="O frete não pode ser calculado.";
+				//if (get_frete()=='') $msg="O frete não pode ser calculado.";
     }
 
 	if($_REQUEST['command']=='delete' && $_REQUEST['pid']>0){
@@ -123,12 +122,12 @@
                             <input type="range" name="rangeInput<?php echo $pid?>" value="<?php echo $q?>" min="1" max="<?php echo $pstock?>" onchange="updateTextInput(this.value, <?php echo $pid?>);">
                             <input type="text" id="product<?php echo $pid?>" name="product<?php echo $pid?>" onblur="update_cart()" value="<?php echo no_more_than($q,$pstock)?>" maxlength="3" size="2" />
                         </td>
-                        <td>R$ <?php echo number_format(get_price($pid)*no_more_than($q,$pstock), 2, '.', ' ')?></td>
+                        <td>R$ <?php echo number_format(get_price($link,$pid)*no_more_than($q,$pstock), 2, '.', ' ')?></td>
                     <td><a href="javascript:del(<?php echo $pid?>)">Remover</a></td></tr>
             <?php
 				}
 			?>
-            		<tr>
+            		<!--<tr>
                         <td></td>
                         <td>Frete</td>
                         <td>
@@ -144,10 +143,9 @@
                                 <option value="40290" <?php if ('40290' == $_SESSION['nCdServico']) echo ' selected="selected"';?>>SEDEX HOJE</option>
                             </select>
                         </td>
-                        <!-- <td>R$ <?php //echo number_format(get_frete(), 2, '.', ' ')?></td> -->
-												<td>R$ <?php echo number_format(1 , 2, '.', ' ')?></td>
-                    <!--<td><a href="javascript:get_frete()">Calcular</a></td></tr>-->
-										<td><a href="">Calcular</a></td></tr>
+                        <td>R$ <?php //echo number_format(get_frete(), 2, '.', ' ')?></td>
+                    <td><a href="javascript:get_frete()">Calcular</a></td></tr>
+										<td><a href="">Calcular</a></td></tr> -->
 
 				<tr><td colspan="2"><b>Total: R$ <?php echo number_format(get_order_total($link), 2, '.', ' ')?></b></td><td colspan="5" align="right">
                     <input type="button" value="Esvaziar" onclick="clear_cart()">

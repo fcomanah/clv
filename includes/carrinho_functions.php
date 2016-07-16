@@ -227,16 +227,17 @@
 		for($i=0;$i<$max;$i++){
 			$pid=$_SESSION['cart'][$i]['productid'];
 			$q=intval($_REQUEST['product'.$pid]);
-			if($q>0 && $q<=10000){
+      $pstock=get_product_stock($link,$pid);
+			if($q>0 && $q<=$pstock){
                 if($_SESSION['cart'][$i]['qty']!=$q){
                     $_SESSION['cart'][$i]['qty']=$q;
                     $result=mysqli_query($link,"UPDATE `carrinho` SET `quantidade` = '$q', `modificacao` = now() WHERE `chave` = '$chave' AND `sku` = '$pid';");
                 }
 			}else{
-				#$msg='Algum produto não foi atualizado! Quantidade deve ser um número entre 1 e 999';
+				$msg='Algum produto não foi atualizado! Quantidade deve ser um número entre 1 e '.$pstock.'.';
 			}
 		}
-    }
+  }
 	function addtocart($link,$pid,$q){
 
 		if($pid<1 or $q<1) return;
