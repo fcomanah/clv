@@ -52,7 +52,7 @@ sudo apt-get install -y mysql-server php-mysql
 #sudo /usr/bin/mysql_secure_installation
 echo '--------------------------------------------------------------------'
 echo "Installing PHP"
-sudo apt-get install -y php php-mcrypt
+sudo apt-get install -y php php-mcrypt php5-curl
 
 echo '--------------------------------------------------------------------'
 echo "Clonning clv"
