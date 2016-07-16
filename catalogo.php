@@ -5,7 +5,7 @@
 
 	if($_REQUEST['command']=='add' && $_REQUEST['productid']>0){
 		$pid=$_REQUEST['productid'];
-		addtocart($pid,1);
+		addtocart($link,$pid,1);
 		header("location:carrinho.php");
 		exit();
 	}

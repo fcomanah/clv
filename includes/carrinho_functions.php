@@ -85,7 +85,7 @@
         );
     }
 
-    function create_sessao($link){        
+    function create_sessao($link){
         $ua=getBrowser();
         $browser = $ua['name'] . " " . $ua['version'];
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -252,9 +252,7 @@
 			$_SESSION['cart'][0]['productid']=$pid;
 			$_SESSION['cart'][0]['qty']=$q;
 		}
-
     $chave = $_SESSION['chave'];
-    echo "INSERT INTO `carrinho` (`chave`, `sku`, `quantidade`) VALUES ('$chave', '$pid', '$q');";
 		$result=mysqli_query($link,"INSERT INTO `carrinho` (`chave`, `sku`, `quantidade`) VALUES ('$chave', '$pid', '$q');");
 	}
 
