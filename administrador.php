@@ -1,8 +1,8 @@
 <?php
-	include("includes/db.php");
-	include("includes/auth_functions.php");
+  include("includes/db.php");
+  include("includes/auth_functions.php");
 
-	if($_REQUEST['command']=='login'){
+  if($_REQUEST['command']=='login'){
     $email=$_REQUEST['email'];
     $senha=$_REQUEST['senha'];
 	  list ( $_SESSION['status'], $msg, $msg_color ) = auth($link, $email, $senha);
@@ -38,7 +38,7 @@
 
 <body>
 
-<?php if($_SESSION['status'] == 'dentro'){ 	?>
+<?php if($_SESSION['status'] == 'dentro'){ ?>
         <div align="right">
             <a href="produto.php"><input type="submit" value="Produto" /></td></a>
             <a href="transacao.php"><input type="submit" value="Transação" /></td></a>

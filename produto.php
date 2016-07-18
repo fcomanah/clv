@@ -254,7 +254,7 @@
 	    </form>
 
 
-				    <div style="margin:0px auto; width:800px;" >
+				    <div style="margin:0px auto; width:1200px;" >
 				        <div style="padding-bottom:10px">
 				            <h1 align="center">Produto</h1>
 				            <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
