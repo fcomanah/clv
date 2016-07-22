@@ -109,6 +109,7 @@
     }
 
     function get_frete(){
+      return 15;
 
         require_once('RsCorreios.php');
 
