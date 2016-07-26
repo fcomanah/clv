@@ -1,30 +1,38 @@
-<?php 
+<?php
 	include("includes/db.php");
+	include("includes/auth_functions.php");
 	include("includes/status_functions.php");
 
 	if($_REQUEST['command']=='login'){
-		$email = $_REQUEST['email'];
-        	$senha = $_REQUEST['senha'];
-        	list ( $_SESSION['status'], $msg, $msg_color ) = auth($link, $email, $senha);
+
+		$email=$_REQUEST['email'];
+        $senha=$_REQUEST['senha'];
+        list ( $_SESSION['status'], $msg, $msg_color ) = auth($link,$email, $senha);
+
 	}else if($_REQUEST['command']=='create'){
-	        $status=array();
-        	$status[1] = $_REQUEST['sname_c'];
-	        $status[2] = $_REQUEST['sdesc_c'];
-	        create_status($link, $status);
+        $status=array();
+        $status[1]=$_REQUEST['sname_c'];
+        $status[2]=$_REQUEST['sdesc_c'];
+        create_status($link,$status);
+
 	}else if($_REQUEST['command']=='edit'){
-        	$pedit = $_REQUEST['pid'];
+        $pedit = $_REQUEST['pid'];
+
 	}else if($_REQUEST['command']=='update'){
-        	$status=array();
-	        $status[0] = $_REQUEST['pid'];
-	        $status[1] = $_REQUEST['sname'];
-        	$status[2] = $_REQUEST['sdesc'];
-	        update_status($link, $status);
+        $status=array();
+        $status[0]=$_REQUEST['pid'];
+        $status[1]=$_REQUEST['sname'];
+        $status[2]=$_REQUEST['sdesc'];
+        update_status($link,$status);
+
 	}else if($_REQUEST['command']=='delete'){
-        	delete_status($link, $_REQUEST['pid']);
+        delete_status($link,$_REQUEST['pid']);
+
 	}else if($_REQUEST['command']=='logout'){
-	        $_SESSION['status'] = 'fora';
-        	$msg_color ='#0F0';
-	        $msg = "Logout feito com sucesso.";
+
+        $_SESSION['status'] = 'fora';
+        $msg_color ='#0F0';
+        $msg = "Logout feito com sucesso.";
     }
 ?>
 <!DOCTYPE html>
@@ -97,11 +105,11 @@
 <body>
 
 <?php if($_SESSION['status'] == 'dentro'){?>
-	<div align="right">
-		<a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
-		<a href="produto.php"><input type="submit" value="Produto" /></td></a>
-		<a href="transacao.php"><input type="submit" value="Transação" /></td></a>
-	</div>
+				<div align="right">
+						<a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
+						<a href="produto.php"><input type="submit" value="Produto" /></td></a>
+						<a href="transacao.php"><input type="submit" value="Transação" /></td></a>
+				</div>
         <form name="form2" method="POST">
             <input type="hidden" name="command" value="logout" />
             <div align="right">
@@ -120,8 +128,8 @@
         <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
     </div>
     	<table border="0" cellpadding="5px" cellspacing="1px" style="font-family:Verdana, Geneva, sans-serif; font-size:11px; background-color:#E1E1E1" width="100%">
-    	<?php 
-            echo '<tr bgcolor="#FFFFFF" style="font-weight:bold">
+    	<?php
+            	echo '<tr bgcolor="#FFFFFF" style="font-weight:bold">
                     <td>#</td>
                     <td>Nome</td>
                     <td>Descrição</td>
@@ -129,12 +137,12 @@
 
             $statuss = read_status($link);
 
-		if( count($statuss) > 0 ){
+			if( count($statuss) > 0 ){
 
-		foreach ($statuss as $status){
-			$pid   = $status[0];
-			$sname = $status[1];
-			$sdesc = $status[2];
+				foreach ($statuss as $status){
+					$pid   =$status[0];
+					$sname =$status[1];
+					$sdesc =$status[2];
 
                     if ( $pid == $pedit) {
 			?>
@@ -145,14 +153,14 @@
                         <td><a href="javascript:del(<?php echo $pid?>)">Remover</a>
                             <a href="javascript:update(<?php echo $pid?>)">Atualizar</a></td>
                     </tr>
-            <?php       } else { ?>
+            <?php      } else { ?>
             		<tr bgcolor="#FFFFFF">
                         <td><?php echo $pid?></td>
                         <td><?php echo $sname?></td>
                         <td><?php echo $sdesc?></td>
                         <td><a href="javascript:edit(<?php echo $pid?>)">Editar</a></td>
                     </tr>
-            <?php       }
+            <?php      }
 				}
             }
 			else{
@@ -165,6 +173,8 @@
                         <td><input type="text" name="sdesc_c" /></td>
                         <td><a href="javascript:create()">Adicionar</a></td>
                 </tr>
+			<?php
+		?>
         </table>
     </div>
 </form>
