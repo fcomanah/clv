@@ -5,10 +5,6 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP DATABASE IF EXISTS `clv`;
-CREATE DATABASE `clv` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `clv`;
-
 DROP TABLE IF EXISTS `administrador`;
 CREATE TABLE `administrador` (
   `email` varchar(32) NOT NULL,
@@ -19,7 +15,8 @@ CREATE TABLE `administrador` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `administrador` (`email`, `senha`, `nome`, `sobrenome`) VALUES
-('clvu@clv.com',	'905e68470532cd67e600ee9cc376bba1',	'clv_nome',	'clv_sobrenome');
+('clvu@clv.com',	'905e68470532cd67e600ee9cc376bba1',	'clv_nome',	'clv_sobrenome'),
+('murici@hotmail.com',	'murici',	'renato',	'murici');
 
 DROP TABLE IF EXISTS `carrinho`;
 CREATE TABLE `carrinho` (
@@ -42,7 +39,7 @@ CREATE TABLE `produto` (
   `imagem` varchar(80) NOT NULL,
   `quantidadeestoque` int(11) NOT NULL,
   PRIMARY KEY (`sku`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `produto` (`sku`, `nome`, `descricao`, `preco`, `imagem`, `quantidadeestoque`) VALUES
 (1,	'Celular',	'Nokia 5800 XpressMusic is a mobile device with 3.2',	50.00,	'mobile.jpg',	1000),
@@ -52,7 +49,8 @@ INSERT INTO `produto` (`sku`, `nome`, `descricao`, `preco`, `imagem`, `quantidad
 (5,	'Bateria',	'Para NoteBooks Dell',	56.77,	'charger.jpg',	1000),
 (6,	'Drive CD',	'Leitor e Gravador',	555.33,	'cdrom-drive.jpg',	1000),
 (7,	'HardDrive',	'80GB - 7200RPM',	137.00,	'hard-drive.jpg',	1000),
-(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000);
+(8,	'SSD',	'128GB',	294.05,	'ssd.png',	1000),
+(9,	'Camisa',	'Algodão',	149.99,	'camisa.jpg',	100);
 
 DROP TABLE IF EXISTS `sessao`;
 CREATE TABLE `sessao` (
@@ -61,7 +59,7 @@ CREATE TABLE `sessao` (
   `browser` varchar(255) NOT NULL,
   `criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `sessao` (`chave`, `ip`, `browser`, `criacao`) VALUES
 (1,	'::1',	'Mozilla Firefox 47.0',	'2016-07-02 13:05:39');
@@ -72,7 +70,7 @@ CREATE TABLE `status` (
   `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `status` (`codigo`, `nome`, `descricao`) VALUES
 (1,	'Em Andamento',	''),
@@ -100,4 +98,4 @@ CREATE TABLE `transacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2016-07-02 14:44:35
+-- 2016-07-15 22:49:20
