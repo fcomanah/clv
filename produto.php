@@ -1,4 +1,5 @@
 <?php
+
 	include("includes/db.php");
 	include("includes/auth_functions.php");
 	include("includes/produto_functions.php");
@@ -59,9 +60,6 @@
                 echo "Não foi possível enviar o arquivo, tente novamente";
             }
         }
-
-
-
 	}else if($_REQUEST['command']=='edit'){
         $pedit = $_REQUEST['pid'];
 
@@ -236,8 +234,6 @@
 </head>
 
 <body>
-
-
 	<?php if($_SESSION['status'] == 'dentro'){?>
 			<div align="right">
 					<a href="administrador.php"><input type="submit" value="Administrador" /></td></a>
@@ -253,8 +249,7 @@
 		    </div>
 	    </form>
 
-
-				    <div style="margin:0px auto; width:1200px;" >
+				    <div style="margin:0px auto; width:100%;" >
 				        <div style="padding-bottom:10px">
 				            <h1 align="center">Produto</h1>
 				            <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>

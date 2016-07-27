@@ -139,7 +139,7 @@
             		<tr bgcolor="#FFFFFF">
                         <td><?php echo $tid?></td>
                         <td><a href="andamento.php?command=read&tidbcash=<?php echo $tidbcash?>" target="_blank""><?php echo $tidbcash?></a></td>
-                        <td><?php=number_format($tvalor, 2, '.', ' ')?></td>
+                        <td><?php echo number_format($tvalor, 2, '.', ' ')?></td>
                         <td><?php echo $tstat?></td>
                         <td><?php echo $tcria?></td>
                         <td><?php echo $tmodi?></td>

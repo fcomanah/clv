@@ -1,26 +1,51 @@
 <?php
 	include("includes/db.php");
 	include("includes/carrinho_functions.php");
-	include("includes/pagamento_functions.php");
 
-  if($_REQUEST['command']=='verify') {
-    $_SESSION['cpf_valido'] =   validaCPF($_POST['cpf']);
-    $_SESSION['email']      =   $_POST['email'];
-    $_SESSION['name_sname'] =   $_POST['name'].' '.$_POST['sname'];
-		$_SESSION['name'] 			=   $_POST['name'];
-		$_SESSION['sname'] 			=   $_POST['sname'];
-    $_SESSION['cpf']        =   $_POST['cpf'];
-    $_SESSION['tel']        =   $_POST['telefone'];
-
-    if(!$_SESSION['cpf_valido']){
-      $msg_color ='#F00';
-      $msg = "O CPF digitado é incorreto.";
+    // Função que valida o CPF
+    function validaCPF($cpf) {
+        $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
+        if (strlen($cpf) != 11 || $cpf == '00000000000'
+            || $cpf == '11111111111' || $cpf == '22222222222'
+            || $cpf == '33333333333' || $cpf == '44444444444'
+            || $cpf == '55555555555' || $cpf == '66666666666'
+            || $cpf == '77777777777' || $cpf == '88888888888'
+            || $cpf == '99999999999') {
+            return false;
+        } else {
+            for ($t = 9; $t < 11; $t++) {
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf{$c} * (($t + 1) - $c);
+                }
+                $d = ((10 * $d) % 11) % 10;
+                if ($cpf{$c} != $d) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
-  }else if($_REQUEST['command']=='edit') {
-		$_SESSION['cpf_valido'] = false;
-	}
-?>
 
+    if($_REQUEST['command']=='verify') {
+        $_SESSION['cpf_valido'] =   validaCPF($_POST['cpf']);
+        $_SESSION['email']      =   $_POST['email'];
+        $_SESSION['name']       =   $_POST['name'].' '.$_POST['sname'];
+        $_SESSION['cpf']        =   $_POST['cpf'];
+        $_SESSION['tel']        =   $_POST['telefone'];
+
+        if(!$_SESSION['cpf_valido']){
+            $msg_color ='#F00';
+            $msg = "O CPF digitado é incorreto.";
+        }
+    } else if($_REQUEST['command']=='clear') {
+        $_SESSION['cpf_valido'] =   false;
+        $_SESSION['email']      =   '';
+        $_SESSION['name']       =   '';
+        $_SESSION['cpf']        =   '';
+        $_SESSION['tel']        =   '';
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,15 +71,15 @@
 		}
 
 		form {
-		  width:500px;
-		  margin: 50px auto;
+		  width:400px;
+		  margin: 20px auto;
 		}
 
 		input {
 		  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		  border:1px solid #ccc;
 		  font-size:20px;
-		  width:300px;
+		  width:200px;
 		  min-height:30px;
 		  display:block;
 		  margin-bottom:15px;
@@ -83,17 +108,14 @@
     <a style="text-decoration: none" href="pagamento.php">Pagamento</a>
 </div>
 
-<?php if( $_SESSION['cpf_valido'] ){ ?>
+<?php if(isset($_SESSION['cpf_valido'])){ ?>
 			<form name="bcash" action="https://www.bcash.com.br/checkout/pay/" method="post">
-		  <!-- <form name="bcash" action="lib/post/bcash_action.php" method="post">-->
-  			<input type="hidden" name="command" />
-		    <input name="redirect" type="hidden" value="true">
-					<!-- TODO inserir dados do bcash-->
+			    <input type="hidden" name="command" />
+			    <input name="redirect" type="hidden" value="true">
 			    <input name="email_loja" type="hidden" value="manaphys@gmail.com">
 			    <input name="url_retorno" type="hidden" value="<?php echo $_SERVER['SERVER_NAME']?>/clv/retorno.php">
 			    <input name="url_aviso" type="hidden" value="<?php echo $_SERVER['SERVER_NAME']?>/clv/aviso.php">
-
-			    <input name="id_pedido" type="hidden" value="<?php echo 1100//$_SESSION['chave']?>">
+			    <input name="id_pedido" type="hidden" value="<?php echo $_SESSION['chave']?>">
 			    <?php  if (!empty($_SESSION['cart']))
 			        {
 			            $contador = 1;
@@ -111,39 +133,36 @@
 			        }
 			    ?>
 			    <input name="frete" type="hidden" value="<?php echo get_frete()?>">
+
 			    <input name="email" type="hidden" value="<?php echo $_SESSION['email']?>" >
 			    <input name="cpf" type="hidden" value="<?php echo $_SESSION['cpf']?>">
-			    <input name="nome" type="hidden" value="<?php echo $_SESSION['name_sname']?>">
+			    <input name="nome" type="hidden" value="<?php echo $_SESSION['name']?>">
 			    <input name="telefone" type="hidden" value="<?php echo $_SESSION['tel']?>">
 			    <input name="cep" type="hidden" value="<?php echo $_SESSION['sCepDestino']?>">
 
 
 				<div align="center">
 			        <h1 align="center">Pagamento</h1>
-			        <p>
-								<a href="javascript:edit();" title="Clique aqui para editar os dados cadastrados."><?php echo $_SESSION['name_sname']?></a>, o total da compra é </br>
-								<h3><?php echo 'R$ ' . number_format(get_order_total($link), 2, '.', ' ');?></h3>
-							</p>
+			        <p><a href="javascript:clear();" title="Clique aqui se não for você!"><?php echo $_SESSION['name']?></a>, o total da compra é </br><h3><?php echo 'R$ ' . number_format(get_order_total($link), 2, '.', ' ');?></h3></p>
 			        <table border="0" cellpadding="2px">
 			            <tr><td>&nbsp;</td><td><input type="image" src="https://www.bcash.com.br/webroot/img/bt_comprar.gif" value="Pagar" alt="Pagar" border="0" align="absbottom" ></td></tr>
 			        </table>
 				</div>
 			</form>
 
-		<form name="form1" action="pagamento.php" method="POST">
-			<input type="hidden" name="command" value="edit" />
-		</form>
-
-		<script language="javascript">
-			function edit(){
-				document.form1.submit();
-	    }
-		</script>
-
+			<script language="javascript">
+				function clear(){
+					if(confirm('Você realmente quer apagar os dados?')){
+						document.form1.pid.value=pid;
+						document.form1.command.value='clear';
+						document.form1.submit();
+					}
+			  }
+			</script>
 <?php }else if (isset($_SESSION['cart'])){?>
 
-			<form name="form2" method="POST">
-			  <input type="hidden" name="command" value="verify" />
+			<form name="form1" action="pagamento.php" method="POST">
+			    <input type="hidden" name="command" value="verify" />
 				<div align="center">
 			        <h1 align="center">Seus Dados</h1>
 			        <div style="color:<?php echo $msg_color?>"><?php echo $msg?></div>
